@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './SearchLocationInput.css';
 
+import { GoogleKey } from '../../../../../config';
+
 let autoComplete;
 
 const loadScript = (url, callback) => {
@@ -45,7 +47,7 @@ function SearchLocationInput() {
 
   useEffect(() => {
     loadScript(
-      `https://maps.googleapis.com/maps/api/js?key=AIzaSyBxhATG7W3Pg41Z3NHLe5vs-Qgr6J7NRHA&libraries=places`,
+      `https://maps.googleapis.com/maps/api/js?key=${GoogleKey}&libraries=places`,
       () => handleScriptLoad(setQuery, autoCompleteRef)
     );
   }, []);
