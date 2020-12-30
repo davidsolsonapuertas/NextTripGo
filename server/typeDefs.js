@@ -25,10 +25,13 @@ const typeDefs = gql`
   }
   type Query {
     getTrips: [Trip]
+    getTrip(tripId: ID!): Trip
   }
   type Mutation {
     register(registerInput: RegisterInput): User!
     login(username: String!, password: String!): User!
+    createTrip(destination: String!): Trip!
+    deleteTrip(tripId: ID!): String!
   }
 `;
 
