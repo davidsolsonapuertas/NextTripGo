@@ -1,7 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
-import './SearchLocationInput.css';
 
-import { GoogleKey } from '../../../../../config';
+import './SearchLocationInput.css';
+import '../../../bootstrap.css';
+
+import { GoogleKey } from '../../../config';
 
 let autoComplete;
 
@@ -41,7 +43,7 @@ async function handlePlaceSelect(updateQuery) {
   console.log(addressObject);
 }
 
-function SearchLocationInput() {
+function SearchLocationInput({ placeholder, styles }) {
   const [query, setQuery] = useState('');
   const autoCompleteRef = useRef(null);
 
@@ -53,15 +55,13 @@ function SearchLocationInput() {
   }, []);
 
   return (
-    <div className="search-location-input">
-      <input
-        ref={autoCompleteRef}
-        onChange={(event) => setQuery(event.target.value)}
-        placeholder="Enter your next destination"
-        value={query}
-      />
-    </div>
+    <input
+      className={styles}
+      ref={autoCompleteRef}
+      onChange={(event) => setQuery(event.target.value)}
+      placeholder={placeholder}
+      value={query}
+    />
   );
 }
-
 export default SearchLocationInput;

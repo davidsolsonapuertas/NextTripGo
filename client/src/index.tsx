@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
+import ApolloProvider from './ApolloProvider';
 import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
@@ -10,7 +10,7 @@ ReactDOM.render(
       rel="stylesheet"
       href="https://fonts.googleapis.com/css?family=Nunito"
     />
-    <App />
+    {ApolloProvider}
   </React.StrictMode>,
   document.getElementById('root')
 );

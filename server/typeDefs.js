@@ -18,10 +18,13 @@ const typeDefs = gql`
     createdAt: String!
   }
   input RegisterInput {
+    firstname: String!
+    lastname: String!
     username: String!
+    currentCity: String!
+    email: String!
     password: String!
     confirmPassword: String!
-    email: String!
   }
   type Query {
     getTrips: [Trip]

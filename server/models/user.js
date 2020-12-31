@@ -2,11 +2,14 @@ const mongoose = require('./index');
 const { Schema } = mongoose;
 
 const userSchema = new Schema({
+  firstname: String,
+  lastname: String,
   username: String,
-  password: String,
+  currentCity: String,
   email: String,
+  password: String,
+  confirmPassword: String,
   createdAt: String,
-  trips: Object,
 });
 
 const User = mongoose.model('User', userSchema);
