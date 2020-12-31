@@ -19,9 +19,11 @@
   "homepage": "https://github.com/davidsolsonapuertas/Solo#readme",
   "dependencies": {
     "apollo-server": "^2.19.1",
+    "axios": "^0.21.1",
     "bcryptjs": "^2.4.3",
     "graphql": "^15.4.0",
     "jsonwebtoken": "^8.5.1",
-    "mongoose": "^5.11.9"
+    "mongoose": "^5.11.9",
+    "pexels": "^1.0.1"
   }
 }

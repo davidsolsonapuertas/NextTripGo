@@ -548,6 +548,7 @@ pre code {
   flex-wrap: wrap;
   margin-right: -0.75rem;
   margin-left: -0.75rem;
+  justify-content: center;
 }
 .no-gutters {
   margin-right: 0;
@@ -4187,8 +4188,8 @@ input[type='submit'].btn-block {
   background-clip: border-box;
   border: 1px solid #e3e6f0;
   border-radius: 0.35rem;
-  max-width: 75%;
-  min-width: 75%;
+  max-width: 55%;
+  min-width: 55%;
 }
 .card > hr {
   margin-right: 0;
