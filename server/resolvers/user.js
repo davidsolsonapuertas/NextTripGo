@@ -22,6 +22,17 @@ function generateToken(user) {
 }
 
 module.exports = {
+  Query: {
+    async getUsers() {
+      try {
+        const users = await User.find();
+        console.log(users);
+        return users;
+      } catch (error) {
+        throw new Error(error);
+      }
+    },
+  },
   Mutation: {
     async login(_, { username, password }) {
       const { errors, valid } = validateLoginInput(username, password);
@@ -104,7 +115,6 @@ module.exports = {
         currentCity,
         email,
         password,
-        confirmPassword,
         createdAt: new Date().toISOString(),
       });
 

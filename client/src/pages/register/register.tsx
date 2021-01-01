@@ -1,15 +1,20 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { useMutation } from '@apollo/react-hooks';
+import { useHistory, Link } from 'react-router-dom';
 import gql from 'graphql-tag';
 
-import '../bootstrap.css';
+import '../../bootstrap.css';
 import './register.css';
-import SearchLocationInput from '../APIs/googlemaps/searchlocationinput/SearchLocationInput';
-import { useForm } from '../util/hooks';
-import { Redirect } from 'react-router-dom';
+
+import SearchLocationInput from '../../APIs/googlemaps/searchlocationinput/SearchLocationInput';
+import { useForm } from '../../util/hooks';
+import { AuthContext } from '../../context/auth';
 
 function Register(props: any) {
+  let history = useHistory();
   const [errors, setErrors]: any = useState({});
+
+  const context = useContext(AuthContext);
 
   const { onChange, onSubmit, values }: any = useForm(registerUser, {
     firstname: '',
@@ -22,12 +27,13 @@ function Register(props: any) {
   });
 
   const [addUser, { loading }] = useMutation(REGISTER_USER, {
-    update(proxy, result) {
-      props.history.push('/');
-      <Redirect to="/" />;
+    update(proxy, { data: { register: userData } }) {
+      context.login(userData);
+      history.push('/');
     },
     onError(err) {
       setErrors(err?.graphQLErrors[0]?.extensions?.exception.errors);
+      console.log(err?.graphQLErrors);
     },
     variables: {
       firstname: values.firstname,
@@ -130,7 +136,6 @@ function Register(props: any) {
                         onChange={onChange}
                       />
                     </div>
-
                     <div className="form-group row">
                       <div className="col-sm-6 mb-3 mb-sm-0">
                         <input
@@ -161,6 +166,15 @@ function Register(props: any) {
                         />
                       </div>
                     </div>
+                    {Object.keys(errors).length > 0 && (
+                      <div>
+                        <ul>
+                          {Object.values(errors).map((value, i) => (
+                            <li key={i}> {value}</li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
                     <button
                       type="submit"
                       className="btn btn-primary btn-user btn-block"
@@ -169,6 +183,14 @@ function Register(props: any) {
                       Create ↪
                     </button>
                   </form>
+                  <hr />
+                  <Link to="/login">
+                    <div className="text-center">
+                      <a className="small" href="register.html">
+                        Already have an account? Login!
+                      </a>
+                    </div>
+                  </Link>
                 </div>
               </div>
             </div>
@@ -201,6 +223,9 @@ const REGISTER_USER = gql`
       }
     ) {
       id
+      firstname
+      lastname
+      currentCity
       email
       username
       createdAt

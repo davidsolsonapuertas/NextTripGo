@@ -8,10 +8,19 @@ const typeDefs = gql`
     fromDate: String
     toDate: String
     createdAt: String!
-    username: String!
+    username: User!
+    expenses: String
+    toDo: String
+    friends: [User]!
   }
   type User {
     id: ID!
+    firstname: String!
+    lastname: String!
+    profilePic: String!
+    currentCity: String
+    friends: [User]
+    trips: [Trip]
     email: String!
     token: String!
     username: String!
@@ -27,6 +36,7 @@ const typeDefs = gql`
     confirmPassword: String!
   }
   type Query {
+    getUsers: [User]
     getTrips: [Trip]
     getTrip(tripId: ID!): Trip
   }

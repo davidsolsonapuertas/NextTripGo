@@ -8,16 +8,16 @@ module.exports.validateRegisterInput = (
 ) => {
   const errors = {};
   if (firstname.trim() === '') {
-    errors.firstname = 'This field must not be empty';
+    errors.firstname = 'Name field must not be empty';
   }
   if (lastname.trim() === '') {
-    errors.lastname = 'This field must not be empty';
+    errors.lastname = 'Last name field must not be empty';
   }
   if (username.trim() === '') {
     errors.username = 'Username must not be empty';
   }
   if (email.trim() === '') {
-    errors.username = 'Email must not be empty';
+    errors.email = 'Email must not be empty';
   } else {
     const regEx = /^([0-9a-zA-Z]([-.\w]*[0-9a-zA-Z])*@([0-9a-zA-Z][-\w]*[0-9a-zA-Z]\.)+[a-zA-Z]{2,9})$/;
     if (!email.match(regEx)) {

@@ -1,12 +1,18 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { useMutation } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
+import { useHistory, Link } from 'react-router-dom';
 
-import '../bootstrap.css';
+import '../../bootstrap.css';
 import './login.css';
-import { useForm } from '../util/hooks';
 
-function Login(props: any) {
+import { AuthContext } from '../../context/auth';
+import { useForm } from '../../util/hooks';
+
+function Login() {
+  let history = useHistory();
+  const context = useContext(AuthContext);
+
   const [errors, setErrors]: any = useState({});
 
   const { onChange, onSubmit, values }: any = useForm(loginUserCallback, {
@@ -15,8 +21,9 @@ function Login(props: any) {
   });
 
   const [loginUser, { loading }] = useMutation(LOGIN_USER, {
-    update(proxy, result) {
-      props.history.push('/');
+    update(proxy, { data: { login: userData } }) {
+      context.login(userData);
+      history.push('/');
     },
     onError(err) {
       setErrors(err?.graphQLErrors[0]?.extensions?.exception.errors);
@@ -46,15 +53,15 @@ function Login(props: any) {
                   <form className="user" onSubmit={onSubmit} noValidate>
                     <div className="form-group">
                       <input
-                        type="email"
+                        type="text"
                         className={
-                          errors.email
+                          errors.username
                             ? 'form-control form-control-user errorRed'
                             : 'form-control form-control-user'
                         }
-                        placeholder="Email"
-                        name="email"
-                        value={values.email}
+                        placeholder="Username"
+                        name="username"
+                        value={values.username}
                         onChange={onChange}
                       />
                     </div>
@@ -72,6 +79,15 @@ function Login(props: any) {
                         onChange={onChange}
                       />
                     </div>
+                    {Object.keys(errors).length > 0 && (
+                      <div className="">
+                        <ul className="">
+                          {Object.values(errors).map((value, i) => (
+                            <li key={i}> {value}</li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
                     <button
                       type="submit"
                       className="btn btn-primary btn-user btn-block"
@@ -80,6 +96,14 @@ function Login(props: any) {
                       Login ↪
                     </button>
                   </form>
+                  <hr />
+                  <Link to="/register">
+                    <div className="text-center">
+                      <a className="small" href="register.html">
+                        Create an Account!
+                      </a>
+                    </div>
+                  </Link>
                 </div>
               </div>
             </div>
@@ -94,10 +118,56 @@ const LOGIN_USER = gql`
   mutation login($username: String!, $password: String!) {
     login(username: $username, password: $password) {
       id
+      firstname
+      lastname
+      currentCity
+      friends {
+        id
+        firstname
+        lastname
+        currentCity
+        trips {
+          id
+          destination
+          picture
+          fromDate
+          toDate
+          createdAt
+          username {
+            username
+          }
+          expenses
+          toDo
+          friends {
+            username
+            profilePic
+          }
+        }
+        email
+        username
+        createdAt
+      }
+      trips {
+        id
+        destination
+        picture
+        fromDate
+        toDate
+        createdAt
+        username {
+          username
+        }
+        expenses
+        toDo
+        friends {
+          username
+          profilePic
+        }
+      }
       email
+      token
       username
       createdAt
-      token
     }
   }
 `;

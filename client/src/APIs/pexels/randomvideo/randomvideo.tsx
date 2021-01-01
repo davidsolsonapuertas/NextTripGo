@@ -31,7 +31,6 @@ function RandomVideo() {
 
   return (
     <div>
-      {/* <header className="video-header"></header> */}
       {videos.length && (
         <video
           width={window.screen.width}

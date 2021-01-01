@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useContext } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import HomeRoundedIcon from '@material-ui/icons/HomeRounded';
 import FlightTakeoffRoundedIcon from '@material-ui/icons/FlightTakeoffRounded';
@@ -7,6 +7,8 @@ import PersonRoundedIcon from '@material-ui/icons/PersonRounded';
 import { BrowserRouter as Router, Link, useLocation } from 'react-router-dom';
 
 import './sidebar.css';
+
+import { AuthContext } from '../../context/auth';
 
 const useStyles = makeStyles({
   root: {
@@ -18,6 +20,7 @@ const useStyles = makeStyles({
 });
 
 function Sidebar() {
+  const { user, logout } = useContext(AuthContext);
   const location = useLocation();
 
   const routes = [
@@ -33,6 +36,11 @@ function Sidebar() {
       icon: <PersonRoundedIcon />,
       cName: 'nav-profile',
     },
+    {
+      title: 'Logout',
+      path: '/',
+      onClick: logout,
+    },
   ];
 
   const classes: any = useStyles();
@@ -43,7 +51,7 @@ function Sidebar() {
         <span className="logo">Logo</span>
         {routes.map((item) => {
           return (
-            <div className="route">
+            <div className="route" onClick={item.onClick}>
               <Link to={item.path}>
                 <span
                   className={

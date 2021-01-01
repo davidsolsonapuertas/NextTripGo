@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useQuery } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 
-import SearchLocationInput from '../APIs/googlemaps/searchlocationinput/SearchLocationInput';
+import SearchLocationInput from '../../APIs/googlemaps/searchlocationinput/SearchLocationInput';
 import { TripOriginSharp } from '@material-ui/icons';
 
 function Home() {

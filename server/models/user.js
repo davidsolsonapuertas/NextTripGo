@@ -8,7 +8,6 @@ const userSchema = new Schema({
   currentCity: String,
   email: String,
   password: String,
-  confirmPassword: String,
   createdAt: String,
 });
 
