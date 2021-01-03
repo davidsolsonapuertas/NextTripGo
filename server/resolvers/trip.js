@@ -2,6 +2,9 @@ const { AuthenticationError } = require('apollo-server');
 const { argsToArgsConfig } = require('graphql/type/definition');
 const Trip = require('../models/trip');
 const checkAuth = require('../util/check-auth');
+const { UserInputError } = require('apollo-server');
+
+const { validateTripInput } = require('../util/validators');
 
 module.exports = {
   Query: {
@@ -27,21 +30,49 @@ module.exports = {
     },
   },
   Mutation: {
-    async createTrip(_, { destination }, context) {
+    async createTrip(
+      _,
+      {
+        createTripInput: {
+          destination,
+          picture,
+          fromDate,
+          toDate,
+          expenses,
+          toDo,
+          friends,
+        },
+      },
+      context
+    ) {
       const user = checkAuth(context);
 
-      if (args.body.trim() === '') {
-        throw new Error('Destination must not be empty');
+      const { valid, errors } = validateTripInput(
+        destination,
+        fromDate,
+        toDate
+      );
+      if (!valid) {
+        throw new UserInputError('Errors', { errors });
       }
+
       const newTrip = new Trip({
         destination,
-        user: user.id,
-        username: user.username,
+        picture,
+        fromDate,
+        toDate,
+        expenses,
+        toDo,
+        friends,
+        userid: user.id,
         createdAt: new Date().toISOString(),
       });
 
       const trip = await newTrip.save();
-      console.log(trip);
+
+      // context.pubsub.publish('NEW_TRIP', {
+      //   newTrip: trip,
+      // });
 
       return trip;
     },

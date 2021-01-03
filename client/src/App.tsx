@@ -1,16 +1,20 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
+import './bootstrap.css';
 import './App.css';
 
 import { AuthProvider } from './context/auth';
 
-import PrivateRoute from './components/privateroute/privateroute';
+import PrivateRoute from './util/privateroute/privateroute';
+import AuthRoute from './util/authroute/authroute';
 import Register from './pages/register/register';
 import Login from './pages/login/login';
 import Home from './pages/home/home';
 import Profile from './pages/profile/profile';
 import RandomVideo from './APIs/pexels/randomvideo/randomvideo';
+import DisplayTrips from './pages/trips/displaytrips/displaytrips';
+import CreateTrip from './pages/trips/createtrip/createtrip';
 
 function App() {
   return (
@@ -18,16 +22,22 @@ function App() {
       <div className="App">
         <Router>
           <Switch>
-            <Route path="/register">
+            <AuthRoute path="/register">
               <RandomVideo />
               <Register />
-            </Route>
-            <Route path="/login">
+            </AuthRoute>
+            <AuthRoute path="/login">
               <RandomVideo />
               <Login />
-            </Route>
+            </AuthRoute>
             <PrivateRoute path="/me">
               <Profile />
+            </PrivateRoute>
+            <PrivateRoute path="/trips">
+              <DisplayTrips />
+            </PrivateRoute>
+            <PrivateRoute path="/createTrip">
+              <CreateTrip />
             </PrivateRoute>
             <PrivateRoute path="/">
               <Home />

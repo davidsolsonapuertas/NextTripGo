@@ -1,31 +1,40 @@
-import React, { useState, useMemo } from 'react';
-import axios from 'axios';
+import React, { useState, useEffect } from 'react';
+// TODO import axios from 'axios';
 
+import '../pexels.css';
 import { PexelKey } from '../../../config';
 
+//  delete mock data
+const data = require('./mockdata');
+
 function RandomVideo() {
-  const [videos, setVideos]: any[] = useState({});
+  const [videos, setVideos]: any[] = useState([]);
 
   const getVideos = async () => {
-    axios
-      .get(
-        'https://api.pexels.com/videos/search?query=travel&size=small&per_page=30',
-        {
-          headers: {
-            Authorization: `${PexelKey}`,
-          },
-        }
-      )
-      .then((data) => {
-        setVideos(data.data.videos);
-      });
+    try {
+      console.log(data);
+
+      //  use
+      // const data = await axios.get(
+      //   'https://api.pexels.com/videos/search?query=travel&size=small&per_page=30',
+      //   {
+      //     headers: {
+      //       Authorization: `${PexelKey}`,
+      //     },
+      //   }
+      // );
+      // setVideos(data.data.videos);
+      setVideos(data.videos);
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   function getRandomInt() {
     return Math.floor(Math.random() * Math.floor(29));
   }
 
-  useMemo(() => {
+  useEffect(() => {
     getVideos();
   }, []);
 
@@ -33,7 +42,6 @@ function RandomVideo() {
     <div>
       {videos.length && (
         <video
-          width={window.screen.width}
           src={videos[getRandomInt()].video_files[0].link}
           autoPlay
           loop

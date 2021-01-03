@@ -3,7 +3,6 @@ import { useMutation } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 import { useHistory, Link } from 'react-router-dom';
 
-import '../../bootstrap.css';
 import './login.css';
 
 import { AuthContext } from '../../context/auth';
@@ -121,6 +120,7 @@ const LOGIN_USER = gql`
       firstname
       lastname
       currentCity
+      profilePic
       friends {
         id
         firstname
@@ -133,7 +133,7 @@ const LOGIN_USER = gql`
           fromDate
           toDate
           createdAt
-          username {
+          userid {
             username
           }
           expenses
@@ -154,7 +154,7 @@ const LOGIN_USER = gql`
         fromDate
         toDate
         createdAt
-        username {
+        userid {
           username
         }
         expenses

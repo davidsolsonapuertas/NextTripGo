@@ -7,7 +7,16 @@ const tripSchema = new Schema({
   fromDate: String,
   toDate: String,
   createdAt: String,
-  username: String,
+  userid: {
+    type: Schema.Types.ObjectId,
+    ref: 'users',
+  },
+  expenses: String,
+  toDo: String,
+  friends: {
+    type: Schema.Types.ObjectId,
+    ref: 'users',
+  },
 });
 
 const Trip = mongoose.model('Trip', tripSchema);

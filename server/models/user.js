@@ -6,6 +6,15 @@ const userSchema = new Schema({
   lastname: String,
   username: String,
   currentCity: String,
+  profilePic: String,
+  friends: {
+    type: Schema.Types.ObjectId,
+    ref: 'users',
+  },
+  trips: {
+    type: Schema.Types.ObjectId,
+    ref: 'trips',
+  },
   email: String,
   password: String,
   createdAt: String,

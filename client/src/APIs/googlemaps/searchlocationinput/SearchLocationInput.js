@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 
 import './SearchLocationInput.css';
-import '../../../bootstrap.css';
 
 import { GoogleKey } from '../../../config';
 
@@ -26,31 +25,31 @@ const loadScript = (url, callback) => {
   document.getElementsByTagName('head')[0].appendChild(script);
 };
 
-function handleScriptLoad(updateQuery, autoCompleteRef) {
+function handleScriptLoad(updateQuery, autoCompleteRef, setFormatedAddress) {
   autoComplete = new window.google.maps.places.Autocomplete(
     autoCompleteRef.current
   );
   autoComplete.setFields(['address_components', 'formatted_address']);
   autoComplete.addListener('place_changed', () =>
-    handlePlaceSelect(updateQuery)
+    handlePlaceSelect(updateQuery, setFormatedAddress)
   );
 }
 
-async function handlePlaceSelect(updateQuery) {
+async function handlePlaceSelect(updateQuery, setFormatedAddress) {
   const addressObject = autoComplete.getPlace();
   const query = addressObject.formatted_address;
   updateQuery(query);
-  // console.log(addressObject);
+  setFormatedAddress(query);
 }
 
-function SearchLocationInput({ placeholder, styles }) {
+function SearchLocationInput({ setFormatedAddress, placeholder, styles }) {
   const [query, setQuery] = useState('');
   const autoCompleteRef = useRef(null);
 
   useEffect(() => {
     loadScript(
       `https://maps.googleapis.com/maps/api/js?key=${GoogleKey}&libraries=places`,
-      () => handleScriptLoad(setQuery, autoCompleteRef)
+      () => handleScriptLoad(setQuery, autoCompleteRef, setFormatedAddress)
     );
   }, []);
 

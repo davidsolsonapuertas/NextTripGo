@@ -3,7 +3,6 @@ import { useMutation } from '@apollo/react-hooks';
 import { useHistory, Link } from 'react-router-dom';
 import gql from 'graphql-tag';
 
-import '../../bootstrap.css';
 import './register.css';
 
 import SearchLocationInput from '../../APIs/googlemaps/searchlocationinput/SearchLocationInput';
@@ -13,6 +12,7 @@ import { AuthContext } from '../../context/auth';
 function Register(props: any) {
   let history = useHistory();
   const [errors, setErrors]: any = useState({});
+  const [formattedAddress, setFormatedAddress]: any = useState('');
 
   const context = useContext(AuthContext);
 
@@ -39,7 +39,7 @@ function Register(props: any) {
       firstname: values.firstname,
       lastname: values.lastname,
       username: values.username,
-      currentCity: values.currentCity,
+      currentCity: formattedAddress,
       email: values.email,
       password: values.password,
       confirmPassword: values.confirmPassword,
@@ -113,6 +113,7 @@ function Register(props: any) {
                       </div>
                       <div className="col-sm-6">
                         <SearchLocationInput
+                          setFormatedAddress={setFormatedAddress}
                           placeholder={'Current city'}
                           styles={
                             errors.username

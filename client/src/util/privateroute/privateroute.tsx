@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import { Route, Redirect } from 'react-router-dom';
 
 import { AuthContext } from '../../context/auth';
+import './privateroute.css';
 
 import Sidebar from '../../components/sidebar/sidebar';
 
@@ -13,11 +14,12 @@ function PrivateRoute({ children, ...rest }: any) {
       {...rest}
       render={({ location }) =>
         user ? (
-          <div>
-            <div className="sidebar">
+          <div className="privateroute">
+            <div className="theSidebar">
               <Sidebar />
             </div>
-            {children}
+            <div className="topBar"></div>
+            <div className="allElements">{children}</div>
           </div>
         ) : (
           <Redirect

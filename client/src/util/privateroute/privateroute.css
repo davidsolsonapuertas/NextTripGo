@@ -1,0 +1,22 @@
+.privateroute {
+  min-width: 100vh;
+  min-height: 100vh;
+  display: grid;
+  grid-gap: 0;
+  grid-template-rows: 80px 1fr;
+  grid-template-columns: 230px 1fr;
+}
+.theSidebar {
+  grid-column: 1/2;
+  grid-row: 1/3;
+  background-color: blue;
+}
+.topBar {
+  grid-column: 2/3;
+  grid-row: 1/2;
+  background-color: rgb(214, 214, 214);
+}
+.allElements {
+  grid-column: 2/3;
+  grid-row: 2/3;
+}

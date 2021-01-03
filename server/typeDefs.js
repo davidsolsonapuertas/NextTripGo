@@ -8,22 +8,22 @@ const typeDefs = gql`
     fromDate: String
     toDate: String
     createdAt: String!
-    username: User!
+    userid: User!
     expenses: String
     toDo: String
-    friends: [User]!
+    friends: [User]
   }
   type User {
     id: ID!
     firstname: String!
     lastname: String!
-    profilePic: String!
+    username: String!
     currentCity: String
+    profilePic: String
     friends: [User]
     trips: [Trip]
     email: String!
     token: String!
-    username: String!
     createdAt: String!
   }
   input RegisterInput {
@@ -35,6 +35,15 @@ const typeDefs = gql`
     password: String!
     confirmPassword: String!
   }
+  input CreateTripInput {
+    destination: String!
+    picture: String
+    fromDate: String
+    toDate: String
+    expenses: String
+    toDo: String
+    friends: String
+  }
   type Query {
     getUsers: [User]
     getTrips: [Trip]
@@ -43,7 +52,7 @@ const typeDefs = gql`
   type Mutation {
     register(registerInput: RegisterInput): User!
     login(username: String!, password: String!): User!
-    createTrip(destination: String!): Trip!
+    createTrip(createTripInput: CreateTripInput!): Trip!
     deleteTrip(tripId: ID!): String!
   }
 `;

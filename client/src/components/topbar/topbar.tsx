@@ -1,9 +1,10 @@
 import React from 'react';
+
 import './topbar.css';
 
 function Topbar() {
   return (
-    <div className="topbar shadow">
+    <div className="">
       TopbarTopbarTopbarTopbarTopbarTopbarTopbarTopbarTopbarTopbarTopbarTopbarTopbar
     </div>
   );

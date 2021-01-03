@@ -20,7 +20,7 @@ const useStyles = makeStyles({
 });
 
 function Sidebar() {
-  const { user, logout } = useContext(AuthContext);
+  const { logout } = useContext(AuthContext);
   const location = useLocation();
 
   const routes = [
@@ -37,6 +37,12 @@ function Sidebar() {
       cName: 'nav-profile',
     },
     {
+      title: 'Trips',
+      path: '/trips',
+      icon: <FlightTakeoffRoundedIcon />,
+      cName: 'nav-trips',
+    },
+    {
       title: 'Logout',
       path: '/',
       onClick: logout,
@@ -46,36 +52,32 @@ function Sidebar() {
   const classes: any = useStyles();
 
   return (
-    <div className="Header">
-      <div className="navbar bg-gradient-primary">
-        <span className="logo">Logo</span>
-        {routes.map((item) => {
-          return (
-            <div className="route" onClick={item.onClick}>
-              <Link to={item.path}>
-                <span
-                  className={
-                    location.pathname === item.path
-                      ? classes.selected
-                      : classes.root
-                  }
-                >
-                  {item.icon}
-                </span>
-                <span
-                  className={
-                    location.pathname === item.path
-                      ? 'divname active'
-                      : 'divname'
-                  }
-                >
-                  {item.title}
-                </span>
-              </Link>
-            </div>
-          );
-        })}
-      </div>
+    <div className="navbar bg-gradient-primary">
+      <span className="logo">Logo</span>
+      {routes.map((item) => {
+        return (
+          <div className="route" key={item.title} onClick={item.onClick}>
+            <Link to={item.path}>
+              <span
+                className={
+                  location.pathname === item.path
+                    ? classes.selected
+                    : classes.root
+                }
+              >
+                {item.icon}
+              </span>
+              <span
+                className={
+                  location.pathname === item.path ? 'divname active' : 'divname'
+                }
+              >
+                {item.title}
+              </span>
+            </Link>
+          </div>
+        );
+      })}
     </div>
   );
 }

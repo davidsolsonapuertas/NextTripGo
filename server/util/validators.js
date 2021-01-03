@@ -50,3 +50,21 @@ module.exports.validateLoginInput = (username, password) => {
     valid: Object.keys(errors).length < 1,
   };
 };
+
+module.exports.validateTripInput = (destination, fromDate, toDate) => {
+  const errors = {};
+  if (destination.trim() === '') {
+    errors.destination = 'Please enter a destination';
+  }
+  if (fromDate.trim() === '') {
+    errors.fromDate = 'Please enter a valid date';
+  }
+  if (toDate.trim() === '') {
+    errors.toDate = 'Please enter a valid date';
+  }
+
+  return {
+    errors,
+    valid: Object.keys(errors).length < 1,
+  };
+};

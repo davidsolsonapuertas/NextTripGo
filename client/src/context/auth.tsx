@@ -1,4 +1,5 @@
 import React, { useReducer, createContext } from 'react';
+import jwtDecode from 'jwt-decode';
 
 const LOGIN = 'LOGIN';
 const LOGOUT = 'LOGOUT';
@@ -6,6 +7,7 @@ const LOGOUT = 'LOGOUT';
 interface User {
   username: string;
   password: string;
+  token: string;
 }
 
 interface Login {
@@ -19,9 +21,23 @@ interface Logout {
 
 type ActionTypes = Login | Logout;
 
+const initialState = {
+  user: null,
+};
+
+if (localStorage.getItem('jwtToken')) {
+  const decodedToken: any = jwtDecode(localStorage.getItem('jwtToken')!);
+
+  if (decodedToken.exp * 1000 < Date.now()) {
+    localStorage.removeItem('jwtToken');
+  } else {
+    initialState.user = decodedToken;
+  }
+}
+
 const AuthContext = createContext({
   user: null,
-  login: (data: User) => {},
+  login: (userData: User) => {},
   logout: () => {},
 });
 
@@ -43,9 +59,10 @@ function authReducer(state: object, action: ActionTypes) {
 }
 
 function AuthProvider(props: any) {
-  const [state, dispatch]: any = useReducer(authReducer, { user: null });
+  const [state, dispatch]: any = useReducer(authReducer, initialState);
 
   function login(userData: User) {
+    localStorage.setItem('jwtToken', userData.token);
     dispatch({
       type: 'LOGIN',
       payload: userData,
@@ -53,6 +70,7 @@ function AuthProvider(props: any) {
   }
 
   function logout() {
+    localStorage.removeItem('jwtToken');
     dispatch({
       type: 'LOGOUT',
     });

@@ -26,7 +26,6 @@ module.exports = {
     async getUsers() {
       try {
         const users = await User.find();
-        console.log(users);
         return users;
       } catch (error) {
         throw new Error(error);
