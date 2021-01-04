@@ -31,6 +31,19 @@ module.exports = {
         throw new Error(error);
       }
     },
+    async getUser(_, { userId }) {
+      try {
+        const user = await User.findById(userId);
+
+        if (user) {
+          return user;
+        } else {
+          throw new Error('User not found');
+        }
+      } catch (error) {
+        throw new Error(error);
+      }
+    },
   },
   Mutation: {
     async login(_, { username, password }) {

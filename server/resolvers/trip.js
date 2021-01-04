@@ -1,6 +1,7 @@
 const { AuthenticationError } = require('apollo-server');
 const { argsToArgsConfig } = require('graphql/type/definition');
 const Trip = require('../models/trip');
+const User = require('../models/user');
 const checkAuth = require('../util/check-auth');
 const { UserInputError } = require('apollo-server');
 
@@ -27,6 +28,12 @@ module.exports = {
       } catch (error) {
         throw new Error(error);
       }
+    },
+  },
+  Trip: {
+    async userid(obj) {
+      user = await User.findById(obj.userid);
+      return user;
     },
   },
   Mutation: {
@@ -67,14 +74,17 @@ module.exports = {
         userid: user.id,
         createdAt: new Date().toISOString(),
       });
-
       const trip = await newTrip.save();
+
+      await User.findByIdAndUpdate(user.id, {
+        $addToSet: { trips: newTrip._id },
+      });
 
       // context.pubsub.publish('NEW_TRIP', {
       //   newTrip: trip,
       // });
 
-      return trip;
+      return trip.populate('user').execPopulate();
     },
     async deleteTrip(_, { tripId }, context) {
       const user = checkAuth(context);

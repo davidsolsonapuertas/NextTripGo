@@ -15,6 +15,7 @@ import Profile from './pages/profile/profile';
 import RandomVideo from './APIs/pexels/randomvideo/randomvideo';
 import DisplayTrips from './pages/trips/displaytrips/displaytrips';
 import CreateTrip from './pages/trips/createtrip/createtrip';
+import TripDetail from './pages/trips/tripdetail/tripdetail';
 
 function App() {
   return (
@@ -32,6 +33,9 @@ function App() {
             </AuthRoute>
             <PrivateRoute path="/me">
               <Profile />
+            </PrivateRoute>
+            <PrivateRoute path="/trips/:id">
+              <TripDetail />
             </PrivateRoute>
             <PrivateRoute path="/trips">
               <DisplayTrips />

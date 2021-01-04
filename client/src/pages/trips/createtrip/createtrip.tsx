@@ -52,7 +52,7 @@ function CreateTrip() {
       destination: formattedAddress,
       fromDate: ranges?.startDate,
       toDate: ranges?.endDate,
-      // picture: values.picture,
+      picture: photo,
       // expenses: values.expenses,
       // toDo: values.toDo,
       // friends: values.friends,
