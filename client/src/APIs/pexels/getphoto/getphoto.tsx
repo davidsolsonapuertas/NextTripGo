@@ -17,8 +17,6 @@ function DestinationPhotos({ destination, setPhoto }: AppProps) {
   const [photos, setPhotos]: any = useState({});
 
   const getPhotos = async (destination: string) => {
-    // setPhotos(mockdata.photos);
-    // TODO call api
     try {
       if (destination.length > 1) {
         const data = await axios.get(
@@ -39,16 +37,16 @@ function DestinationPhotos({ destination, setPhoto }: AppProps) {
 
   useMemo(() => {
     getPhotos(destination);
-    console.log(destination);
   }, [destination]);
 
   return (
     <section id="photos">
       <fieldset>
-        {destination.length > 1 &&
+        {destination &&
+          destination.length > 1 &&
           (photos.length ? (
             photos.map((photo: any) => (
-              <div className="cc-selector">
+              <div key={photo.src.medium} className="cc-selector">
                 <input
                   id={photo.src.medium}
                   type="radio"

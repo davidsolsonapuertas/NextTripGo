@@ -80,9 +80,9 @@ module.exports = {
         $addToSet: { trips: newTrip._id },
       });
 
-      // context.pubsub.publish('NEW_TRIP', {
-      //   newTrip: trip,
-      // });
+      context.pubsub.publish('NEW_TRIP', {
+        newTrip: trip,
+      });
 
       return trip.populate('user').execPopulate();
     },
@@ -100,6 +100,11 @@ module.exports = {
       } catch (error) {
         throw new Error(error);
       }
+    },
+  },
+  Subscription: {
+    newTrip: {
+      subscribe: (_, __, { pubsub }) => pubsub.asyncIterator('NEW_TRIP'),
     },
   },
 };

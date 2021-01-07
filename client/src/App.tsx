@@ -16,6 +16,7 @@ import RandomVideo from './APIs/pexels/randomvideo/randomvideo';
 import DisplayTrips from './pages/trips/displaytrips/displaytrips';
 import CreateTrip from './pages/trips/createtrip/createtrip';
 import TripDetail from './pages/trips/tripdetail/tripdetail';
+import PageNotFound from './pages/404';
 
 function App() {
   return (
@@ -23,28 +24,31 @@ function App() {
       <div className="App">
         <Router>
           <Switch>
-            <AuthRoute path="/register">
+            <AuthRoute exact path="/register">
               <RandomVideo />
               <Register />
             </AuthRoute>
-            <AuthRoute path="/login">
+            <AuthRoute exact path="/login">
               <RandomVideo />
               <Login />
             </AuthRoute>
-            <PrivateRoute path="/me">
+            <PrivateRoute exact path="/me">
               <Profile />
             </PrivateRoute>
-            <PrivateRoute path="/trips/:id">
+            <PrivateRoute exact path="/trips/:id">
               <TripDetail />
             </PrivateRoute>
-            <PrivateRoute path="/trips">
+            <PrivateRoute exact path="/trips">
               <DisplayTrips />
             </PrivateRoute>
-            <PrivateRoute path="/createTrip">
+            <PrivateRoute exact path="/createTrip">
               <CreateTrip />
             </PrivateRoute>
-            <PrivateRoute path="/">
+            <PrivateRoute exact path="/">
               <Home />
+            </PrivateRoute>
+            <PrivateRoute path="/">
+              <PageNotFound />
             </PrivateRoute>
           </Switch>
         </Router>

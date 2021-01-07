@@ -1,5 +1,6 @@
 import React, { useReducer, createContext } from 'react';
 import jwtDecode from 'jwt-decode';
+import { client } from '../ApolloProvider';
 
 const LOGIN = 'LOGIN';
 const LOGOUT = 'LOGOUT';
@@ -71,6 +72,7 @@ function AuthProvider(props: any) {
 
   function logout() {
     localStorage.removeItem('jwtToken');
+    client.clearStore();
     dispatch({
       type: 'LOGOUT',
     });

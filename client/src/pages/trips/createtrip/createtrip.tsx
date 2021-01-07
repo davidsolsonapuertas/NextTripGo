@@ -1,11 +1,9 @@
-import React, { useContext, useState, useMemo } from 'react';
-import gql from 'graphql-tag';
+import React, { useContext, useState } from 'react';
 import { useMutation } from '@apollo/react-hooks';
-import { useHistory, Link } from 'react-router-dom';
-import axios from 'axios';
+import { useHistory } from 'react-router-dom';
 
-import { PexelKey } from '../../../config';
-
+import { FETCH_TRIPS_QUERY } from '../../../services/queryService';
+import { CREATE_TRIP } from '../../../services/mutationService';
 import SearchLocationInput from '../../../APIs/googlemaps/searchlocationinput/SearchLocationInput';
 import { AuthContext } from '../../../context/auth';
 import { useForm } from '../../../util/hooks';
@@ -14,7 +12,9 @@ import Daterangepicker from '../../../components/daterangepicker/daterangepicker
 
 function CreateTrip() {
   let history = useHistory();
+
   const context = useContext(AuthContext);
+
   const [errors, setErrors]: any = useState({});
   const [formattedAddress, setFormatedAddress]: any = useState('');
   const [photo, setPhoto]: any = useState('');
@@ -27,9 +27,7 @@ function CreateTrip() {
     startDate: new Date(),
     endDate: new Date(),
   });
-
   const { onChange, onSubmit, values }: any = useForm(createTripCallback, {
-    // destination: '',
     picture: '',
     expenses: '',
     toDo: '',
@@ -37,17 +35,6 @@ function CreateTrip() {
   });
 
   const [createTrip, { loading }] = useMutation(CREATE_TRIP, {
-    update(proxy, { data: { tripId } }) {
-      // const data = proxy.readQuery({
-      //   query: FETCH_POSTS_QUERY
-      // });
-      // data.getPosts = [result.data.createPost, ...data.getPosts];
-      // proxy.writeQuery({ query: FETCH_POSTS_QUERY, data });
-      history.push(`/${tripId}`);
-    },
-    onError(err) {
-      setErrors(err?.graphQLErrors[0]?.extensions?.exception.errors);
-    },
     variables: {
       destination: formattedAddress,
       fromDate: ranges?.startDate,
@@ -57,7 +44,30 @@ function CreateTrip() {
       // toDo: values.toDo,
       // friends: values.friends,
     },
+    update(proxy: any, result) {
+      console.log(proxy);
+
+      if (proxy.data.data.ROOT_QUERY) {
+        const data: any = proxy.readQuery({
+          query: FETCH_TRIPS_QUERY,
+        });
+        console.log(data);
+
+        proxy.writeQuery({
+          query: FETCH_TRIPS_QUERY,
+          data: {
+            getTrips: [result.data.createTrip, ...data.getTrips],
+          },
+        });
+      }
+      history.push(`/trips/${result.data.createTrip.id}`);
+    },
+    onError(err) {
+      setErrors(err?.graphQLErrors[0]?.extensions?.exception.errors);
+    },
   });
+
+  console.log(formattedAddress);
 
   function createTripCallback() {
     createTrip();
@@ -96,7 +106,7 @@ function CreateTrip() {
               <div className="form-group">
                 <DestinationPhotos
                   // TODO change destination value to to formattedAddress
-                  destination={formattedAddress.split(',')[0]}
+                  destination={formattedAddress?.split(',')[0]}
                   setPhoto={setPhoto}
                 />
               </div>
@@ -114,7 +124,7 @@ function CreateTrip() {
                 className="btn btn-primary btn-user btn-block"
                 onClick={onSubmit}
               >
-                Login ↪
+                Create ↪
               </button>
             </form>
             <hr />
@@ -125,67 +135,5 @@ function CreateTrip() {
     // </div>
   );
 }
-
-const CREATE_TRIP = gql`
-  mutation createTrip(
-    $destination: String!
-    $picture: String
-    $fromDate: String!
-    $toDate: String!
-    $expenses: String
-    $toDo: String
-    $friends: String
-  ) {
-    createTrip(
-      createTripInput: {
-        destination: $destination
-        picture: $picture
-        fromDate: $fromDate
-        toDate: $toDate
-        expenses: $expenses
-        toDo: $toDo
-        friends: $friends
-      }
-    ) {
-      id
-      destination
-      picture
-      fromDate
-      toDate
-      expenses
-      toDo
-      userid {
-        id
-      }
-      friends {
-        id
-        firstname
-        lastname
-        currentCity
-        trips {
-          id
-          destination
-          picture
-          fromDate
-          toDate
-          createdAt
-          userid {
-            id
-          }
-          expenses
-          toDo
-          friends {
-            username
-            profilePic
-          }
-        }
-        email
-        username
-        createdAt
-      }
-      createdAt
-    }
-  }
-`;
 
 export default CreateTrip;

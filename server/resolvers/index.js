@@ -3,7 +3,11 @@ const usersResolvers = require('./user');
 
 module.exports = {
   Query: {
+    ...usersResolvers.Query,
     ...tripsResolvers.Query,
+  },
+  User: {
+    ...usersResolvers.User,
   },
   Trip: {
     ...tripsResolvers.Trip,
@@ -11,5 +15,8 @@ module.exports = {
   Mutation: {
     ...usersResolvers.Mutation,
     ...tripsResolvers.Mutation,
+  },
+  Subscription: {
+    ...tripsResolvers.Subscription,
   },
 };

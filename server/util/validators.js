@@ -53,7 +53,7 @@ module.exports.validateLoginInput = (username, password) => {
 
 module.exports.validateTripInput = (destination, fromDate, toDate) => {
   const errors = {};
-  if (destination.trim() === '') {
+  if ((destination.trim() === '') | (typeof destination === undefined)) {
     errors.destination = 'Please enter a destination';
   }
   if (fromDate.trim() === '') {

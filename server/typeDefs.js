@@ -30,7 +30,7 @@ const typeDefs = gql`
     firstname: String!
     lastname: String!
     username: String!
-    currentCity: String!
+    currentCity: String
     email: String!
     password: String!
     confirmPassword: String!
@@ -55,6 +55,9 @@ const typeDefs = gql`
     login(username: String!, password: String!): User!
     createTrip(createTripInput: CreateTripInput!): Trip!
     deleteTrip(tripId: ID!): String!
+  }
+  type Subscription {
+    newTrip: Trip!
   }
 `;
 

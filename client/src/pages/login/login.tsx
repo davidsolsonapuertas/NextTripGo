@@ -5,6 +5,7 @@ import { useHistory, Link } from 'react-router-dom';
 
 import './login.css';
 
+import { LOGIN_USER } from '../../services/mutationService';
 import { AuthContext } from '../../context/auth';
 import { useForm } from '../../util/hooks';
 
@@ -112,64 +113,5 @@ function Login() {
     </div>
   );
 }
-
-const LOGIN_USER = gql`
-  mutation login($username: String!, $password: String!) {
-    login(username: $username, password: $password) {
-      id
-      firstname
-      lastname
-      currentCity
-      profilePic
-      friends {
-        id
-        firstname
-        lastname
-        currentCity
-        trips {
-          id
-          destination
-          picture
-          fromDate
-          toDate
-          createdAt
-          userid {
-            username
-          }
-          expenses
-          toDo
-          friends {
-            username
-            profilePic
-          }
-        }
-        email
-        username
-        createdAt
-      }
-      trips {
-        id
-        destination
-        picture
-        fromDate
-        toDate
-        createdAt
-        userid {
-          username
-        }
-        expenses
-        toDo
-        friends {
-          username
-          profilePic
-        }
-      }
-      email
-      token
-      username
-      createdAt
-    }
-  }
-`;
 
 export default Login;

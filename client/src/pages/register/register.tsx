@@ -1,10 +1,10 @@
 import React, { useContext, useState } from 'react';
 import { useMutation } from '@apollo/react-hooks';
 import { useHistory, Link } from 'react-router-dom';
-import gql from 'graphql-tag';
 
 import './register.css';
 
+import { REGISTER_USER } from '../../services/mutationService';
 import SearchLocationInput from '../../APIs/googlemaps/searchlocationinput/SearchLocationInput';
 import { useForm } from '../../util/hooks';
 import { AuthContext } from '../../context/auth';
@@ -20,7 +20,6 @@ function Register(props: any) {
     firstname: '',
     lastname: '',
     username: '',
-    currentCity: '',
     email: '',
     password: '',
     confirmPassword: '',
@@ -201,38 +200,5 @@ function Register(props: any) {
     </div>
   );
 }
-
-const REGISTER_USER = gql`
-  mutation register(
-    $firstname: String!
-    $lastname: String!
-    $username: String!
-    $currentCity: String!
-    $email: String!
-    $password: String!
-    $confirmPassword: String!
-  ) {
-    register(
-      registerInput: {
-        firstname: $firstname
-        lastname: $lastname
-        username: $username
-        currentCity: $currentCity
-        email: $email
-        password: $password
-        confirmPassword: $confirmPassword
-      }
-    ) {
-      id
-      firstname
-      lastname
-      currentCity
-      email
-      username
-      createdAt
-      token
-    }
-  }
-`;
 
 export default Register;

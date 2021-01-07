@@ -9,6 +9,7 @@ import { BrowserRouter as Router, Link, useLocation } from 'react-router-dom';
 import './sidebar.css';
 
 import { AuthContext } from '../../context/auth';
+import Logo from '../../assets/logo.png';
 
 const useStyles = makeStyles({
   root: {
@@ -53,7 +54,7 @@ function Sidebar() {
 
   return (
     <div className="navbar bg-gradient-primary">
-      <span className="logo">Logo</span>
+      <img src={Logo} width="90%" alt="NextTripGo Logo" />
       {routes.map((item) => {
         return (
           <div className="route" key={item.title} onClick={item.onClick}>

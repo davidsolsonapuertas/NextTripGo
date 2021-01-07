@@ -12,8 +12,6 @@ function RandomVideo() {
 
   const getVideos = async () => {
     try {
-      console.log(data);
-
       //  use
       // const data = await axios.get(
       //   'https://api.pexels.com/videos/search?query=travel&size=small&per_page=30',

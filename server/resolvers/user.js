@@ -7,7 +7,9 @@ const {
   validateLoginInput,
 } = require('../util/validators');
 const { SECRET_KEY } = require('../../config');
+
 const User = require('../models/user');
+const Trip = require('../models/trip');
 
 function generateToken(user) {
   return jwt.sign(
@@ -45,13 +47,18 @@ module.exports = {
       }
     },
   },
+  User: {
+    async trips(obj) {
+      console.log(obj);
+      for (let key in obj.trips) {
+        trip = await Trip.findById(key);
+        return trip;
+      }
+    },
+  },
   Mutation: {
     async login(_, { username, password }) {
       const { errors, valid } = validateLoginInput(username, password);
-
-      if (!valid) {
-        throw new UserInputError('Errors', { errors });
-      }
 
       if (!valid) {
         throw new UserInputError('Errors', { errors });
