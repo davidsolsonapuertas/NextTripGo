@@ -1,0 +1,9 @@
+.triplist {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.triplist > * {
+  margin: 10px 10px 10px 10px;
+}

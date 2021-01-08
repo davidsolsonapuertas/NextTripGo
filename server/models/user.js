@@ -7,14 +7,18 @@ const userSchema = new Schema({
   username: String,
   currentCity: String,
   profilePic: String,
-  friends: {
-    type: Schema.Types.ObjectId,
-    ref: 'users',
-  },
-  trips: {
-    type: Schema.Types.ObjectId,
-    ref: 'trips',
-  },
+  friends: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'users',
+    },
+  ],
+  trips: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'trips',
+    },
+  ],
   email: String,
   password: String,
   createdAt: String,

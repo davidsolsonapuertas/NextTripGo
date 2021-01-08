@@ -41,3 +41,24 @@ export const FETCH_TRIPS_QUERY = gql`
     }
   }
 `;
+
+export const FETCH_TRIPS_BY_USERNAME = gql`
+  query getTripsByUsername($userId: ID!) {
+    getTripsByUsername(userId: $userId) {
+      id
+      destination
+      picture
+      fromDate
+      toDate
+      createdAt
+      userid {
+        username
+      }
+      expenses
+      toDo
+      friends {
+        username
+      }
+    }
+  }
+`;

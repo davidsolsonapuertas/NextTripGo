@@ -68,6 +68,7 @@ function CreateTrip() {
   });
 
   console.log(formattedAddress);
+  console.log(ranges);
 
   function createTripCallback() {
     createTrip();

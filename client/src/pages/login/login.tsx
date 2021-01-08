@@ -41,7 +41,7 @@ function Login() {
   return (
     <div className="videos pageNoMargin">
       <div className="container pageNoMargin">
-        <div className="card o-hidden border-0 shadow-lg my-5">
+        <div id="login" className="card o-hidden border-0 shadow-lg my-5">
           <div className="card-body p-0">
             <div className="row">
               <div className="col-lg-5 d-none d-lg-block bg-login-image"></div>
@@ -99,9 +99,7 @@ function Login() {
                   <hr />
                   <Link to="/register">
                     <div className="text-center">
-                      <a className="small" href="register.html">
-                        Create an Account!
-                      </a>
+                      <p className="small">Create an Account!</p>
                     </div>
                   </Link>
                 </div>

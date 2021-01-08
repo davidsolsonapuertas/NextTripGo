@@ -49,6 +49,7 @@ const typeDefs = gql`
     getUser(userId: ID!): User
     getTrips: [Trip]
     getTrip(tripId: ID!): Trip
+    getTripsByUsername(userId: ID!): [Trip]
   }
   type Mutation {
     register(registerInput: RegisterInput): User!

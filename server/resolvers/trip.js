@@ -29,6 +29,23 @@ module.exports = {
         throw new Error(error);
       }
     },
+    async getTripsByUsername(_, { userId }) {
+      try {
+        const user = await User.findById(userId);
+        if (user) {
+          const res = [];
+          for (key in user.trips) {
+            trip = await Trip.findById(user.trips[key]);
+            res.push(trip);
+          }
+          return res;
+        } else {
+          throw new Error('This user does not exist.');
+        }
+      } catch (error) {
+        throw new Error(error);
+      }
+    },
   },
   Trip: {
     async userid(obj) {

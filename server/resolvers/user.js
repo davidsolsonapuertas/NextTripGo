@@ -49,11 +49,12 @@ module.exports = {
   },
   User: {
     async trips(obj) {
-      console.log(obj);
-      for (let key in obj.trips) {
-        trip = await Trip.findById(key);
-        return trip;
+      const res = [];
+      for (key in obj.trips) {
+        trip = await Trip.findById(obj.trips[key]);
+        res.push(trip);
       }
+      return res;
     },
   },
   Mutation: {

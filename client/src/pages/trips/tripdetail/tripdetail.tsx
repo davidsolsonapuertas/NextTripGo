@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import {
   BrowserRouter as Router,
   useParams,
@@ -6,6 +6,8 @@ import {
   useHistory,
 } from 'react-router-dom';
 import { useQuery } from '@apollo/react-hooks';
+
+import { AuthContext } from '../../../context/auth';
 import { GET_TRIP_BY_ID } from '../../../services/queryService';
 import { Trip } from '../../../interfaces/trip';
 
@@ -19,6 +21,7 @@ interface TripData {
 
 function TripDetail() {
   let { id } = useParams<ParamTypes>();
+  const { user } = useContext(AuthContext);
 
   const { loading, data } = useQuery<TripData>(GET_TRIP_BY_ID, {
     variables: { tripId: id },

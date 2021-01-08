@@ -52,7 +52,7 @@ function Register(props: any) {
   return (
     <div className="videos pageNoMargin">
       <div className="container pageNoMargin">
-        <div className="card o-hidden border-0 shadow-lg my-5">
+        <div id="login" className="card o-hidden border-0 shadow-lg my-5">
           <div className="card-body p-0">
             <div className="row">
               <div className="col-lg-5 d-none d-lg-block bg-register-image"></div>
@@ -186,9 +186,7 @@ function Register(props: any) {
                   <hr />
                   <Link to="/login">
                     <div className="text-center">
-                      <a className="small" href="register.html">
-                        Already have an account? Login!
-                      </a>
+                      <p className="small">Already have an account? Login!</p>
                     </div>
                   </Link>
                 </div>
