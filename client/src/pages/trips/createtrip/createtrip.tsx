@@ -1,23 +1,26 @@
 import React, { useContext, useState } from 'react';
-import { useMutation } from '@apollo/react-hooks';
+import { useMutation } from '@apollo/client';
 import { useHistory } from 'react-router-dom';
 
-import { FETCH_TRIPS_QUERY } from '../../../services/queryService';
+import './createtrip.css';
+import { FETCH_TRIPS_BY_USERNAME } from '../../../services/queryService';
 import { CREATE_TRIP } from '../../../services/mutationService';
-import SearchLocationInput from '../../../APIs/googlemaps/searchlocationinput/SearchLocationInput';
 import { AuthContext } from '../../../context/auth';
 import { useForm } from '../../../util/hooks';
+import SearchLocationInput from '../../../APIs/googlemaps/searchlocationinput/SearchLocationInput';
 import DestinationPhotos from '../../../APIs/pexels/getphoto/getphoto';
 import Daterangepicker from '../../../components/daterangepicker/daterangepicker';
+import Expenses from '../../../components/expenses/expenses';
 
 function CreateTrip() {
   let history = useHistory();
 
-  const context = useContext(AuthContext);
+  const { user }: any = useContext(AuthContext);
 
   const [errors, setErrors]: any = useState({});
   const [formattedAddress, setFormatedAddress]: any = useState('');
   const [photo, setPhoto]: any = useState('');
+  const [expenses, setExpenses] = useState({});
   const [dates, setDates]: any = useState({
     startDate: new Date(),
     endDate: new Date(),
@@ -27,7 +30,9 @@ function CreateTrip() {
     startDate: new Date(),
     endDate: new Date(),
   });
+
   const { onChange, onSubmit, values }: any = useForm(createTripCallback, {
+    destination: '',
     picture: '',
     expenses: '',
     toDo: '',
@@ -36,7 +41,9 @@ function CreateTrip() {
 
   const [createTrip, { loading }] = useMutation(CREATE_TRIP, {
     variables: {
-      destination: formattedAddress,
+      destination: values.destination,
+      // TODO change
+      // destination: formattedAddress,
       fromDate: ranges?.startDate,
       toDate: ranges?.endDate,
       picture: photo,
@@ -45,21 +52,28 @@ function CreateTrip() {
       // friends: values.friends,
     },
     update(proxy: any, result) {
-      console.log(proxy);
+      // const data: any = proxy.readQuery({
+      //   query: FETCH_TRIPS_BY_USERNAME,
+      //   variables: {
+      //     userId: user.id,
+      //   },
+      // });
+      // console.log('data', data);
+      // console.log('result', result.data);
 
-      if (proxy.data.data.ROOT_QUERY) {
-        const data: any = proxy.readQuery({
-          query: FETCH_TRIPS_QUERY,
-        });
-        console.log(data);
+      // proxy.writeQuery({
+      //   query: FETCH_TRIPS_BY_USERNAME,
+      //   variables: {
+      //     userId: user.id,
+      //   },
+      //   data: {
+      //     getTripsByUsername: [
+      //       result.data.createTrip,
+      //       ...data.getTripsByUsername,
+      //     ],
+      //   },
+      // });
 
-        proxy.writeQuery({
-          query: FETCH_TRIPS_QUERY,
-          data: {
-            getTrips: [result.data.createTrip, ...data.getTrips],
-          },
-        });
-      }
       history.push(`/trips/${result.data.createTrip.id}`);
     },
     onError(err) {
@@ -68,26 +82,31 @@ function CreateTrip() {
   });
 
   console.log(formattedAddress);
-  console.log(ranges);
 
   function createTripCallback() {
     createTrip();
   }
 
   return (
-    // <div className="card o-hidden border-0 shadow-lg my-5">
-    <div className="card-body p-0">
-      <div className="row">
-        <div className="col-lg-7">
-          <div className="p-5">
-            <div className="text-center">
-              <h1 className="h4 text-gray-900 mb-4">
-                Ready for your next trip?
-              </h1>
-            </div>
-            <form className="user" onSubmit={onSubmit} noValidate>
-              <div className="form-group">
-                <SearchLocationInput
+    <div className="p-5 d-flex justify-content-center flex-column flex-wrap">
+      <div className="text-center">
+        <h1 className="h4 text-gray-900 mb-4">Ready for your next trip?</h1>
+      </div>
+      <form className="user" onSubmit={onSubmit} noValidate>
+        <div className="form-group d-flex justify-content-center">
+          <input
+            type="text"
+            className={
+              errors.destination
+                ? 'form-control form-control-user errorRed w-50'
+                : 'form-control form-control-user w-50'
+            }
+            placeholder="Destination"
+            name="destination"
+            value={values.destination}
+            onChange={onChange}
+          />
+          {/* <SearchLocationInput
                   setFormatedAddress={setFormatedAddress}
                   placeholder={"What's your next destination? ✈"}
                   styles={
@@ -95,45 +114,51 @@ function CreateTrip() {
                       ? 'form-control form-control-user errorRed'
                       : 'form-control form-control-user'
                   }
-                />
-              </div>
-              <div className="form-group">
-                <Daterangepicker
-                  setDates={setDates}
-                  dates={dates}
-                  setRanges={setRanges}
-                />
-              </div>
-              <div className="form-group">
-                <DestinationPhotos
-                  // TODO change destination value to to formattedAddress
-                  destination={formattedAddress?.split(',')[0]}
-                  setPhoto={setPhoto}
-                />
-              </div>
-              {Object.keys(errors).length > 0 && (
-                <div className="">
-                  <ul className="">
-                    {Object.values(errors).map((value, i) => (
-                      <li key={i}> {value}</li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-              <button
-                type="submit"
-                className="btn btn-primary btn-user btn-block"
-                onClick={onSubmit}
-              >
-                Create ↪
-              </button>
-            </form>
-            <hr />
-          </div>
+                /> */}
         </div>
-      </div>
+        <div className="form-group mt-3 d-flex justify-content-center">
+          <Daterangepicker
+            setDates={setDates}
+            dates={dates}
+            setRanges={setRanges}
+          />
+        </div>
+        {/* </div> */}
+        <div className="form-group">
+          <DestinationPhotos
+            // destination={formattedAddress?.split(',')[0]}
+            destination={values.destination}
+            setPhoto={setPhoto}
+          />
+        </div>
+        <div className="form-group d-flex justify-content-center">
+          <Expenses
+            expenses={expenses}
+            setExpenses={setExpenses}
+            errors={errors}
+          />
+        </div>
+        {Object.keys(errors).length > 0 && (
+          <div className="">
+            <ul className="">
+              {Object.values(errors).map((value, i) => (
+                <li key={i}> {value}</li>
+              ))}
+            </ul>
+          </div>
+        )}
+        <div className="d-flex justify-content-center">
+          <button
+            type="submit"
+            className="btn button btn-primary w-50 btn-user btn-block"
+            onClick={onSubmit}
+          >
+            Create ↪
+          </button>
+        </div>
+      </form>
+      <hr />
     </div>
-    // </div>
   );
 }
 

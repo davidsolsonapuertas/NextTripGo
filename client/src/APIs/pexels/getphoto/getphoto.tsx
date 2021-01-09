@@ -20,7 +20,7 @@ function DestinationPhotos({ destination, setPhoto }: AppProps) {
     try {
       if (destination.length > 1) {
         const data = await axios.get(
-          `https://api.pexels.com/v1/search?query=${destination}&orientation=landscape&per_page=15`,
+          `https://api.pexels.com/v1/search?query=${destination}&orientation=landscape&per_page=9`,
           {
             headers: {
               Authorization: `${PexelKey}`,
@@ -62,7 +62,7 @@ function DestinationPhotos({ destination, setPhoto }: AppProps) {
               </div>
             ))
           ) : (
-            <p>No pictures available for this place</p>
+            <p className="mt-1">No pictures available for this destination</p>
           ))}
       </fieldset>
     </section>

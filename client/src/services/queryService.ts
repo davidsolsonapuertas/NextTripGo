@@ -1,4 +1,4 @@
-import gql from 'graphql-tag';
+import { gql } from '@apollo/client';
 
 export const GET_TRIP_BY_ID = gql`
   query getTrip($tripId: ID!) {

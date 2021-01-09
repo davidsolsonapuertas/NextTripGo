@@ -7,3 +7,8 @@
 .triplist > * {
   margin: 10px 10px 10px 10px;
 }
+
+.img-thumbnail {
+  height: 230px;
+  object-fit: cover;
+}

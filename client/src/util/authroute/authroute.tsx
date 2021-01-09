@@ -1,6 +1,5 @@
 import React, { useContext, useEffect } from 'react';
 import { Route, Redirect } from 'react-router-dom';
-import { useQuery } from '@apollo/react-hooks';
 
 import { AuthContext } from '../../context/auth';
 

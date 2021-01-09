@@ -39,7 +39,7 @@ async function handlePlaceSelect(updateQuery, setFormatedAddress) {
   const addressObject = autoComplete.getPlace();
   const query = addressObject.formatted_address;
   updateQuery(query);
-  setFormatedAddress(query);
+  typeof query !== 'undefined' && setFormatedAddress(query);
 }
 
 function SearchLocationInput({ setFormatedAddress, placeholder, styles }) {
@@ -51,7 +51,7 @@ function SearchLocationInput({ setFormatedAddress, placeholder, styles }) {
       `https://maps.googleapis.com/maps/api/js?key=${GoogleKey}&libraries=places`,
       () => handleScriptLoad(setQuery, autoCompleteRef, setFormatedAddress)
     );
-  }, []);
+  }, [autoCompleteRef, setFormatedAddress]);
 
   return (
     <input

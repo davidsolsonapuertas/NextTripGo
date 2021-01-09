@@ -3,7 +3,6 @@ import { Card, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import moment from 'moment';
 
-import './pasttrips.css';
 import { Trip } from '../../interfaces/trip';
 
 type IProps = {
@@ -11,9 +10,11 @@ type IProps = {
 };
 
 function PastTrips({ trips }: IProps) {
-  trips = trips.filter((trip) => {
-    return trip.fromDate < new Date().toISOString();
-  });
+  if (typeof trips !== undefined) {
+    trips = trips.filter((trip) => {
+      return trip.fromDate > new Date().toISOString();
+    });
+  }
 
   return (
     <div className="triplist">

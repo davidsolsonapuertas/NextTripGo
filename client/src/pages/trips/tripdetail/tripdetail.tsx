@@ -1,13 +1,11 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   BrowserRouter as Router,
   useParams,
   Redirect,
   useHistory,
 } from 'react-router-dom';
-import { useQuery } from '@apollo/react-hooks';
-
-import { AuthContext } from '../../../context/auth';
+import { useQuery } from '@apollo/client';
 import { GET_TRIP_BY_ID } from '../../../services/queryService';
 import { Trip } from '../../../interfaces/trip';
 
@@ -15,28 +13,28 @@ interface ParamTypes {
   id: string;
 }
 
-interface TripData {
-  getTrip: Trip;
-}
-
 function TripDetail() {
   let { id } = useParams<ParamTypes>();
-  const { user } = useContext(AuthContext);
 
-  const { loading, data } = useQuery<TripData>(GET_TRIP_BY_ID, {
+  let { loading, error, data } = useQuery(GET_TRIP_BY_ID, {
     variables: { tripId: id },
+    pollInterval: 500,
   });
+  console.log(data);
 
-  const trip = data?.getTrip;
+  let trip = data?.getTrip;
+  console.log(id);
 
-  return trip ? (
-    <div>{<h1>{trip?.id}</h1>}</div>
-  ) : (
-    <div>
-      {/* TODO Spinner */}
-      Loading...
-    </div>
-  );
+  let postMarkup;
+  if (!trip) {
+    postMarkup = <p>Loading trip...</p>;
+  } else {
+    const { id, destination } = trip;
+
+    postMarkup = <div>{destination}</div>;
+  }
+
+  return postMarkup;
 }
 
 export default TripDetail;
