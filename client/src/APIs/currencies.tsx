@@ -1,4 +1,4 @@
-export const currencies = {
+export const currencies: any = {
   AED: 'United Arab Emirates Dirham',
   AFN: 'Afghan Afghani',
   ALL: 'Albanian Lek',

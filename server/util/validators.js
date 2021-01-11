@@ -51,9 +51,14 @@ module.exports.validateLoginInput = (username, password) => {
   };
 };
 
-module.exports.validateTripInput = (destination, fromDate, toDate) => {
+module.exports.validateTripInput = (
+  destination,
+  fromDate,
+  toDate,
+  expenses
+) => {
   const errors = {};
-  if ((destination.trim() === '') | (typeof destination === undefined)) {
+  if (destination.trim() === '' || typeof destination === 'undefined') {
     errors.destination = 'Please enter a destination';
   }
   if (fromDate.trim() === '') {
@@ -61,6 +66,21 @@ module.exports.validateTripInput = (destination, fromDate, toDate) => {
   }
   if (toDate.trim() === '') {
     errors.toDate = 'Please enter a valid date';
+  }
+  if (expenses.length) {
+    expenses.map((expense, index) => {
+      if (expense.type.trim() === '') {
+        errors.expensestype = 'If you add expenses, these must include a type';
+      }
+      if (!expense.amount || expense.amount === 0) {
+        errors.expensesamount =
+          'If you add expenses, you must specify the amount';
+      }
+      if (expense.currency.trim() === '') {
+        errors.expensescurrency =
+          'If you add expenses, you must specify the currency';
+      }
+    });
   }
 
   return {

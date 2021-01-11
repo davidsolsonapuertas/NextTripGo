@@ -9,9 +9,14 @@ const typeDefs = gql`
     toDate: String
     createdAt: String!
     userid: User!
-    expenses: String
+    expenses: [Expense]
     toDo: String
     friends: [User]
+  }
+  type Expense {
+    type: String
+    amount: Float
+    currency: String
   }
   type User {
     id: ID!
@@ -40,9 +45,14 @@ const typeDefs = gql`
     picture: String
     fromDate: String
     toDate: String
-    expenses: String
+    expenses: [ExpenseInput]
     toDo: String
     friends: String
+  }
+  input ExpenseInput {
+    type: String
+    amount: Float
+    currency: String
   }
   type Query {
     getUsers: [User]

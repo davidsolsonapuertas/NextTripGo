@@ -10,5 +10,13 @@
 
 .img-thumbnail {
   height: 230px;
+  width: 400px;
+  overflow: hidden;
   object-fit: cover;
+  padding: 0;
+  margin-top: 0;
+}
+.card {
+  border-radius: 25px;
+  overflow: hidden;
 }

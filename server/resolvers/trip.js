@@ -74,7 +74,8 @@ module.exports = {
       const { valid, errors } = validateTripInput(
         destination,
         fromDate,
-        toDate
+        toDate,
+        expenses
       );
       if (!valid) {
         throw new UserInputError('Errors', { errors });

@@ -12,7 +12,11 @@ export const GET_TRIP_BY_ID = gql`
       userid {
         username
       }
-      expenses
+      expenses {
+        type
+        amount
+        currency
+      }
       toDo
       friends {
         username
@@ -33,7 +37,11 @@ export const FETCH_TRIPS_QUERY = gql`
       userid {
         id
       }
-      expenses
+      expenses {
+        type
+        amount
+        currency
+      }
       toDo
       friends {
         id
@@ -54,7 +62,11 @@ export const FETCH_TRIPS_BY_USERNAME = gql`
       userid {
         username
       }
-      expenses
+      expenses {
+        type
+        amount
+        currency
+      }
       toDo
       friends {
         username

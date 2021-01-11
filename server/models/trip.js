@@ -11,7 +11,15 @@ const tripSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'users',
   },
-  expenses: String,
+  expenses: [
+    {
+      type: {
+        type: String,
+      },
+      amount: Number,
+      currency: String,
+    },
+  ],
   toDo: String,
   friends: {
     type: Schema.Types.ObjectId,

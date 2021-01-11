@@ -10,7 +10,7 @@ import { useForm } from '../../../util/hooks';
 import SearchLocationInput from '../../../APIs/googlemaps/searchlocationinput/SearchLocationInput';
 import DestinationPhotos from '../../../APIs/pexels/getphoto/getphoto';
 import Daterangepicker from '../../../components/daterangepicker/daterangepicker';
-import Expenses from '../../../components/expenses/expenses';
+import ExpensesComponent from '../../../components/expenses/expenses';
 
 function CreateTrip() {
   let history = useHistory();
@@ -18,9 +18,11 @@ function CreateTrip() {
   const { user }: any = useContext(AuthContext);
 
   const [errors, setErrors]: any = useState({});
+
   const [formattedAddress, setFormatedAddress]: any = useState('');
   const [photo, setPhoto]: any = useState('');
-  const [expenses, setExpenses] = useState({});
+  const [expenses, setExpenses]: any = useState([]);
+
   const [dates, setDates]: any = useState({
     startDate: new Date(),
     endDate: new Date(),
@@ -33,8 +35,6 @@ function CreateTrip() {
 
   const { onChange, onSubmit, values }: any = useForm(createTripCallback, {
     destination: '',
-    picture: '',
-    expenses: '',
     toDo: '',
     friends: '',
   });
@@ -47,7 +47,7 @@ function CreateTrip() {
       fromDate: ranges?.startDate,
       toDate: ranges?.endDate,
       picture: photo,
-      // expenses: values.expenses,
+      expenses: expenses,
       // toDo: values.toDo,
       // friends: values.friends,
     },
@@ -77,11 +77,11 @@ function CreateTrip() {
       history.push(`/trips/${result.data.createTrip.id}`);
     },
     onError(err) {
-      setErrors(err?.graphQLErrors[0]?.extensions?.exception.errors);
+      setErrors((errors: any) => {
+        return err?.graphQLErrors[0]?.extensions?.exception.errors;
+      });
     },
   });
-
-  console.log(formattedAddress);
 
   function createTripCallback() {
     createTrip();
@@ -132,7 +132,7 @@ function CreateTrip() {
           />
         </div>
         <div className="form-group d-flex justify-content-center">
-          <Expenses
+          <ExpensesComponent
             expenses={expenses}
             setExpenses={setExpenses}
             errors={errors}

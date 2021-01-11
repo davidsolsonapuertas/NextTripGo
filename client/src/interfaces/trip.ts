@@ -9,7 +9,13 @@ export interface Trip extends Document {
   toDate: string;
   createdAt: string;
   userid: User;
-  expenses: string;
+  expenses: [Expense];
   toDo: string;
   friends: Types.ObjectId[];
+}
+
+export interface Expense {
+  type: string;
+  amount: number;
+  currency: string;
 }

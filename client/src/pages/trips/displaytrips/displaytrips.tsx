@@ -6,10 +6,10 @@ import {
   Link,
 } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
-import { Card, Nav, Button } from 'react-bootstrap';
+import { Card, Nav } from 'react-bootstrap';
+import FlightTakeoffRoundedIcon from '@material-ui/icons/FlightTakeoffRounded';
 
-import PastTrips from '../../../components/pasttrips/pasttrips';
-import Upcoming from '../../../components/upcomingtrips/upcomingtrips';
+import TripCards from '../../../components/tripcards/tripcards';
 import { AuthContext } from '../../../context/auth';
 import { FETCH_TRIPS_BY_USERNAME } from '../../../services/queryService';
 
@@ -33,27 +33,17 @@ function DisplayTrips() {
     variables: { userId: user.id },
     pollInterval: 500,
   });
-  console.log(data);
 
   let trips = data?.getTripsByUsername;
-  console.log(trips);
 
   return (
     <div>
       {pathname === '/trips' && <Redirect to="/trips#upcoming" />}
       {/* Create trip button  */}
-      <Link to="/createTrip">
-        <button className="btn btn-primary btn-icon-split">
-          <span className="icon text-white-50">
-            <i className="fas fa-flag"></i>
-          </span>
-          <span className="text">Create trip</span>
-        </button>
-      </Link>
 
       {/* Past and upcoming trips */}
-      <Card>
-        <Card.Header>
+      <Card className="rounded-0">
+        <Card.Header className="d-flex">
           <Nav variant="tabs" defaultActiveKey="#upcoming">
             <Nav.Item>
               <Nav.Link href="#upcoming">Upcoming</Nav.Link>
@@ -61,14 +51,25 @@ function DisplayTrips() {
             <Nav.Item>
               <Nav.Link href="#past">Past</Nav.Link>
             </Nav.Item>
+
+            <div className="float-right">
+              <Link to="/createTrip">
+                <button className="btn btn-primary  btn-icon-split">
+                  <span className="icon text-white-50">
+                    <FlightTakeoffRoundedIcon />
+                  </span>
+                  <span className="text">Create trip</span>
+                </button>
+              </Link>
+            </div>
           </Nav>
         </Card.Header>
       </Card>
 
       {hash === '#past' ? (
-        <PastTrips trips={trips} />
+        <TripCards trips={trips} time={'past'} />
       ) : (
-        <Upcoming trips={trips} />
+        <TripCards trips={trips} time={'upcoming'} />
       )}
     </div>
   );

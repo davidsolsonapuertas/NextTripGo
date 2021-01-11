@@ -56,7 +56,11 @@ export const LOGIN_USER = gql`
           userid {
             username
           }
-          expenses
+          expenses {
+            type
+            amount
+            currency
+          }
           toDo
           friends {
             username
@@ -77,7 +81,11 @@ export const LOGIN_USER = gql`
         userid {
           username
         }
-        expenses
+        expenses {
+          type
+          amount
+          currency
+        }
         toDo
         friends {
           username
@@ -98,7 +106,7 @@ export const CREATE_TRIP = gql`
     $picture: String
     $fromDate: String!
     $toDate: String!
-    $expenses: String
+    $expenses: [ExpenseInput]
     $toDo: String
     $friends: String
   ) {
@@ -118,7 +126,11 @@ export const CREATE_TRIP = gql`
       picture
       fromDate
       toDate
-      expenses
+      expenses {
+        type
+        amount
+        currency
+      }
       toDo
       userid {
         id
@@ -138,7 +150,11 @@ export const CREATE_TRIP = gql`
           userid {
             id
           }
-          expenses
+          expenses {
+            type
+            amount
+            currency
+          }
           toDo
           friends {
             username
