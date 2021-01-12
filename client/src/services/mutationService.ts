@@ -169,3 +169,8 @@ export const CREATE_TRIP = gql`
     }
   }
 `;
+export const DELETE_TRIP = gql`
+  mutation deleteTrip($tripId: ID!) {
+    deleteTrip(tripId: $tripId)
+  }
+`;

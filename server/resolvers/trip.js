@@ -109,7 +109,12 @@ module.exports = {
 
       try {
         const trip = await Trip.findById(tripId);
-        if (user.username === trip.username) {
+        tripUser = await User.findById(trip.userid);
+
+        if (user.username === tripUser.username) {
+          await User.findByIdAndUpdate(user.id, {
+            $pull: { trips: tripId },
+          });
           await trip.delete();
           return 'Trip deleted successfully';
         } else {

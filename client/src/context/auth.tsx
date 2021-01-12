@@ -5,7 +5,7 @@ import { client } from '../ApolloProvider';
 const LOGIN = 'LOGIN';
 const LOGOUT = 'LOGOUT';
 
-interface User {
+export interface User {
   username: string;
   password: string;
   token: string;

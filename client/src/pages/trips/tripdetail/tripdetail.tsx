@@ -1,26 +1,21 @@
-import React, { useEffect, useState } from 'react';
-import {
-  BrowserRouter as Router,
-  useParams,
-  Redirect,
-  useHistory,
-} from 'react-router-dom';
+import React from 'react';
+import { useParams } from 'react-router-dom';
+
 import { useQuery } from '@apollo/client';
 import { GET_TRIP_BY_ID } from '../../../services/queryService';
 import { Trip } from '../../../Interfaces/Trip';
+import SeeExpenses from '../../../Components/Expenses/SeeExpenses';
 
-interface ParamTypes {
+interface IProps {
   id: string;
 }
 
 function TripDetail() {
-  let { id } = useParams<ParamTypes>();
+  let { id } = useParams<IProps>();
 
   let { loading, error, data } = useQuery(GET_TRIP_BY_ID, {
     variables: { tripId: id },
-    pollInterval: 500,
   });
-  console.log(data);
 
   let trip = data?.getTrip;
   console.log(id);
@@ -29,9 +24,13 @@ function TripDetail() {
   if (!trip) {
     postMarkup = <p>Loading trip...</p>;
   } else {
-    const { id, destination } = trip;
-
-    postMarkup = <div>{destination}</div>;
+    postMarkup = (
+      <div>
+        {trip.destination}
+        <h1>Expenses</h1>
+        <SeeExpenses expenses={trip.expenses} />
+      </div>
+    );
   }
 
   return postMarkup;

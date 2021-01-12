@@ -1,19 +1,23 @@
-import React, { useContext } from 'react';
+import React, { useContext, Dispatch, SetStateAction } from 'react';
 import { BrowserRouter as Router, Link, useLocation } from 'react-router-dom';
-import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore';
+import DehazeIcon from '@material-ui/icons/Dehaze';
 
 import './topbar.css';
 import { AuthContext } from '../../Context/Auth';
 
-function Topbar({ setSidebar }: any) {
+interface IProps {
+  setSidebar: Dispatch<SetStateAction<boolean>>;
+}
+
+function Topbar({ setSidebar }: IProps) {
   const { logout } = useContext(AuthContext);
 
-  const showSidebar = () => setSidebar((sidebar: any) => !sidebar);
+  const showSidebar = () => setSidebar((sidebar: boolean) => !sidebar);
 
   return (
     <div className="trip-sidebar bg-white shadow">
       <Link className="trip-sidebar-icon" to="#">
-        <NavigateBeforeIcon onClick={showSidebar} />
+        <DehazeIcon onClick={showSidebar} />
       </Link>
       <button
         className="button float-right btn"

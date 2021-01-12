@@ -39,9 +39,6 @@ function DisplayTrips() {
   return (
     <div>
       {pathname === '/trips' && <Redirect to="/trips#upcoming" />}
-      {/* Create trip button  */}
-
-      {/* Past and upcoming trips */}
       <Card className="rounded-0">
         <Card.Header className="d-flex">
           <Nav variant="tabs" defaultActiveKey="#upcoming">
@@ -66,7 +63,7 @@ function DisplayTrips() {
         </Card.Header>
       </Card>
 
-      {hash === '#past' ? (
+      {trips?.length && hash === '#past' ? (
         <TripCards trips={trips} time={'past'} />
       ) : (
         <TripCards trips={trips} time={'upcoming'} />

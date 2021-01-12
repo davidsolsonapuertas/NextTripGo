@@ -59,8 +59,7 @@
 .submenu-dropdown-link {
   background: #ffffff;
   justify-content: flex-start;
-  height: 60px;
-  padding-left: 1rem;
+  min-height: 50px;
   display: flex;
   align-items: center;
   text-decoration: none;
@@ -78,7 +77,20 @@ img {
   margin-top: 10px;
   margin-bottom: 30px;
 }
-
+.cursor-pointer {
+  cursor: pointer;
+}
+.trip-logo {
+  margin: -10% 0 5% 5%;
+}
+a:hover {
+  text-decoration: none;
+  color: white;
+}
+a:hover .override {
+  text-decoration: none;
+  color: black;
+}
 @media only screen and (max-width: 768px) {
   .trip-sidebar-nav {
     width: 80px;

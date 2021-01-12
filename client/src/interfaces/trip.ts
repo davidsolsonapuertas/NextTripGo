@@ -3,6 +3,7 @@ import { Document, Types } from 'mongoose';
 import { User } from './User';
 
 export interface Trip extends Document {
+  id: string;
   destination: string;
   picture: string;
   fromDate: string;

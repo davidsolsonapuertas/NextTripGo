@@ -3,13 +3,14 @@ import { useMutation } from '@apollo/client';
 import { useHistory } from 'react-router-dom';
 
 import { FETCH_TRIPS_BY_USERNAME } from '../../../services/queryService';
+import { GET_TRIP_BY_ID } from '../../../services/queryService';
 import { CREATE_TRIP } from '../../../services/mutationService';
 import { AuthContext } from '../../../Context/Auth';
 import { useForm } from '../../../util/hooks';
 import SearchLocationInput from '../../../APIs/googlemaps/searchlocationinput/SearchLocationInput';
 import DestinationPhotos from '../../../APIs/pexels/getphoto/getphoto';
 import Daterangepicker from '../../../Components/DateRangePicker/DateRangePicker';
-import ExpensesComponent from '../../../Components/Expenses/Expenses';
+import ExpensesComponent from '../../../Components/Expenses/CreateExpenses';
 
 function CreateTrip() {
   let history = useHistory();
@@ -50,30 +51,34 @@ function CreateTrip() {
       // toDo: values.toDo,
       // friends: values.friends,
     },
+    // refetchQueries: (result) => [
+    //   { query: FETCH_TRIPS_BY_USERNAME, variables: { userId: user.username } },
+    //   { query: GET_TRIP_BY_ID, variables: { tripId: user.username } },
+    // ],
+    // const data: any = proxy.readQuery({
+    //   query: FETCH_TRIPS_BY_USERNAME,
+    //   variables: {
+    //     userId: user.id,
+    //   },
+    // });
+    // console.log('data', data);
+    // console.log('result', result.data);
+
+    // proxy.writeQuery({
+    //   query: FETCH_TRIPS_BY_USERNAME,
+    //   variables: {
+    //     userId: user.id,
+    //   },
+    //   data: {
+    //     getTripsByUsername: [
+    //       result.data.createTrip,
+    //       ...data.getTripsByUsername,
+    //     ],
+    //   },
+    // });
     update(proxy: any, result) {
-      // const data: any = proxy.readQuery({
-      //   query: FETCH_TRIPS_BY_USERNAME,
-      //   variables: {
-      //     userId: user.id,
-      //   },
-      // });
-      // console.log('data', data);
-      // console.log('result', result.data);
-
-      // proxy.writeQuery({
-      //   query: FETCH_TRIPS_BY_USERNAME,
-      //   variables: {
-      //     userId: user.id,
-      //   },
-      //   data: {
-      //     getTripsByUsername: [
-      //       result.data.createTrip,
-      //       ...data.getTripsByUsername,
-      //     ],
-      //   },
-      // });
-
       history.push(`/trips/${result.data.createTrip.id}`);
+      history.go(0);
     },
     onError(err) {
       setErrors((errors: any) => {

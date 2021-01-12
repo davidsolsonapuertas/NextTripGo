@@ -24,13 +24,16 @@ function Sidebar({ sidebar, setSidebar }: IProps) {
         }
       >
         <div className={sidebar ? 'trip-sidebar-wrap' : 'trip-sidebar-hidden'}>
-          <Link className="" to="#">
-            <div className={'trip-sidebar-icon'}>
-              <NavigateBeforeIcon color={'action'} onClick={showSidebar} />
-            </div>
+          <div className={'trip-sidebar-icon'}>
+            <NavigateBeforeIcon
+              className="cursor-pointer"
+              color={'action'}
+              onClick={showSidebar}
+            />
+          </div>
+          <Link to="/">
+            <img alt="logo" className="trip-logo" width="90%" src={Logo} />
           </Link>
-          <img alt="logo" width="90%" src={Logo} />
-
           {routes.map((item, index) => {
             return <SubMenu item={item} key={index} />;
           })}
