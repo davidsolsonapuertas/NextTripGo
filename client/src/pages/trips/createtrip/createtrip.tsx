@@ -2,15 +2,14 @@ import React, { useContext, useState } from 'react';
 import { useMutation } from '@apollo/client';
 import { useHistory } from 'react-router-dom';
 
-import './createtrip.css';
 import { FETCH_TRIPS_BY_USERNAME } from '../../../services/queryService';
 import { CREATE_TRIP } from '../../../services/mutationService';
-import { AuthContext } from '../../../context/auth';
+import { AuthContext } from '../../../Context/Auth';
 import { useForm } from '../../../util/hooks';
 import SearchLocationInput from '../../../APIs/googlemaps/searchlocationinput/SearchLocationInput';
 import DestinationPhotos from '../../../APIs/pexels/getphoto/getphoto';
-import Daterangepicker from '../../../components/daterangepicker/daterangepicker';
-import ExpensesComponent from '../../../components/expenses/expenses';
+import Daterangepicker from '../../../Components/DateRangePicker/DateRangePicker';
+import ExpensesComponent from '../../../Components/Expenses/Expenses';
 
 function CreateTrip() {
   let history = useHistory();

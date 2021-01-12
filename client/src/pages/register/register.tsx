@@ -7,7 +7,7 @@ import './register.css';
 import { REGISTER_USER } from '../../services/mutationService';
 import SearchLocationInput from '../../APIs/googlemaps/searchlocationinput/SearchLocationInput';
 import { useForm } from '../../util/hooks';
-import { AuthContext } from '../../context/auth';
+import { AuthContext } from '../../Context/Auth';
 
 function Register(props: any) {
   let history = useHistory();

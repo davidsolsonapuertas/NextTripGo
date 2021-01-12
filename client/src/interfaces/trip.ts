@@ -1,6 +1,6 @@
 import { Document, Types } from 'mongoose';
 
-import { User } from './user';
+import { User } from './User';
 
 export interface Trip extends Document {
   destination: string;

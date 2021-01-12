@@ -4,19 +4,19 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import './bootstrap.css';
 import './App.css';
 
-import { AuthProvider } from './context/auth';
+import { AuthProvider } from './Context/Auth';
 
-import PrivateRoute from './util/privateroute/privateroute';
-import AuthRoute from './util/authroute/authroute';
-import Register from './pages/register/register';
-import Login from './pages/login/login';
-import Home from './pages/home/home';
-import Profile from './pages/profile/profile';
+import PrivateRoute from './util/PrivateRoute/PrivateRoute';
+import AuthRoute from './util/AuthRoute/AuthRoute';
+import Register from './Pages/Register/Register';
+import Login from './Pages/Login/Login';
+import Home from './Pages/Home/Home';
+import Profile from './Pages/Profile/Profile';
 import RandomVideo from './APIs/pexels/randomvideo/randomvideo';
-import DisplayTrips from './pages/trips/displaytrips/displaytrips';
-import CreateTrip from './pages/trips/createtrip/createtrip';
-import TripDetail from './pages/trips/tripdetail/tripdetail';
-import PageNotFound from './pages/404';
+import DisplayTrips from './Pages/Trips/DisplayTrips/DisplayTrips';
+import CreateTrip from './Pages/Trips/CreateTrip/CreateTrip';
+import TripDetail from './Pages/Trips/TripDetail/TripDetail';
+import PageNotFound from './Pages/404';
 
 function App() {
   return (

@@ -5,7 +5,7 @@ import RemoveCircleIcon from '@material-ui/icons/RemoveCircle';
 
 import { currencies } from '../../APIs/currencies';
 import ValidateAmount from './validateAmount';
-import { Expense } from '../../interfaces/trip';
+import { Expense } from '../../Interfaces/Trip';
 
 interface Expenses extends Array<Expense> {}
 

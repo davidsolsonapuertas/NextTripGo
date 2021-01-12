@@ -1,38 +1,89 @@
-.route > * {
-  outline-color: transparent;
+.trip-sidebar {
+  background: #ffffff;
+  height: 80px;
   display: flex;
-  text-decoration: none;
+  justify-content: flex-start;
   align-items: center;
-  padding-top: 10px;
-  margin-bottom: 10px;
+  padding-bottom: 10px;
+}
+.trip-sidebar-icon {
+  margin-left: 2rem;
+  font-size: 2rem;
+  height: 80px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+.trip-sidebar-nav {
+  background: linear-gradient(180deg, #4e73df 10%, #224abe 100%);
+  width: 250px;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  transition: 350ms;
+  z-index: 10;
+}
+.trip-sidebar-nav-closed {
+  left: -100%;
+}
+.trip-sidebar-wrap {
+  width: 100%;
+}
+.trip-sidebar-hidden {
+  display: none;
+}
+.submenu-link {
+  display: flex;
+  color: #ffffff;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  list-style: none;
+  height: 60px;
+  text-decoration: none !important;
+  font-size: 18px;
+}
+.submenu-link:hover {
+  cursor: pointer;
+}
+.submenu-label {
+  margin-left: 16px;
+  text-decoration: none !important;
+}
+.submenu-link:link {
+  text-decoration: none !important;
+}
+.submenu-dropdown-link {
+  background: #ffffff;
+  justify-content: flex-start;
+  height: 60px;
+  padding-left: 1rem;
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: #000000;
+  font-size: 14px;
+  border-radius: 20%;
+}
+.submenu-dropdown-link:hover {
+  cursor: pointer;
+}
+.submenu {
+  background-color: #ffffff;
 }
 img {
   margin-top: 10px;
   margin-bottom: 30px;
 }
-.navbar {
-  display: flex;
-  flex-direction: column;
-  min-height: 100%;
-  justify-content: flex-start;
-  position: relative;
-}
-.route {
-  border-top: 1px solid rgba(255, 255, 255, 0.15);
-  min-width: 100%;
-}
-.divname {
-  color: rgba(255, 255, 255, 0.7);
-  margin-left: 15px;
-  font-size: 0.85rem;
-}
-.divname:hover,
-.active {
-  color: rgb(255, 255, 255, 1);
-  font-weight: 900;
-}
-.bg-gradient-primary {
-  background-color: #4e73df;
-  background-image: linear-gradient(180deg, #4e73df 10%, #224abe 100%);
-  background-size: cover;
+
+@media only screen and (max-width: 768px) {
+  .trip-sidebar-nav {
+    width: 80px;
+  }
+  .submenu-label {
+    display: none;
+  }
 }

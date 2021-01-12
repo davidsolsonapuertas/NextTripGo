@@ -6,7 +6,7 @@ import { useHistory, Link } from 'react-router-dom';
 import './login.css';
 
 import { LOGIN_USER } from '../../services/mutationService';
-import { AuthContext } from '../../context/auth';
+import { AuthContext } from '../../Context/Auth';
 import { useForm } from '../../util/hooks';
 
 function Login() {

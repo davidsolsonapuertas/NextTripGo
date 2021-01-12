@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from 'react';
 import { Route, Redirect } from 'react-router-dom';
 
-import { AuthContext } from '../../context/auth';
+import { AuthContext } from '../../Context/Auth';
 
 function AuthRoute({ children, ...rest }: any) {
   const { user } = useContext(AuthContext);

@@ -9,8 +9,8 @@ import { useQuery } from '@apollo/client';
 import { Card, Nav } from 'react-bootstrap';
 import FlightTakeoffRoundedIcon from '@material-ui/icons/FlightTakeoffRounded';
 
-import TripCards from '../../../components/tripcards/tripcards';
-import { AuthContext } from '../../../context/auth';
+import TripCards from '../../../Components/TripCards/TripCards';
+import { AuthContext } from '../../../Context/Auth';
 import { FETCH_TRIPS_BY_USERNAME } from '../../../services/queryService';
 
 interface IUser {
@@ -54,7 +54,7 @@ function DisplayTrips() {
 
             <div className="float-right">
               <Link to="/createTrip">
-                <button className="btn btn-primary  btn-icon-split">
+                <button className="btn btn-primary btn-icon-split">
                   <span className="icon text-white-50">
                     <FlightTakeoffRoundedIcon />
                   </span>

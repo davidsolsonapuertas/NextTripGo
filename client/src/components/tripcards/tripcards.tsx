@@ -5,7 +5,7 @@ import moment from 'moment';
 import Dropdown from 'react-bootstrap/Dropdown';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 
-import { Trip } from '../../interfaces/trip';
+import { Trip } from '../../Interfaces/Trip';
 import Logo from '../../assets/logo.png';
 import './tripcards.css';
 
@@ -32,7 +32,7 @@ function TripCards({ trips, time }: IProps) {
           return (
             <div
               key={trip.id}
-              style={{ maxWidth: '30%' }}
+              // style={{ maxWidth: '30%' }}
               className="mx-3 card shadow mb-4"
             >
               <Link to={'/trips/' + trip.id}>
@@ -51,10 +51,12 @@ function TripCards({ trips, time }: IProps) {
                       <MoreVertIcon />
                     </Dropdown.Toggle>
                     <Dropdown.Menu align="right">
-                      <Dropdown.Item variant="danger" href="#/action-1">
+                      <Dropdown.Item variant="danger" href="#/delete">
                         Delete
                       </Dropdown.Item>
-                      <Dropdown.Item href="#/action-2">Edit</Dropdown.Item>
+                      <Dropdown.Item href={'#edit' + trip.id}>
+                        Edit
+                      </Dropdown.Item>
                     </Dropdown.Menu>
                   </Dropdown>
                 </div>

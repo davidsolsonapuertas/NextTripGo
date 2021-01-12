@@ -7,7 +7,7 @@ import {
 } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
 import { GET_TRIP_BY_ID } from '../../../services/queryService';
-import { Trip } from '../../../interfaces/trip';
+import { Trip } from '../../../Interfaces/Trip';
 
 interface ParamTypes {
   id: string;
