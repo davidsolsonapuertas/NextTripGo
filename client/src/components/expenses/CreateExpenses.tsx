@@ -3,7 +3,7 @@ import Button from 'react-bootstrap/Button';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import RemoveCircleIcon from '@material-ui/icons/RemoveCircle';
 
-import { currencies } from '../../APIs/currencies';
+import { currencies } from '../../assets/Currencies';
 import ValidateAmount from './validateAmount';
 import { Expense } from '../../Interfaces/Trip';
 

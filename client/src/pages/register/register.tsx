@@ -5,14 +5,15 @@ import { useHistory, Link } from 'react-router-dom';
 import './register.css';
 
 import { REGISTER_USER } from '../../services/mutationService';
-import SearchLocationInput from '../../APIs/googlemaps/searchlocationinput/SearchLocationInput';
-import { useForm } from '../../util/hooks';
+import SearchLocationInput from '../../APIs/googlemaps/searchlocationinput/SearchLocationInput.js';
+import { useForm } from '../../util/Hooks';
 import { AuthContext } from '../../Context/Auth';
 
 function Register(props: any) {
   let history = useHistory();
   const [errors, setErrors]: any = useState({});
   const [formattedAddress, setFormatedAddress]: any = useState('');
+  console.log(formattedAddress);
 
   const context = useContext(AuthContext);
 

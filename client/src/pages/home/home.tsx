@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-import SearchLocationInput from '../../APIs/googlemaps/searchlocationinput/SearchLocationInput';
+import SearchLocationInput from '../../APIs/googlemaps/searchlocationinput/SearchLocationInput.js';
 
 function Home() {
   return (

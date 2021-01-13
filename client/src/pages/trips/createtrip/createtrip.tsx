@@ -6,8 +6,8 @@ import { FETCH_TRIPS_BY_USERNAME } from '../../../services/queryService';
 import { GET_TRIP_BY_ID } from '../../../services/queryService';
 import { CREATE_TRIP } from '../../../services/mutationService';
 import { AuthContext } from '../../../Context/Auth';
-import { useForm } from '../../../util/hooks';
-import SearchLocationInput from '../../../APIs/googlemaps/searchlocationinput/SearchLocationInput';
+import { useForm } from '../../../util/Hooks';
+import SearchLocationInput from '../../../APIs/googlemaps/searchlocationinput/SearchLocationInput.js';
 import DestinationPhotos from '../../../APIs/pexels/getphoto/getphoto';
 import Daterangepicker from '../../../Components/DateRangePicker/DateRangePicker';
 import ExpensesComponent from '../../../Components/Expenses/CreateExpenses';
@@ -41,9 +41,9 @@ function CreateTrip() {
 
   const [createTrip, { loading }] = useMutation(CREATE_TRIP, {
     variables: {
-      destination: values.destination,
+      // destination: values.destination,
       // TODO change
-      // destination: formattedAddress,
+      destination: formattedAddress,
       fromDate: ranges?.startDate,
       toDate: ranges?.endDate,
       picture: photo,
@@ -98,7 +98,7 @@ function CreateTrip() {
       </div>
       <form className="user" onSubmit={onSubmit} noValidate>
         <div className="form-group d-flex justify-content-center">
-          <input
+          {/* <input
             type="text"
             className={
               errors.destination
@@ -109,16 +109,16 @@ function CreateTrip() {
             name="destination"
             value={values.destination}
             onChange={onChange}
+          /> */}
+          <SearchLocationInput
+            setFormatedAddress={setFormatedAddress}
+            placeholder={"What's your next destination? ✈"}
+            styles={
+              errors.destination
+                ? 'form-control form-control-user errorRed'
+                : 'form-control form-control-user'
+            }
           />
-          {/* <SearchLocationInput
-                  setFormatedAddress={setFormatedAddress}
-                  placeholder={"What's your next destination? ✈"}
-                  styles={
-                    errors.destination
-                      ? 'form-control form-control-user errorRed'
-                      : 'form-control form-control-user'
-                  }
-                /> */}
         </div>
         <div className="form-group mt-3 d-flex justify-content-center">
           <Daterangepicker
@@ -130,8 +130,8 @@ function CreateTrip() {
         {/* </div> */}
         <div className="form-group">
           <DestinationPhotos
-            // destination={formattedAddress?.split(',')[0]}
-            destination={values.destination}
+            destination={formattedAddress?.split(',')[0]}
+            // destination={values.destination}
             setPhoto={setPhoto}
           />
         </div>

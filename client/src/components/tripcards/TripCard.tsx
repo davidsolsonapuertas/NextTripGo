@@ -5,6 +5,7 @@ import moment from 'moment';
 import Dropdown from 'react-bootstrap/Dropdown';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import { useMutation } from '@apollo/client';
+import { useHistory } from 'react-router-dom';
 
 import { DELETE_TRIP } from '../../services/mutationService';
 import Logo from '../../assets/logo.png';
@@ -13,16 +14,21 @@ import './tripcards.css';
 
 function TripCard({ trip }: any) {
   const [showModal, setShowModal] = useState(false);
+  let history = useHistory();
 
   const toggleModal = () => {
     setShowModal((state) => !state);
   };
 
-  const [deleteTrip] = useMutation(DELETE_TRIP);
+  const [deleteTrip] = useMutation(DELETE_TRIP, {
+    update() {
+      history.go(0);
+    },
+  });
 
   return (
     <>
-      <div key={trip.id} className="mx-3 card shadow mb-4">
+      <div key={trip.id} className="mx-3 card shadow shadow-hover mb-4">
         <Link to={'/trips/' + trip.id}>
           <Card.Img
             className="img-thumbnail mb-1"
@@ -62,8 +68,8 @@ function TripCard({ trip }: any) {
 
       <Modal
         header="Delete trip"
-        // acceptButtonStyle="danger"
-        // acceptButtonText="Delete"
+        acceptButtonStyle="danger"
+        acceptButtonText="Delete"
         body="Are you sure you want to delete this trip?"
         show={showModal}
         onCancel={toggleModal}

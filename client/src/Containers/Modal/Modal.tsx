@@ -3,8 +3,8 @@ import { Button, Modal as DeleteModal } from 'react-bootstrap';
 
 interface IProps {
   header: string;
-  // acceptButtonStyle: string;
-  // acceptButtonText: string;
+  acceptButtonStyle: string;
+  acceptButtonText: string;
   body: string;
   show: boolean;
   onCancel: () => void;
@@ -14,8 +14,8 @@ interface IProps {
 const Modal: FunctionComponent<IProps> = (props) => {
   const {
     header,
-    // acceptButtonStyle,
-    // acceptButtonText,
+    acceptButtonStyle,
+    acceptButtonText,
     body,
     show,
     onCancel,
@@ -33,8 +33,8 @@ const Modal: FunctionComponent<IProps> = (props) => {
           <Button variant="secondary" onClick={onCancel}>
             Close
           </Button>
-          <Button variant="danger" onClick={onConfirm}>
-            Yes
+          <Button variant={acceptButtonStyle} onClick={onConfirm}>
+            {acceptButtonText}
           </Button>
         </DeleteModal.Footer>
       </DeleteModal>

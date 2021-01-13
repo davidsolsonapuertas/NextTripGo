@@ -29,7 +29,11 @@ function handleScriptLoad(updateQuery, autoCompleteRef, setFormatedAddress) {
   autoComplete = new window.google.maps.places.Autocomplete(
     autoCompleteRef.current
   );
-  autoComplete.setFields(['address_components', 'formatted_address']);
+  autoComplete.setFields([
+    'address_components',
+    'formatted_address',
+    'geometry',
+  ]);
   autoComplete.addListener('place_changed', () =>
     handlePlaceSelect(updateQuery, setFormatedAddress)
   );
@@ -37,6 +41,7 @@ function handleScriptLoad(updateQuery, autoCompleteRef, setFormatedAddress) {
 
 async function handlePlaceSelect(updateQuery, setFormatedAddress) {
   const addressObject = autoComplete.getPlace();
+  console.log(addressObject);
   const query = addressObject.formatted_address;
   updateQuery(query);
   typeof query !== 'undefined' && setFormatedAddress(query);

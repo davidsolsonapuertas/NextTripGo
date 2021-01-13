@@ -23,7 +23,11 @@ function Daterangepicker({ setDates, dates, setRanges }: IProps) {
 
   return (
     <div>
-      <DateRangePicker ranges={[dates]} onChange={handleSelect} />
+      <DateRangePicker
+        minDate={new Date()}
+        ranges={[dates]}
+        onChange={handleSelect}
+      />
     </div>
   );
 }
