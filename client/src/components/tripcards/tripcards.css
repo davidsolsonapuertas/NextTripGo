@@ -21,3 +21,6 @@
 .shadow-hover:hover {
   box-shadow: rgba(0, 0, 0, 0.15) 0px 6px 20px !important;
 }
+.card-margin {
+  padding: 1.25rem;
+}

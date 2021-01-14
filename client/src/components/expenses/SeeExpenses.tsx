@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useState, useEffect } from 'react';
+import React, { FunctionComponent, useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
 
@@ -15,24 +15,46 @@ interface IProps {
 interface Expenses extends Array<Expense> {}
 
 const SeeExpenses: FunctionComponent<IProps> = ({ expenses }) => {
-  const [changedExpenses, setChangedExpenses]: any = useState(expenses);
+  const expensesCopy = expenses.map((el) => ({ ...el }));
+  const [changedExpenses, setChangedExpenses]: any = useState(expensesCopy);
+  const [totalExpenses, setTotalExpenses]: any = useState(0);
 
   const currencies: string[] = [];
-  for (let key in expenses) {
-    if (currencies.indexOf(expenses[key].currency) === -1) {
-      currencies.push(expenses[key].currency);
+
+  for (let key in expensesCopy) {
+    if (currencies.indexOf(expensesCopy[key].currency) === -1) {
+      currencies.push(expensesCopy[key].currency);
     }
   }
 
   const changeCurrency = async (currency: string) => {
-    const Arr: any = [];
+    setTotalExpenses(0);
     for (let key in currencies) {
-      const res = await getRate([currency, currencies[key]]);
-      console.log(res);
-      Arr.push(res);
+      const res = await getRate([currencies[key], currency]);
+
+      setChangedExpenses((oldExpenses: Expense[]) => {
+        if (oldExpenses[key].currency !== currency) {
+          let exchRate = Object.values(res)[0];
+
+          if (typeof exchRate === 'number')
+            oldExpenses[key].amount =
+              Math.round(expensesCopy[key].amount * exchRate * 100) / 100;
+          oldExpenses[key].currency = currency;
+        }
+        return [...oldExpenses];
+      });
     }
-    console.log(Object.values(Arr[0]));
+
+    for (let key in changedExpenses) {
+      setTotalExpenses((oldTotalExpenses: number) => {
+        return (oldTotalExpenses += changedExpenses[key].amount);
+      });
+    }
   };
+
+  useMemo(() => {
+    currencies && changeCurrency(currencies[0]);
+  }, []);
 
   return (
     <div className="col-xl-4 col-lg-5">
@@ -41,14 +63,14 @@ const SeeExpenses: FunctionComponent<IProps> = ({ expenses }) => {
           <h6 className="m-0 font-weight-bold text-primary">Expenses</h6>
         </div>
         <div className="btn-group currency-buttons" role="group">
-          <button type="button" className={'btn rounded-0 btn-link'}>
-            Mixed
-          </button>
           {currencies.length >= 0 &&
             currencies.map((currency, index) => {
               return (
                 <button
-                  onClick={() => changeCurrency(currency)}
+                  key={index}
+                  onClick={() => {
+                    changeCurrency(currency);
+                  }}
                   type="button"
                   className={'btn rounded-0 ' + 'btn-' + variant[index]}
                 >
@@ -56,29 +78,63 @@ const SeeExpenses: FunctionComponent<IProps> = ({ expenses }) => {
                 </button>
               );
             })}
+          {currencies.length > 1 && (
+            <button
+              type="button"
+              onClick={() => {
+                setChangedExpenses(expensesCopy);
+                setTotalExpenses(0);
+              }}
+              className={'btn rounded-0 btn-link'}
+            >
+              Mixed
+            </button>
+          )}
         </div>
 
         <div className="card-body">
-          <div className="chart-pie pt-4 pb-2">
-            <PieChart expenses={changedExpenses} />
-          </div>
+          {totalExpenses !== 0 && (
+            <div className="chart-pie pt-4 pb-2">
+              <PieChart expenses={changedExpenses} />
+            </div>
+          )}
           <div className="mt-4 text-center small">
-            {expenses.length > 0 &&
-              expenses.map((expense, index) => {
+            {changedExpenses.length > 0 &&
+              changedExpenses.map((expense: Expense, index: number) => {
                 return (
-                  <div className="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                    <span className="d-flex justify-content-between">
+                  <div
+                    key={index}
+                    className="card-header py-3 d-flex flex-row align-items-center justify-content-around"
+                  >
+                    <span className="d-flex w-100 justify-content-between">
                       <FiberManualRecordIcon
                         className="mr-3"
                         style={{ color: `${colors[index]}` }}
                       />
-                      {expense.type}
-                      {expense.amount + ' '}
-                      {expense.currency}
+                      {expense.type + ' '}
+                      <div>
+                        {expense.amount + ' '}
+                        {expense.currency}
+                      </div>
                     </span>
                   </div>
                 );
               })}
+            {totalExpenses !== 0 && (
+              <div className="card-header py-3 d-flex flex-row align-items-center justify-content-around">
+                <span className="d-flex w-100 justify-content-between">
+                  <FiberManualRecordIcon
+                    className="mr-3"
+                    style={{ color: `${colors[48]}` }}
+                  />
+                  Total expenses
+                  <div>
+                    {totalExpenses + ' '}
+                    {changedExpenses[0].currency}
+                  </div>
+                </span>
+              </div>
+            )}
           </div>
         </div>
       </div>

@@ -4,7 +4,11 @@ export const GET_TRIP_BY_ID = gql`
   query getTrip($tripId: ID!) {
     getTrip(tripId: $tripId) {
       id
-      destination
+      destination {
+        formattedAddress
+        latitude
+        longitude
+      }
       picture
       fromDate
       toDate
@@ -29,7 +33,11 @@ export const FETCH_TRIPS_QUERY = gql`
   {
     getTrips {
       id
-      destination
+      destination {
+        formattedAddress
+        latitude
+        longitude
+      }
       picture
       fromDate
       toDate
@@ -54,7 +62,11 @@ export const FETCH_TRIPS_BY_USERNAME = gql`
   query getTripsByUsername($userId: ID!) {
     getTripsByUsername(userId: $userId) {
       id
-      destination
+      destination {
+        formattedAddress
+        latitude
+        longitude
+      }
       picture
       fromDate
       toDate

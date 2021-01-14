@@ -38,12 +38,15 @@ function CreateTrip() {
     toDo: '',
     friends: '',
   });
+  console.log(formattedAddress);
 
   const [createTrip, { loading }] = useMutation(CREATE_TRIP, {
     variables: {
-      // destination: values.destination,
-      // TODO change
-      destination: formattedAddress,
+      destination: {
+        formattedAddress: formattedAddress[0],
+        latitude: formattedAddress[1],
+        longitude: formattedAddress[2],
+      },
       fromDate: ranges?.startDate,
       toDate: ranges?.endDate,
       picture: photo,
@@ -55,6 +58,7 @@ function CreateTrip() {
     //   { query: FETCH_TRIPS_BY_USERNAME, variables: { userId: user.username } },
     //   { query: GET_TRIP_BY_ID, variables: { tripId: user.username } },
     // ],
+
     // const data: any = proxy.readQuery({
     //   query: FETCH_TRIPS_BY_USERNAME,
     //   variables: {
@@ -98,25 +102,13 @@ function CreateTrip() {
       </div>
       <form className="user" onSubmit={onSubmit} noValidate>
         <div className="form-group d-flex justify-content-center">
-          {/* <input
-            type="text"
-            className={
-              errors.destination
-                ? 'form-control form-control-user errorRed w-50'
-                : 'form-control form-control-user w-50'
-            }
-            placeholder="Destination"
-            name="destination"
-            value={values.destination}
-            onChange={onChange}
-          /> */}
           <SearchLocationInput
             setFormatedAddress={setFormatedAddress}
             placeholder={"What's your next destination? ✈"}
             styles={
               errors.destination
-                ? 'form-control form-control-user errorRed'
-                : 'form-control form-control-user'
+                ? 'form-control form-control-user errorRed w-50'
+                : 'form-control form-control-user w-50'
             }
           />
         </div>
@@ -127,11 +119,9 @@ function CreateTrip() {
             setRanges={setRanges}
           />
         </div>
-        {/* </div> */}
         <div className="form-group">
           <DestinationPhotos
-            destination={formattedAddress?.split(',')[0]}
-            // destination={values.destination}
+            destination={formattedAddress[0]?.split(',')[0]}
             setPhoto={setPhoto}
           />
         </div>

@@ -2,7 +2,11 @@ const mongoose = require('./index');
 const { Schema } = mongoose;
 
 const tripSchema = new Schema({
-  destination: String,
+  destination: {
+    formattedAddress: String,
+    latitude: String,
+    longitude: String,
+  },
   picture: String,
   fromDate: String,
   toDate: String,

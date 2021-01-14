@@ -23,3 +23,7 @@
 .search-location-input input:focus {
   outline: none;
 }
+
+#map {
+  height: 100%;
+}

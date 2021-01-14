@@ -58,7 +58,10 @@ module.exports.validateTripInput = (
   expenses
 ) => {
   const errors = {};
-  if (destination.trim() === '' || typeof destination === 'undefined') {
+  if (
+    destination.formattedAddress.trim() === '' ||
+    typeof destination === 'undefined'
+  ) {
     errors.destination = 'Please enter a destination';
   }
   if (fromDate.trim() === '') {

@@ -37,7 +37,9 @@ function TripCard({ trip }: any) {
         </Link>
         <div className="card-header py-3 d-flex flex-row align-items-center justify-content-between">
           <h6 className="m-0 font-weight-bold text-primary">
-            <Link to={'/trips/' + trip.id}>{trip.destination}</Link>
+            <Link to={'/trips/' + trip.id}>
+              {trip.destination.formattedAddress}
+            </Link>
           </h6>
           <div className="dropdown no-arrow">
             <Dropdown>
@@ -53,7 +55,7 @@ function TripCard({ trip }: any) {
             </Dropdown>
           </div>
         </div>
-        <div className="card-body">
+        <div className="card-body card-margin">
           {moment(trip.fromDate).format('MMM Do YY')} {' – '}
           {moment(trip.toDate).format('MMM Do YY')}
         </div>

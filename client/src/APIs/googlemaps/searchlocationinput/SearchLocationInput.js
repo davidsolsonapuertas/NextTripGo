@@ -41,10 +41,14 @@ function handleScriptLoad(updateQuery, autoCompleteRef, setFormatedAddress) {
 
 async function handlePlaceSelect(updateQuery, setFormatedAddress) {
   const addressObject = autoComplete.getPlace();
-  console.log(addressObject);
   const query = addressObject.formatted_address;
   updateQuery(query);
-  typeof query !== 'undefined' && setFormatedAddress(query);
+  typeof query !== 'undefined' &&
+    setFormatedAddress([
+      query,
+      addressObject?.geometry?.location.lat().toString(),
+      addressObject?.geometry?.location.lng().toString(),
+    ]);
 }
 
 function SearchLocationInput({ setFormatedAddress, placeholder, styles }) {

@@ -48,7 +48,11 @@ export const LOGIN_USER = gql`
         currentCity
         trips {
           id
-          destination
+          destination {
+            formattedAddress
+            latitude
+            longitude
+          }
           picture
           fromDate
           toDate
@@ -73,7 +77,11 @@ export const LOGIN_USER = gql`
       }
       trips {
         id
-        destination
+        destination {
+          formattedAddress
+          latitude
+          longitude
+        }
         picture
         fromDate
         toDate
@@ -102,7 +110,7 @@ export const LOGIN_USER = gql`
 
 export const CREATE_TRIP = gql`
   mutation createTrip(
-    $destination: String!
+    $destination: DestinationInput!
     $picture: String
     $fromDate: String!
     $toDate: String!
@@ -122,7 +130,11 @@ export const CREATE_TRIP = gql`
       }
     ) {
       id
-      destination
+      destination {
+        formattedAddress
+        latitude
+        longitude
+      }
       picture
       fromDate
       toDate
@@ -142,7 +154,11 @@ export const CREATE_TRIP = gql`
         currentCity
         trips {
           id
-          destination
+          destination {
+            formattedAddress
+            latitude
+            longitude
+          }
           picture
           fromDate
           toDate

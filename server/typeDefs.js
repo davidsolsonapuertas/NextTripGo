@@ -3,7 +3,7 @@ const { gql } = require('apollo-server');
 const typeDefs = gql`
   type Trip {
     id: ID!
-    destination: String!
+    destination: Destination!
     picture: String
     fromDate: String
     toDate: String
@@ -12,6 +12,11 @@ const typeDefs = gql`
     expenses: [Expense]
     toDo: String
     friends: [User]
+  }
+  type Destination {
+    formattedAddress: String
+    latitude: String
+    longitude: String
   }
   type Expense {
     type: String
@@ -41,7 +46,7 @@ const typeDefs = gql`
     confirmPassword: String!
   }
   input CreateTripInput {
-    destination: String!
+    destination: DestinationInput!
     picture: String
     fromDate: String
     toDate: String
@@ -53,6 +58,11 @@ const typeDefs = gql`
     type: String
     amount: Float
     currency: String
+  }
+  input DestinationInput {
+    formattedAddress: String
+    latitude: String
+    longitude: String
   }
   type Query {
     getUsers: [User]

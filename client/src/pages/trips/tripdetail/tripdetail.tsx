@@ -5,7 +5,7 @@ import { useQuery } from '@apollo/client';
 import { GET_TRIP_BY_ID } from '../../../services/queryService';
 import SeeExpenses from '../../../Components/Expenses/SeeExpenses';
 import PieChart from '../../../Components/Expenses/PieChart';
-import MapCoordinates from '../../../APIs/googlemaps/MapCoordinates.js';
+import MapCoordinates from '../../../APIs/googlemaps/MapCoordinates';
 
 interface IProps {
   id: string;
@@ -28,8 +28,11 @@ function TripDetail() {
   } else {
     postMarkup = (
       <div>
-        <h1>{trip.destination}</h1>
-        <MapCoordinates placeName="Barcelona" />
+        <h1>{trip.destination.formattedAddress}</h1>
+        <MapCoordinates
+          latitude={trip.destination.latitude}
+          longitude={trip.destination.longitude}
+        />
         {trip.expenses.length > 0 && <SeeExpenses expenses={trip.expenses} />}
       </div>
     );

@@ -13,7 +13,6 @@ function Register(props: any) {
   let history = useHistory();
   const [errors, setErrors]: any = useState({});
   const [formattedAddress, setFormatedAddress]: any = useState('');
-  console.log(formattedAddress);
 
   const context = useContext(AuthContext);
 
@@ -38,7 +37,7 @@ function Register(props: any) {
       firstname: values.firstname,
       lastname: values.lastname,
       username: values.username,
-      currentCity: formattedAddress,
+      currentCity: formattedAddress[0],
       email: values.email,
       password: values.password,
       confirmPassword: values.confirmPassword,

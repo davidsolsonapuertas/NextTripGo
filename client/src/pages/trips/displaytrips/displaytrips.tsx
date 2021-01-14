@@ -31,7 +31,6 @@ function DisplayTrips() {
 
   let { loading, data } = useQuery(FETCH_TRIPS_BY_USERNAME, {
     variables: { userId: user.id },
-    pollInterval: 500,
   });
 
   let trips = data?.getTripsByUsername;
