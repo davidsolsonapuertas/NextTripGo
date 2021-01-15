@@ -1,6 +1,6 @@
 import React, { Dispatch, SetStateAction } from 'react';
 import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore';
-import { BrowserRouter as Router, Link, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Logo from '../../assets/logo.png';
 
 import './Sidebar.css';

@@ -1,5 +1,4 @@
 import React, { FunctionComponent, useState, useMemo } from 'react';
-import { Link } from 'react-router-dom';
 import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
 
 import './Currency.css';
@@ -129,7 +128,7 @@ const SeeExpenses: FunctionComponent<IProps> = ({ expenses }) => {
                   />
                   Total expenses
                   <div>
-                    {totalExpenses + ' '}
+                    {Math.round(totalExpenses * 100) / 100 + ' '}
                     {changedExpenses[0].currency}
                   </div>
                 </span>

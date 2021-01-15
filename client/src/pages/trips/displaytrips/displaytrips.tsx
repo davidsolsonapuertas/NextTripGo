@@ -1,10 +1,5 @@
-import React, { useContext, useState } from 'react';
-import {
-  BrowserRouter as Router,
-  Redirect,
-  useLocation,
-  Link,
-} from 'react-router-dom';
+import React, { useContext } from 'react';
+import { Redirect, useLocation, Link } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
 import { Card, Nav } from 'react-bootstrap';
 import FlightTakeoffRoundedIcon from '@material-ui/icons/FlightTakeoffRounded';
@@ -29,7 +24,7 @@ function DisplayTrips() {
   const { user } = useContext<IUser>(AuthContext);
   let { pathname, hash }: any = useLocation();
 
-  let { loading, data } = useQuery(FETCH_TRIPS_BY_USERNAME, {
+  let { data } = useQuery(FETCH_TRIPS_BY_USERNAME, {
     variables: { userId: user.id },
   });
 

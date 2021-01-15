@@ -13,6 +13,9 @@ const typeDefs = gql`
     toDo: String
     friends: [User]
   }
+  type File {
+    url: String!
+  }
   type Destination {
     formattedAddress: String
     latitude: String
@@ -29,6 +32,7 @@ const typeDefs = gql`
     lastname: String!
     username: String!
     currentCity: String
+    profilePicture: File
     profilePic: String
     friends: [User]
     trips: [Trip]
@@ -67,6 +71,7 @@ const typeDefs = gql`
   type Query {
     getUsers: [User]
     getUser(userId: ID!): User
+    uploads: [File]
     getTrips: [Trip]
     getTrip(tripId: ID!): Trip
     getTripsByUsername(userId: ID!): [Trip]
@@ -74,6 +79,7 @@ const typeDefs = gql`
   type Mutation {
     register(registerInput: RegisterInput): User!
     login(username: String!, password: String!): User!
+    uploadFile(file: Upload!): File!
     createTrip(createTripInput: CreateTripInput!): Trip!
     deleteTrip(tripId: ID!): String!
   }

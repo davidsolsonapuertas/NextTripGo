@@ -1,6 +1,8 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const { UserInputError } = require('apollo-server');
+const path = require('path');
+const fs = require('fs');
 
 const {
   validateRegisterInput,
@@ -46,6 +48,7 @@ module.exports = {
         throw new Error(error);
       }
     },
+    uploads: (parent, args) => {},
   },
   User: {
     async trips(obj) {
@@ -147,6 +150,23 @@ module.exports = {
         id: res.id,
         token,
       };
+    },
+    uploadFile: async (parent, args) => {
+      return args.file.then((file) => {
+        const { createReadStream, filename, mimetype } = file;
+
+        const fileStream = createReadStream();
+
+        fileStream.pipe(
+          fs.createWriteStream(
+            path.join(__dirname, `../public/images/${filename}`)
+          )
+        );
+
+        return {
+          url: `http://localhost:4000/images/${filename}`,
+        };
+      });
     },
   },
 };

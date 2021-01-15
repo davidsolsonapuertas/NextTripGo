@@ -1,5 +1,27 @@
 import { gql } from '@apollo/client';
 
+export const FETCH_USERS = gql`
+  query getUsers {
+    getUsers {
+      id
+      firstname
+      lastname
+      currentCity
+      profilePic
+      friends {
+        id
+        firstname
+        lastname
+        currentCity
+        username
+        createdAt
+      }
+      username
+      createdAt
+    }
+  }
+`;
+
 export const GET_TRIP_BY_ID = gql`
   query getTrip($tripId: ID!) {
     getTrip(tripId: $tripId) {
@@ -24,35 +46,6 @@ export const GET_TRIP_BY_ID = gql`
       toDo
       friends {
         username
-      }
-    }
-  }
-`;
-
-export const FETCH_TRIPS_QUERY = gql`
-  {
-    getTrips {
-      id
-      destination {
-        formattedAddress
-        latitude
-        longitude
-      }
-      picture
-      fromDate
-      toDate
-      createdAt
-      userid {
-        id
-      }
-      expenses {
-        type
-        amount
-        currency
-      }
-      toDo
-      friends {
-        id
       }
     }
   }

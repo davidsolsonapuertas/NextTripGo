@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import Chart from 'chart.js';
 
-import { variant, colors } from '../../assets/ColorPalette';
+import { colors } from '../../assets/ColorPalette';
 import { Expense } from '../../Interfaces/Trip';
 
 interface Expenses extends Array<Expense> {}

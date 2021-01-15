@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { BrowserRouter as Router, Link, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import ArrowDropUpIcon from '@material-ui/icons/ArrowDropUp';
@@ -9,7 +9,6 @@ interface IProps {
 }
 
 function SubMenu({ item }: IProps) {
-  const location = useLocation();
   const [subnav, setSubnav] = useState(false);
 
   const showSubnav = () => setSubnav(!subnav);

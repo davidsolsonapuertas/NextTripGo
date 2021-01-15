@@ -185,8 +185,17 @@ export const CREATE_TRIP = gql`
     }
   }
 `;
+
 export const DELETE_TRIP = gql`
   mutation deleteTrip($tripId: ID!) {
     deleteTrip(tripId: $tripId)
+  }
+`;
+
+export const UPLOAD_FILE = gql`
+  mutation uploadFile($file: Upload!) {
+    uploadFile(file: $file) {
+      url
+    }
   }
 `;

@@ -1,11 +1,9 @@
 import React, { useState } from 'react';
-import { Card, Button } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Card, Button, Dropdown } from 'react-bootstrap';
+import { Link, useHistory } from 'react-router-dom';
 import moment from 'moment';
-import Dropdown from 'react-bootstrap/Dropdown';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import { useMutation } from '@apollo/client';
-import { useHistory } from 'react-router-dom';
 
 import { DELETE_TRIP } from '../../services/mutationService';
 import Logo from '../../assets/logo.png';

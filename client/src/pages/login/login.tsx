@@ -1,6 +1,5 @@
 import React, { useContext, useState } from 'react';
 import { useMutation } from '@apollo/client';
-import { gql } from '@apollo/client';
 import { useHistory, Link } from 'react-router-dom';
 
 import './login.css';
@@ -20,7 +19,7 @@ function Login() {
     password: '',
   });
 
-  const [loginUser, { loading }] = useMutation(LOGIN_USER, {
+  const [loginUser] = useMutation(LOGIN_USER, {
     update(proxy, { data: { login: userData } }) {
       context.login(userData);
       history.push('/');

@@ -1,21 +1,15 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import { useMutation } from '@apollo/client';
 import { useHistory } from 'react-router-dom';
 
-import { FETCH_TRIPS_BY_USERNAME } from '../../../services/queryService';
-import { GET_TRIP_BY_ID } from '../../../services/queryService';
 import { CREATE_TRIP } from '../../../services/mutationService';
-import { AuthContext } from '../../../Context/Auth';
-import { useForm } from '../../../util/Hooks';
-import SearchLocationInput from '../../../APIs/googlemaps/searchlocationinput/SearchLocationInput.js';
-import DestinationPhotos from '../../../APIs/pexels/getphoto/getphoto';
+import SearchLocationInput from '../../../APIs/GoogleMaps/SearchLocationInput/SearchLocationInput.js';
+import DestinationPhotos from '../../../APIs/Pexels/GetPhoto/GetPhoto';
 import Daterangepicker from '../../../Components/DateRangePicker/DateRangePicker';
 import ExpensesComponent from '../../../Components/Expenses/CreateExpenses';
 
 function CreateTrip() {
   let history = useHistory();
-
-  const { user }: any = useContext(AuthContext);
 
   const [errors, setErrors]: any = useState({});
 
@@ -33,14 +27,12 @@ function CreateTrip() {
     endDate: new Date(),
   });
 
-  const { onChange, onSubmit, values }: any = useForm(createTripCallback, {
-    destination: '',
-    toDo: '',
-    friends: '',
-  });
-  console.log(formattedAddress);
+  const onSubmit = (e: React.SyntheticEvent) => {
+    e.preventDefault();
+    createTrip();
+  };
 
-  const [createTrip, { loading }] = useMutation(CREATE_TRIP, {
+  const [createTrip] = useMutation(CREATE_TRIP, {
     variables: {
       destination: {
         formattedAddress: formattedAddress[0],
@@ -90,10 +82,6 @@ function CreateTrip() {
       });
     },
   });
-
-  function createTripCallback() {
-    createTrip();
-  }
 
   return (
     <div className="p-5 d-flex justify-content-center flex-column flex-wrap">

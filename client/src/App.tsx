@@ -1,5 +1,5 @@
-import React, { useEffect, useContext } from 'react';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import React from 'react';
+import { BrowserRouter as Router, Switch } from 'react-router-dom';
 
 import './bootstrap.css';
 import './App.css';
@@ -12,7 +12,8 @@ import Register from './Pages/Register/Register';
 import Login from './Pages/Login/Login';
 import Home from './Pages/Home/Home';
 import Profile from './Pages/Profile/Profile';
-import RandomVideo from './APIs/pexels/randomvideo/randomvideo';
+import Search from './Pages/Search/Search';
+import RandomVideo from './APIs/Pexels/RandomVideo/RandomVideo';
 import DisplayTrips from './Pages/Trips/DisplayTrips/DisplayTrips';
 import CreateTrip from './Pages/Trips/CreateTrip/CreateTrip';
 import TripDetail from './Pages/Trips/TripDetail/TripDetail';
@@ -34,6 +35,9 @@ function App() {
             </AuthRoute>
             <PrivateRoute exact path="/me">
               <Profile />
+            </PrivateRoute>
+            <PrivateRoute exact path="/search">
+              <Search />
             </PrivateRoute>
             <PrivateRoute exact path="/trips/:id">
               <TripDetail />

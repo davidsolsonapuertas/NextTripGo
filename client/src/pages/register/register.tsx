@@ -3,9 +3,8 @@ import { useMutation } from '@apollo/client';
 import { useHistory, Link } from 'react-router-dom';
 
 import './register.css';
-
 import { REGISTER_USER } from '../../services/mutationService';
-import SearchLocationInput from '../../APIs/googlemaps/searchlocationinput/SearchLocationInput.js';
+import SearchLocationInput from '../../APIs/GoogleMaps/SearchLocationInput/SearchLocationInput.js';
 import { useForm } from '../../util/Hooks';
 import { AuthContext } from '../../Context/Auth';
 
@@ -25,7 +24,7 @@ function Register(props: any) {
     confirmPassword: '',
   });
 
-  const [addUser, { loading }] = useMutation(REGISTER_USER, {
+  const [addUser] = useMutation(REGISTER_USER, {
     update(proxy, { data: { register: userData } }) {
       context.login(userData);
       history.push('/');

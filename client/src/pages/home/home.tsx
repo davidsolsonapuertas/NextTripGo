@@ -1,19 +1,6 @@
-import React, { useEffect, useState } from 'react';
-
-import SearchLocationInput from '../../APIs/googlemaps/searchlocationinput/SearchLocationInput.js';
+import React from 'react';
 
 function Home() {
-  return (
-    <div>
-      {/* {loading ? (
-        <h1>Loading...</h1>
-      ) : (
-        trips &&
-        trips.map((trip: any) => {
-          <div key="trip.id">{trip.destination}</div>;
-        })
-      )} */}
-    </div>
-  );
+  return <div></div>;
 }
 export default Home;
