@@ -3,20 +3,42 @@ import { gql } from '@apollo/client';
 export const FETCH_USERS = gql`
   query getUsers {
     getUsers {
+      username
+    }
+  }
+`;
+
+export const GET_USER_BY_USERNAME = gql`
+  query getUser($username: String) {
+    getUser(username: $username) {
       id
       firstname
       lastname
-      currentCity
+      username
+      currentCity {
+        city
+        latitude
+        longitude
+      }
       profilePic
       friends {
-        id
-        firstname
-        lastname
-        currentCity
         username
-        createdAt
       }
-      username
+      trips {
+        id
+        destination {
+          formattedAddress
+          latitude
+          longitude
+        }
+        picture
+        fromDate
+        toDate
+        createdAt
+        friends {
+          username
+        }
+      }
       createdAt
     }
   }
@@ -45,7 +67,9 @@ export const GET_TRIP_BY_ID = gql`
       }
       toDo
       friends {
+        id
         username
+        profilePic
       }
     }
   }

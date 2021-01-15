@@ -4,12 +4,13 @@ const { UserInputError } = require('apollo-server');
 const path = require('path');
 const fs = require('fs');
 
+const checkAuth = require('../util/check-auth');
 const {
   validateRegisterInput,
   validateLoginInput,
+  validateFriendRequest,
 } = require('../util/validators');
 const { SECRET_KEY } = require('../../config');
-
 const User = require('../models/user');
 const Trip = require('../models/trip');
 
@@ -48,8 +49,10 @@ module.exports = {
         throw new Error(error);
       }
     },
+
     uploads: (parent, args) => {},
   },
+
   User: {
     async trips(obj) {
       const res = [];
@@ -59,7 +62,35 @@ module.exports = {
       }
       return res;
     },
+
+    async friends(obj) {
+      const res = [];
+      for (key in obj.friends) {
+        user = await User.findById(obj.friends[key]);
+        res.push(user);
+      }
+      return res;
+    },
+
+    async sentFriendRequests(obj) {
+      const res = [];
+      for (key in obj.sentFriendRequests) {
+        user = await User.findById(obj.sentFriendRequests[key]);
+        res.push(user);
+      }
+      return res;
+    },
+
+    async receivedFriendRequests(obj) {
+      const res = [];
+      for (key in obj.receivedFriendRequests) {
+        user = await User.findById(obj.receivedFriendRequests[key]);
+        res.push(user);
+      }
+      return res;
+    },
   },
+
   Mutation: {
     async login(_, { username, password }) {
       const { errors, valid } = validateLoginInput(username, password);
@@ -89,6 +120,7 @@ module.exports = {
         token,
       };
     },
+
     async register(
       _,
       {
@@ -151,6 +183,61 @@ module.exports = {
         token,
       };
     },
+
+    async sendFriendRequest(_, { to }, context) {
+      const user = checkAuth(context);
+
+      userFrom = await User.findById(user.id);
+      const userTo = await User.findOne({ username: to });
+
+      const { valid, errors } = validateFriendRequest(user.id, userTo);
+      if (!valid) {
+        throw new UserInputError('Errors', { errors });
+      }
+
+      await User.findByIdAndUpdate(user.id, {
+        $addToSet: { sentFriendRequests: userTo.id },
+      });
+
+      await User.findByIdAndUpdate(userTo.id, {
+        $addToSet: { receivedFriendRequests: user.id },
+      });
+
+      return 'Successful';
+    },
+
+    async acceptFriendRequest(_, { to }, context) {
+      const user = checkAuth(context);
+      const userTo = await User.findOne({ username: to });
+
+      await User.findByIdAndUpdate(user.id, {
+        $pull: { receivedFriendRequests: userTo.id },
+        $addToSet: { friends: userTo.id },
+      });
+
+      await User.findByIdAndUpdate(userTo.id, {
+        $pull: { sentFriendRequests: user.id },
+        $addToSet: { friends: user.id },
+      });
+
+      return 'Successful';
+    },
+
+    async rejectFriendRequest(_, { to }, context) {
+      const user = checkAuth(context);
+      const userTo = await User.findOne({ username: to });
+
+      await User.findByIdAndUpdate(user.id, {
+        $pull: { receivedFriendRequests: userTo.id },
+      });
+
+      await User.findByIdAndUpdate(userTo.id, {
+        $pull: { sentFriendRequests: user.id },
+      });
+
+      return 'Successful';
+    },
+
     uploadFile: async (parent, args) => {
       return args.file.then((file) => {
         const { createReadStream, filename, mimetype } = file;

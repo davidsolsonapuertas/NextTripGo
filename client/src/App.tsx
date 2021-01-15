@@ -18,6 +18,7 @@ import DisplayTrips from './Pages/Trips/DisplayTrips/DisplayTrips';
 import CreateTrip from './Pages/Trips/CreateTrip/CreateTrip';
 import TripDetail from './Pages/Trips/TripDetail/TripDetail';
 import PageNotFound from './Pages/404';
+import UserProfile from './Pages/UserProfile/UserProfile';
 
 function App() {
   return (
@@ -35,6 +36,9 @@ function App() {
             </AuthRoute>
             <PrivateRoute exact path="/me">
               <Profile />
+            </PrivateRoute>
+            <PrivateRoute exact path="/user/:id">
+              <UserProfile />
             </PrivateRoute>
             <PrivateRoute exact path="/search">
               <Search />

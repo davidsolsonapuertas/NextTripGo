@@ -1,14 +1,16 @@
 import React from 'react';
-import { Trip } from '../../Interfaces/Trip';
 
-import TripCard from './TripCard';
+import { Trip } from '../../Interfaces/Trip';
+import TripCardMy from './MyTripCards/TripCardMy';
+import TripCardUser from './Users/TripCardUser';
 
 type IProps = {
   trips: Trip[];
   time: String;
+  mode: String;
 };
 
-function TripCards({ trips, time }: IProps) {
+function TripCards({ trips, time, mode }: IProps) {
   if (typeof trips !== 'undefined') {
     trips = trips
       .filter((trip) => {
@@ -23,8 +25,12 @@ function TripCards({ trips, time }: IProps) {
   return (
     <div className="d-flex mt-4 justify-content-center flex-wrap">
       {trips &&
-        trips.map((trip: Trip, index: Number) => {
-          return <TripCard key={index} trip={trip} />;
+        trips.map((trip: Trip, index: number) => {
+          if (mode === 'My') {
+            return <TripCardMy key={index} trip={trip} />;
+          } else if (mode === 'Users') {
+            return <TripCardUser key={index} trip={trip} />;
+          }
         })}
     </div>
   );

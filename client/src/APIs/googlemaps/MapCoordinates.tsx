@@ -1,14 +1,14 @@
-import React, { useEffect, useRef } from 'react';
-import { Loader } from '@googlemaps/js-api-loader';
+import React, { useEffect, CSSProperties } from 'react';
 
 import { GoogleKey } from '../../config';
 
 interface IProps {
   latitude: string;
   longitude: string;
+  style: CSSProperties;
 }
 
-const MapCoordinates = ({ latitude, longitude }: IProps) => {
+const MapCoordinates = ({ latitude, longitude, style }: IProps) => {
   useEffect(() => {
     const googleMapScript = document.createElement('script');
     googleMapScript.src = `https://maps.googleapis.com/maps/api/js?key=${GoogleKey}&libraries=places`;
@@ -37,10 +37,7 @@ const MapCoordinates = ({ latitude, longitude }: IProps) => {
   }
 
   return (
-    <div
-      style={{ width: '500px', height: '500px' }}
-      className="card shadow-hover shadow mb-4"
-    >
+    <div style={style} className="card shadow-hover shadow mb-4">
       <div id="map" />
     </div>
   );

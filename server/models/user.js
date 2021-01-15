@@ -19,6 +19,18 @@ const userSchema = new Schema({
       ref: 'trips',
     },
   ],
+  sentFriendRequests: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'users',
+    },
+  ],
+  receivedFriendRequests: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'users',
+    },
+  ],
   email: String,
   password: String,
   createdAt: String,

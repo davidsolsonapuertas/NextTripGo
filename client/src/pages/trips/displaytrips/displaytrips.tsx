@@ -58,9 +58,9 @@ function DisplayTrips() {
       </Card>
 
       {trips?.length && hash === '#past' ? (
-        <TripCards trips={trips} time={'past'} />
+        <TripCards trips={trips} time={'past'} mode="My" />
       ) : (
-        <TripCards trips={trips} time={'upcoming'} />
+        <TripCards trips={trips} time={'upcoming'} mode="My" />
       )}
     </div>
   );

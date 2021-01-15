@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useParams, Link, useHistory } from 'react-router-dom';
-import { Card, Button, Dropdown } from 'react-bootstrap';
+import { Card, Dropdown } from 'react-bootstrap';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import moment from 'moment';
 import { useQuery, useMutation } from '@apollo/client';
@@ -10,7 +10,7 @@ import Logo from '../../../assets/logo.png';
 import Modal from '../../../Containers/Modal/Modal';
 import { GET_TRIP_BY_ID } from '../../../services/queryService';
 import SeeExpenses from '../../../Components/Expenses/SeeExpenses';
-import MapCoordinates from '../../../APIs/googlemaps/MapCoordinates';
+import MapCoordinates from '../../../APIs/GoogleMaps/MapCoordinates';
 
 interface IProps {
   id: string;
@@ -81,6 +81,7 @@ function TripDetail() {
               <MapCoordinates
                 latitude={trip.destination.latitude}
                 longitude={trip.destination.longitude}
+                style={{ width: '500px', height: '500px' }}
               />
             </div>
           </div>

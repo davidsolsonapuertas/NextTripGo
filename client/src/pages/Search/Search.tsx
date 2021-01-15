@@ -38,7 +38,6 @@ function Search() {
   const lowerCasedUsernames = allUsers?.map((user: User) =>
     user.username.toLowerCase()
   );
-  console.log(suggestions);
 
   const getSuggestions = (value: string): string[] => {
     return lowerCasedUsernames.filter((usernames: String) =>
@@ -56,7 +55,7 @@ function Search() {
           setSuggestions(getSuggestions(value));
         }}
         onSuggestionSelected={(_, { suggestionValue }) =>
-          history.push('/users/' + suggestionValue)
+          history.push('/user/' + suggestionValue)
         }
         getSuggestionValue={(suggestion) => suggestion}
         renderSuggestion={(suggestion) => <span>{suggestion}</span>}

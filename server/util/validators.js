@@ -91,3 +91,26 @@ module.exports.validateTripInput = (
     valid: Object.keys(errors).length < 1,
   };
 };
+
+module.exports.validateFriendRequest = (friendFromId, friendTo) => {
+  const errors = {};
+  friendToRequests = friendTo.receivedFriendRequests;
+  friendToFriends = friendTo.friends;
+
+  for (let key in friendToRequests) {
+    if (friendToRequests[key] == friendFromId) {
+      errors.friendRequest = 'Friend request already sent';
+    }
+  }
+
+  for (let key in friendToFriends) {
+    if (friendToFriends[key] == friendFromId) {
+      errors.friendRequest = 'You are already friends';
+    }
+  }
+
+  return {
+    errors,
+    valid: Object.keys(errors).length < 1,
+  };
+};

@@ -32,10 +32,11 @@ const typeDefs = gql`
     lastname: String!
     username: String!
     currentCity: String
-    profilePicture: File
     profilePic: String
     friends: [User]
     trips: [Trip]
+    sentFriendRequests: [User]
+    receivedFriendRequests: [User]
     email: String!
     token: String!
     createdAt: String!
@@ -82,6 +83,9 @@ const typeDefs = gql`
     uploadFile(file: Upload!): File!
     createTrip(createTripInput: CreateTripInput!): Trip!
     deleteTrip(tripId: ID!): String!
+    sendFriendRequest(to: String!): String!
+    acceptFriendRequest(to: String!): String!
+    rejectFriendRequest(to: String!): String!
   }
   type Subscription {
     newTrip: Trip!

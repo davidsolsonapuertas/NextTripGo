@@ -5,12 +5,17 @@ import moment from 'moment';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import { useMutation } from '@apollo/client';
 
-import { DELETE_TRIP } from '../../services/mutationService';
-import Logo from '../../assets/logo.png';
-import Modal from '../../Containers/Modal/Modal';
-import './tripcards.css';
+import { Trip } from '../../../Interfaces/Trip';
+import { DELETE_TRIP } from '../../../services/mutationService';
+import Logo from '../../../assets/logo.png';
+import Modal from '../../../Containers/Modal/Modal';
+import './../tripcards.css';
 
-function TripCard({ trip }: any) {
+interface IProps {
+  trip: Trip;
+}
+
+function TripCard({ trip }: IProps) {
   const [showModal, setShowModal] = useState(false);
   let history = useHistory();
 
@@ -26,44 +31,23 @@ function TripCard({ trip }: any) {
 
   return (
     <>
-      <div key={trip.id} className="mx-3 card shadow shadow-hover mb-4">
-        <Link to={'/trips/' + trip.id}>
-          <Card.Img
-            className="img-thumbnail mb-1"
-            src={trip.picture ? trip.picture : Logo}
-          />
-        </Link>
+      <div
+        key={trip.id}
+        className="mx-3 trip-user card shadow shadow-hover mb-4"
+      >
+        <Card.Img
+          className="img-thumbnail mb-1"
+          src={trip.picture ? trip.picture : Logo}
+        />
         <div className="card-header py-3 d-flex flex-row align-items-center justify-content-between">
           <h6 className="m-0 font-weight-bold text-primary">
-            <Link to={'/trips/' + trip.id}>
-              {trip.destination.formattedAddress}
-            </Link>
+            {trip.destination.formattedAddress}
           </h6>
-          <div className="dropdown no-arrow">
-            <Dropdown>
-              <Dropdown.Toggle variant="link" id="dropdown-basic">
-                <MoreVertIcon />
-              </Dropdown.Toggle>
-              <Dropdown.Menu align="right">
-                <Dropdown.Item variant="danger" onClick={toggleModal}>
-                  Delete
-                </Dropdown.Item>
-                <Dropdown.Item href={'#edit' + trip.id}>Edit</Dropdown.Item>
-              </Dropdown.Menu>
-            </Dropdown>
-          </div>
         </div>
         <div className="card-body card-margin">
           {moment(trip.fromDate).format('MMM Do YY')} {' – '}
           {moment(trip.toDate).format('MMM Do YY')}
         </div>
-        <Button
-          href={'/trips/' + trip.id}
-          className="rounded-0"
-          variant="primary"
-        >
-          See trip
-        </Button>
       </div>
 
       <Modal

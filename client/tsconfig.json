@@ -1,4 +1,4 @@
-({
+{
   "compilerOptions": {
     "target": "es5",
     "lib": ["dom", "dom.iterable", "esnext"],
@@ -16,6 +16,5 @@
     "noEmit": true,
     "jsx": "react-jsx"
   },
-  "include": ["src", "index.d.ts"]
-},
-"index.d.ts")
+  "include": ["src"]
+}

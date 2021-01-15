@@ -42,8 +42,6 @@ function ExpensesComponent({ expenses, setExpenses, errors }: IProps) {
     setExpenses(values);
   };
 
-  console.log(errors);
-
   return (
     <div className="w-100">
       <p className="text-center mt-3">Expenses</p>
