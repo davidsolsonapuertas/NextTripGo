@@ -5,7 +5,11 @@ const userSchema = new Schema({
   firstname: String,
   lastname: String,
   username: String,
-  currentCity: String,
+  currentCity: {
+    formattedAddress: String,
+    latitude: String,
+    longitude: String,
+  },
   profilePic: String,
   friends: [
     {
@@ -19,18 +23,8 @@ const userSchema = new Schema({
       ref: 'trips',
     },
   ],
-  sentFriendRequests: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: 'users',
-    },
-  ],
-  receivedFriendRequests: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: 'users',
-    },
-  ],
+  sentFriendRequests: [String],
+  receivedFriendRequests: [String],
   email: String,
   password: String,
   createdAt: String,

@@ -1,18 +1,17 @@
-const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const { UserInputError } = require('apollo-server');
+const bcrypt = require('bcryptjs');
 const path = require('path');
-const fs = require('fs');
+const { createWriteStream } = require('fs');
 
-const checkAuth = require('../util/check-auth');
+const { SECRET_KEY } = require('../../../config');
 const {
   validateRegisterInput,
   validateLoginInput,
   validateFriendRequest,
-} = require('../util/validators');
-const { SECRET_KEY } = require('../../config');
-const User = require('../models/user');
-const Trip = require('../models/trip');
+} = require('../../util/validators');
+const checkAuth = require('../../util/check-auth');
+const User = require('../../models/user');
 
 function generateToken(user) {
   return jwt.sign(
@@ -27,70 +26,6 @@ function generateToken(user) {
 }
 
 module.exports = {
-  Query: {
-    async getUsers() {
-      try {
-        const users = await User.find();
-        return users;
-      } catch (error) {
-        throw new Error(error);
-      }
-    },
-    async getUser(_, { userId }) {
-      try {
-        const user = await User.findById(userId);
-
-        if (user) {
-          return user;
-        } else {
-          throw new Error('User not found');
-        }
-      } catch (error) {
-        throw new Error(error);
-      }
-    },
-
-    uploads: (parent, args) => {},
-  },
-
-  User: {
-    async trips(obj) {
-      const res = [];
-      for (key in obj.trips) {
-        trip = await Trip.findById(obj.trips[key]);
-        res.push(trip);
-      }
-      return res;
-    },
-
-    async friends(obj) {
-      const res = [];
-      for (key in obj.friends) {
-        user = await User.findById(obj.friends[key]);
-        res.push(user);
-      }
-      return res;
-    },
-
-    async sentFriendRequests(obj) {
-      const res = [];
-      for (key in obj.sentFriendRequests) {
-        user = await User.findById(obj.sentFriendRequests[key]);
-        res.push(user);
-      }
-      return res;
-    },
-
-    async receivedFriendRequests(obj) {
-      const res = [];
-      for (key in obj.receivedFriendRequests) {
-        user = await User.findById(obj.receivedFriendRequests[key]);
-        res.push(user);
-      }
-      return res;
-    },
-  },
-
   Mutation: {
     async login(_, { username, password }) {
       const { errors, valid } = validateLoginInput(username, password);
@@ -187,7 +122,6 @@ module.exports = {
     async sendFriendRequest(_, { to }, context) {
       const user = checkAuth(context);
 
-      userFrom = await User.findById(user.id);
       const userTo = await User.findOne({ username: to });
 
       const { valid, errors } = validateFriendRequest(user.id, userTo);
@@ -196,11 +130,11 @@ module.exports = {
       }
 
       await User.findByIdAndUpdate(user.id, {
-        $addToSet: { sentFriendRequests: userTo.id },
+        $push: { sentFriendRequests: userTo.id },
       });
 
       await User.findByIdAndUpdate(userTo.id, {
-        $addToSet: { receivedFriendRequests: user.id },
+        $push: { receivedFriendRequests: user.id },
       });
 
       return 'Successful';
@@ -238,22 +172,50 @@ module.exports = {
       return 'Successful';
     },
 
-    uploadFile: async (parent, args) => {
-      return args.file.then((file) => {
-        const { createReadStream, filename, mimetype } = file;
+    async undoFriendRequest(_, { to }, context) {
+      const user = checkAuth(context);
+      const userTo = await User.findOne({ username: to });
 
-        const fileStream = createReadStream();
-
-        fileStream.pipe(
-          fs.createWriteStream(
-            path.join(__dirname, `../public/images/${filename}`)
-          )
-        );
-
-        return {
-          url: `http://localhost:4000/images/${filename}`,
-        };
+      await User.findByIdAndUpdate(user.id, {
+        $pull: { sentFriendRequests: userTo.id },
       });
+
+      await User.findByIdAndUpdate(userTo.id, {
+        $pull: { receivedFriendRequests: user.id },
+      });
+
+      return 'Successful';
+    },
+
+    async deleteFriend(_, { to }, context) {
+      const user = checkAuth(context);
+      const userTo = await User.findOne({ username: to });
+
+      await User.findByIdAndUpdate(user.id, {
+        $pull: { friends: userTo.id },
+      });
+
+      await User.findByIdAndUpdate(userTo.id, {
+        $pull: { friends: user.id },
+      });
+
+      return 'Successful';
+    },
+
+    uploadFile: async (_, { file }) => {
+      const { createReadStream, filename } = await file;
+      const pictureName = filename.split('.').slice(-1);
+
+      await new Promise((res) =>
+        createReadStream()
+          .pipe(
+            createWriteStream(
+              path.join(__dirname, '../../public/images', pictureName)
+            )
+          )
+          .on('close', res)
+      );
+      return pictureName;
     },
   },
 };

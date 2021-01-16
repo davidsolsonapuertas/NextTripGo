@@ -24,7 +24,23 @@ const tripSchema = new Schema({
       currency: String,
     },
   ],
-  toDo: String,
+  activities: [
+    [
+      {
+        day: String,
+        fromHour: String,
+        toHour: String,
+        activity: String,
+        description: String,
+        price: Number,
+        location: {
+          formattedAddress: String,
+          latitude: String,
+          longitude: String,
+        },
+      },
+    ],
+  ],
   friends: {
     type: Schema.Types.ObjectId,
     ref: 'users',

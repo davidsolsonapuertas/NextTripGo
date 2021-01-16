@@ -3,7 +3,7 @@ const { gql } = require('apollo-server');
 const typeDefs = gql`
   type Trip {
     id: ID!
-    destination: Destination!
+    destination: Location!
     picture: String
     fromDate: String
     toDate: String
@@ -11,12 +11,25 @@ const typeDefs = gql`
     userid: User!
     expenses: [Expense]
     toDo: String
+    # activities: [DayActivities]
     friends: [User]
   }
+  # type DayActivities {
+  #   dayactivities: [Activity]
+  # }
+  # type Activity {
+  #   day: String
+  #   fromHour: String
+  #   toHour: String
+  #   activity: String
+  #   description: String
+  #   price: Float
+  #   location: Location
+  # }
   type File {
     url: String!
   }
-  type Destination {
+  type Location {
     formattedAddress: String
     latitude: String
     longitude: String
@@ -31,12 +44,12 @@ const typeDefs = gql`
     firstname: String!
     lastname: String!
     username: String!
-    currentCity: String
+    currentCity: Location
     profilePic: String
     friends: [User]
     trips: [Trip]
-    sentFriendRequests: [User]
-    receivedFriendRequests: [User]
+    sentFriendRequests: [String]
+    receivedFriendRequests: [String]
     email: String!
     token: String!
     createdAt: String!
@@ -45,13 +58,13 @@ const typeDefs = gql`
     firstname: String!
     lastname: String!
     username: String!
-    currentCity: String
+    currentCity: LocationInput
     email: String!
     password: String!
     confirmPassword: String!
   }
   input CreateTripInput {
-    destination: DestinationInput!
+    destination: LocationInput!
     picture: String
     fromDate: String
     toDate: String
@@ -64,28 +77,31 @@ const typeDefs = gql`
     amount: Float
     currency: String
   }
-  input DestinationInput {
+  input LocationInput {
     formattedAddress: String
     latitude: String
     longitude: String
   }
   type Query {
     getUsers: [User]
-    getUser(userId: ID!): User
+    getUser(username: String!): User
+    getLoggedUser(userId: ID!): User
     uploads: [File]
     getTrips: [Trip]
     getTrip(tripId: ID!): Trip
     getTripsByUsername(userId: ID!): [Trip]
   }
   type Mutation {
-    register(registerInput: RegisterInput): User!
-    login(username: String!, password: String!): User!
-    uploadFile(file: Upload!): File!
-    createTrip(createTripInput: CreateTripInput!): Trip!
-    deleteTrip(tripId: ID!): String!
-    sendFriendRequest(to: String!): String!
-    acceptFriendRequest(to: String!): String!
-    rejectFriendRequest(to: String!): String!
+    register(registerInput: RegisterInput): User
+    login(username: String!, password: String!): User
+    uploadFile(file: Upload!): File
+    createTrip(createTripInput: CreateTripInput!): Trip
+    deleteTrip(tripId: ID!): String
+    sendFriendRequest(to: String!): String
+    acceptFriendRequest(to: String!): String
+    rejectFriendRequest(to: String!): String
+    undoFriendRequest(to: String!): String
+    deleteFriend(to: String!): String
   }
   type Subscription {
     newTrip: Trip!

@@ -1,22 +1,24 @@
-const tripsResolvers = require('./trip');
-const usersResolvers = require('./user');
+const tripsQuery = require('./Trips/tripsQuery');
+const tripsMutation = require('./Trips/tripsMutation');
+const usersQuery = require('./Users/usersQuery');
+const usersMutation = require('./Users/usersMutation');
 
 module.exports = {
   Query: {
-    ...usersResolvers.Query,
-    ...tripsResolvers.Query,
+    ...usersQuery.Query,
+    ...tripsQuery.Query,
   },
   User: {
-    ...usersResolvers.User,
+    ...usersQuery.User,
   },
   Trip: {
-    ...tripsResolvers.Trip,
+    ...tripsQuery.Trip,
   },
   Mutation: {
-    ...usersResolvers.Mutation,
-    ...tripsResolvers.Mutation,
+    ...usersMutation.Mutation,
+    ...tripsMutation.Mutation,
   },
   Subscription: {
-    ...tripsResolvers.Subscription,
+    ...tripsMutation.Subscription,
   },
 };
