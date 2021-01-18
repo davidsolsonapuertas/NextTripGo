@@ -24,6 +24,9 @@ function Profile() {
     if (e.target.files !== null) {
       if (e.target.validity.valid && e.target.files.length) {
         const file = e?.target?.files[0];
+        console.log('thefile', file);
+        console.log('validity', e.target.validity);
+
         setFileSelected(e.target.files[0].name);
 
         if (!file) return;
@@ -37,15 +40,14 @@ function Profile() {
       <div>
         <h1>Upload File</h1>
         <input
-          hidden={true}
           type="file"
           id="imageInput"
           accept=".png, .jpg"
           onChange={handleFileChange}
         />
-        <IconButton onClick={handleEditPicture} className="button">
+        {/* <IconButton onClick={handleEditPicture} className="button">
           <EditIcon color="primary" />
-        </IconButton>
+        </IconButton> */}
       </div>
     </div>
   );

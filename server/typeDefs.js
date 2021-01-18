@@ -1,6 +1,8 @@
 const { gql } = require('apollo-server');
 
 const typeDefs = gql`
+  scalar FileUpload
+
   type Trip {
     id: ID!
     destination: Location!
@@ -93,7 +95,7 @@ const typeDefs = gql`
   type Mutation {
     register(registerInput: RegisterInput): User
     login(username: String!, password: String!): User
-    uploadFile(file: Upload!): File!
+    uploadFile(file: FileUpload!): File!
     createTrip(createTripInput: CreateTripInput!): Trip
     deleteTrip(tripId: ID!): String
     sendFriendRequest(to: String!): String

@@ -3,6 +3,7 @@ const { UserInputError } = require('apollo-server');
 const bcrypt = require('bcryptjs');
 const path = require('path');
 const fs = require('fs');
+// const { createWriteStream, unlink } = require('fs');
 
 const { SECRET_KEY } = require('../../../config');
 const {
@@ -202,12 +203,55 @@ module.exports = {
       return 'Successful';
     },
     uploadFile: async (_, { file }) => {
-      const { createReadStream, filename, mimetype, encoding } = await file;
-
+      const { createReadStream, filename, mimetype } = await file;
       const stream = createReadStream();
-      const pathName = path.join(__dirname, `../../public/images${filename}`);
-      console.log(filename);
-      await stream.pipe(fs.createWriteStream(pathName));
+      // const id = shortid.generate();
+      const path2 = path.join(__dirname, '../../public/images', filename);
+      // const file = { id, filename, mimetype, path };
+
+      try {
+        new Promise((resolve, reject) => {
+          const writeStream = fs.createWriteStream(path2);
+
+          // writeStream.on('finish', resolve);
+          writeStream.on('finish', () => {
+            console.log('finish');
+            resolve();
+          });
+
+          writeStream.on('error', (error) => {
+            unlink(path2, () => {
+              reject(error);
+            });
+          });
+
+          writeStream.on('close', (e) => console.log('closed', e));
+
+          stream.on('error', (error) => writeStream.destroy(error));
+
+          stream.pipe(writeStream);
+        });
+      } catch (error) {
+        console.log(error);
+      }
+      // const { createReadStream, filename, mimetype, encoding } = await file;
+
+      // console.log(filename, mimetype, encoding);
+      // new Promise((res, reject) =>
+      //   createReadStream()
+      //     .pipe(
+      //       createWriteStream(
+      //         path.join(__dirname, '../../public/images', filename)
+      //       )
+      //     )
+      //     .on('error', (err) => reject(err))
+      //     .on('finish', res)
+      // );
+
+      // const stream = createReadStream();
+      // const pathName = path.join(__dirname, `../../public/images${filename}`);
+      // console.log(filename);
+      // await stream.pipe(fs.createWriteStream(pathName));
       return {
         url: `http://localhost:4000/images/${filename}`,
       };

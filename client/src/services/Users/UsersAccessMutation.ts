@@ -49,7 +49,7 @@ export const LOGIN_USER = gql`
 `;
 
 export const UPLOAD_FILE = gql`
-  mutation uploadFile($file: Upload!) {
+  mutation uploadFile($file: FileUpload!) {
     uploadFile(file: $file) {
       url
     }
