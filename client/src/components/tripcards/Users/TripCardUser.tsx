@@ -18,7 +18,7 @@ function TripCard({ trip }: IProps) {
         className="mx-3 trip-user card shadow shadow-hover mb-4"
       >
         <Card.Img
-          className="img-thumbnail mb-1"
+          className="img-thumbnail mb-0"
           src={trip.picture ? trip.picture : Logo}
         />
         <div className="card-header py-3 d-flex flex-row align-items-center justify-content-between">

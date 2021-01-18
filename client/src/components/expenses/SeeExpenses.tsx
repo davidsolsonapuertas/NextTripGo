@@ -56,85 +56,83 @@ const SeeExpenses: FunctionComponent<IProps> = ({ expenses }) => {
   }, []);
 
   return (
-    <div className="m-5">
-      <div className="card shadow-hover shadow mb-4">
-        <div className="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-          <h6 className="m-0 font-weight-bold text-primary">Expenses</h6>
-        </div>
-        <div className="btn-group currency-buttons" role="group">
-          {currencies.length >= 0 &&
-            currencies.map((currency, index) => {
+    <div className="card shadow-hover shadow">
+      <div className="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+        <h6 className="m-0 font-weight-bold text-primary">Expenses</h6>
+      </div>
+      <div className="btn-group currency-buttons" role="group">
+        {currencies.length >= 0 &&
+          currencies.map((currency, index) => {
+            return (
+              <button
+                key={index}
+                onClick={() => {
+                  changeCurrency(currency);
+                }}
+                type="button"
+                className={'btn rounded-0 ' + 'btn-' + variant[index]}
+              >
+                {currency}
+              </button>
+            );
+          })}
+        {currencies.length > 1 && (
+          <button
+            type="button"
+            onClick={() => {
+              setChangedExpenses(expensesCopy);
+              setTotalExpenses(0);
+            }}
+            className={'btn rounded-0 btn-link'}
+          >
+            Mixed
+          </button>
+        )}
+      </div>
+
+      <div className="card-body">
+        {totalExpenses !== 0 && (
+          <div className="chart-pie pt-4 pb-2">
+            <PieChart expenses={changedExpenses} />
+          </div>
+        )}
+        <div className="mt-4 text-center small">
+          {changedExpenses.length > 0 &&
+            changedExpenses.map((expense: Expense, index: number) => {
               return (
-                <button
+                <div
                   key={index}
-                  onClick={() => {
-                    changeCurrency(currency);
-                  }}
-                  type="button"
-                  className={'btn rounded-0 ' + 'btn-' + variant[index]}
+                  className="card-header py-3 d-flex flex-row align-items-center justify-content-around"
                 >
-                  {currency}
-                </button>
+                  <span className="d-flex w-100 justify-content-between">
+                    <FiberManualRecordIcon
+                      className="mr-3"
+                      style={{ color: `${colors[index]}` }}
+                    />
+                    {expense.type + ' '}
+                    <div>
+                      {expense.amount + ' '}
+                      {expense.currency}
+                    </div>
+                  </span>
+                </div>
               );
             })}
-          {currencies.length > 1 && (
-            <button
-              type="button"
-              onClick={() => {
-                setChangedExpenses(expensesCopy);
-                setTotalExpenses(0);
-              }}
-              className={'btn rounded-0 btn-link'}
-            >
-              Mixed
-            </button>
-          )}
-        </div>
-
-        <div className="card-body">
           {totalExpenses !== 0 && (
-            <div className="chart-pie pt-4 pb-2">
-              <PieChart expenses={changedExpenses} />
+            <div className="card-header py-3 d-flex flex-row align-items-center justify-content-around">
+              <span className="d-flex w-100 justify-content-between">
+                <FiberManualRecordIcon
+                  className="mr-3"
+                  style={{ color: `${colors[48]}` }}
+                />
+                Total expenses
+                <div>
+                  {Math.round(totalExpenses * 100) / 100 + ' '}
+                  {changedExpenses[0].currency}
+                </div>
+              </span>
             </div>
           )}
-          <div className="mt-4 text-center small">
-            {changedExpenses.length > 0 &&
-              changedExpenses.map((expense: Expense, index: number) => {
-                return (
-                  <div
-                    key={index}
-                    className="card-header py-3 d-flex flex-row align-items-center justify-content-around"
-                  >
-                    <span className="d-flex w-100 justify-content-between">
-                      <FiberManualRecordIcon
-                        className="mr-3"
-                        style={{ color: `${colors[index]}` }}
-                      />
-                      {expense.type + ' '}
-                      <div>
-                        {expense.amount + ' '}
-                        {expense.currency}
-                      </div>
-                    </span>
-                  </div>
-                );
-              })}
-            {totalExpenses !== 0 && (
-              <div className="card-header py-3 d-flex flex-row align-items-center justify-content-around">
-                <span className="d-flex w-100 justify-content-between">
-                  <FiberManualRecordIcon
-                    className="mr-3"
-                    style={{ color: `${colors[48]}` }}
-                  />
-                  Total expenses
-                  <div>
-                    {Math.round(totalExpenses * 100) / 100 + ' '}
-                    {changedExpenses[0].currency}
-                  </div>
-                </span>
-              </div>
-            )}
-          </div>
         </div>
       </div>
     </div>

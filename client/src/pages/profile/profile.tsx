@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { useMutation } from '@apollo/react-hooks';
 import { UPLOAD_FILE } from '../../services/Users/UsersAccessMutation';
+import { IconButton } from '@material-ui/core';
+import EditIcon from '@material-ui/icons/Edit';
 
 interface Event<T = EventTarget> {
   target: T;
@@ -13,13 +15,17 @@ function Profile() {
       console.log(data);
     },
   });
+  const handleEditPicture = () => {
+    const fileInput = document.getElementById('imageInput');
+    fileInput?.click();
+  };
+
   const handleFileChange = async (e: Event<HTMLInputElement>) => {
     if (e.target.files !== null) {
       if (e.target.validity.valid && e.target.files.length) {
         const file = e?.target?.files[0];
-        console.log(file?.name);
-
         setFileSelected(e.target.files[0].name);
+
         if (!file) return;
 
         uploadFile({ variables: { file } });
@@ -30,7 +36,16 @@ function Profile() {
     <div>
       <div>
         <h1>Upload File</h1>
-        <input type="file" accept=".png, .jpg" onChange={handleFileChange} />
+        <input
+          hidden={true}
+          type="file"
+          id="imageInput"
+          accept=".png, .jpg"
+          onChange={handleFileChange}
+        />
+        <IconButton onClick={handleEditPicture} className="button">
+          <EditIcon color="primary" />
+        </IconButton>
       </div>
     </div>
   );

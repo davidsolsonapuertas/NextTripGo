@@ -7,11 +7,12 @@ import { useQuery, useMutation } from '@apollo/client';
 
 import './tripdetail.css';
 import { DELETE_TRIP } from '../../../services/Trips/TripsMutation';
+import { GET_TRIP_BY_ID } from '../../../services/Trips/TripsQuery';
 import Logo from '../../../assets/logo.png';
 import Modal from '../../../Containers/Modal/Modal';
-import { GET_TRIP_BY_ID } from '../../../services/Trips/TripsQuery';
 import SeeExpenses from '../../../Components/Expenses/SeeExpenses';
 import MapCoordinates from '../../../APIs/GoogleMaps/MapCoordinates';
+import ShowFriends from '../../../Components/Friends/ShowFriends';
 
 interface IProps {
   id: string;
@@ -45,10 +46,10 @@ function TripDetail() {
         <div className="grid-container-detail">
           <div
             key={trip.id}
-            className="Card d-flex justify-content-center card shadow shadow-hover m-5"
+            className="Card d-flex justify-content-center card shadow shadow-hover mr-3 mt-5"
           >
             <Card.Img
-              className="img-thumbnail w-100 mb-1"
+              className="img-thumbnail w-100 mb-0"
               src={trip.picture ? trip.picture : Logo}
             />
             <div className="card-header py-3 d-flex flex-row align-items-center justify-content-between">
@@ -72,16 +73,19 @@ function TripDetail() {
             <div className="card-body card-margin">
               {moment(trip.fromDate).format('MMM Do YY')} {' – '}
               {moment(trip.toDate).format('MMM Do YY')}
+              {trip?.friends?.length > 0 && (
+                <ShowFriends friends={trip?.friends} />
+              )}
             </div>
           </div>
-          <div className="Map m-5">
+          <div className="Map mt-5 mb-3 mr-5 ml-3">
             <MapCoordinates
               latitude={trip.destination.latitude}
               longitude={trip.destination.longitude}
               style={{ width: '500px', height: '500px' }}
             />
           </div>
-          <div className="Expenses w-100">
+          <div className="Expenses mr-3 mb-5">
             {trip.expenses.length > 0 && (
               <SeeExpenses expenses={trip.expenses} />
             )}

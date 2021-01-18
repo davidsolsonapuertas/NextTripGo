@@ -4,7 +4,6 @@
   gap: 0px 0px;
   grid-template-areas:
     'Card Card Map Map'
-    'Card Card Map Map'
     'Expenses Expenses Friends Friends';
 }
 .Map {
@@ -14,11 +13,14 @@
 }
 .Card {
   grid-area: Card;
+  height: 500px;
   display: flex;
+  margin-left: 15%;
   justify-content: center;
 }
 .Expenses {
   grid-area: Expenses;
+  margin-left: 15%;
 }
 .Friends {
   grid-area: Friends;

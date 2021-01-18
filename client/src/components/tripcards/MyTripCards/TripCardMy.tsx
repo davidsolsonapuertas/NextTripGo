@@ -34,7 +34,7 @@ function TripCard({ trip }: IProps) {
       <div key={trip.id} className="mx-3 card shadow shadow-hover mb-4">
         <Link to={'/trips/' + trip.id}>
           <Card.Img
-            className="img-thumbnail mb-1"
+            className="img-thumbnail mb-0"
             src={trip.picture ? trip.picture : Logo}
           />
         </Link>
