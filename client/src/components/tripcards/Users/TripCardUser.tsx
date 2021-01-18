@@ -1,34 +1,16 @@
-import React, { useState } from 'react';
-import { Card, Button, Dropdown } from 'react-bootstrap';
-import { Link, useHistory } from 'react-router-dom';
+import React from 'react';
+import { Card } from 'react-bootstrap';
 import moment from 'moment';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
-import { useMutation } from '@apollo/client';
 
-import { Trip } from '../../../Interfaces/Trip';
-import { DELETE_TRIP } from '../../../services/mutationService';
-import Logo from '../../../assets/logo.png';
-import Modal from '../../../Containers/Modal/Modal';
 import './../tripcards.css';
+import { Trip } from '../../../Interfaces/Trip';
+import Logo from '../../../assets/logo.png';
 
 interface IProps {
   trip: Trip;
 }
 
 function TripCard({ trip }: IProps) {
-  const [showModal, setShowModal] = useState(false);
-  let history = useHistory();
-
-  const toggleModal = () => {
-    setShowModal((state) => !state);
-  };
-
-  const [deleteTrip] = useMutation(DELETE_TRIP, {
-    update() {
-      history.go(0);
-    },
-  });
-
   return (
     <>
       <div
@@ -49,19 +31,6 @@ function TripCard({ trip }: IProps) {
           {moment(trip.toDate).format('MMM Do YY')}
         </div>
       </div>
-
-      <Modal
-        header="Delete trip"
-        acceptButtonStyle="danger"
-        acceptButtonText="Delete"
-        body="Are you sure you want to delete this trip?"
-        show={showModal}
-        onCancel={toggleModal}
-        onConfirm={async () => {
-          await deleteTrip({ variables: { tripId: trip.id } });
-          toggleModal();
-        }}
-      ></Modal>
     </>
   );
 }

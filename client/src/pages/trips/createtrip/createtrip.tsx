@@ -2,21 +2,22 @@ import React, { useState } from 'react';
 import { useMutation } from '@apollo/client';
 import { useHistory } from 'react-router-dom';
 
-import { CREATE_TRIP } from '../../../services/mutationService';
+import { CREATE_TRIP } from '../../../services/Trips/TripsMutation';
 import SearchLocationInput from '../../../APIs/GoogleMaps/SearchLocationInput/SearchLocationInput.js';
 import DestinationPhotos from '../../../APIs/Pexels/GetPhoto/GetPhoto';
 import Daterangepicker from '../../../Components/DateRangePicker/DateRangePicker';
 import ExpensesComponent from '../../../Components/Expenses/CreateExpenses';
+import AddFriendsToTrips from '../../../Components/Friends/AddFriendsToTrips';
 
 function CreateTrip() {
   let history = useHistory();
 
   const [errors, setErrors]: any = useState({});
 
-  const [formattedAddress, setFormatedAddress]: any = useState('');
+  const [formattedAddress, setFormatedAddress]: any = useState(['', '', '']);
   const [photo, setPhoto]: any = useState('');
   const [expenses, setExpenses]: any = useState([]);
-
+  const [friends, setFriends]: any = useState([]);
   const [dates, setDates]: any = useState({
     startDate: new Date(),
     endDate: new Date(),
@@ -26,6 +27,8 @@ function CreateTrip() {
     startDate: new Date(),
     endDate: new Date(),
   });
+
+  console.log(formattedAddress);
 
   const onSubmit = (e: React.SyntheticEvent) => {
     e.preventDefault();
@@ -43,35 +46,9 @@ function CreateTrip() {
       toDate: ranges?.endDate,
       picture: photo,
       expenses: expenses,
+      friends: friends,
       // toDo: values.toDo,
-      // friends: values.friends,
     },
-    // refetchQueries: (result) => [
-    //   { query: FETCH_TRIPS_BY_USERNAME, variables: { userId: user.username } },
-    //   { query: GET_TRIP_BY_ID, variables: { tripId: user.username } },
-    // ],
-
-    // const data: any = proxy.readQuery({
-    //   query: FETCH_TRIPS_BY_USERNAME,
-    //   variables: {
-    //     userId: user.id,
-    //   },
-    // });
-    // console.log('data', data);
-    // console.log('result', result.data);
-
-    // proxy.writeQuery({
-    //   query: FETCH_TRIPS_BY_USERNAME,
-    //   variables: {
-    //     userId: user.id,
-    //   },
-    //   data: {
-    //     getTripsByUsername: [
-    //       result.data.createTrip,
-    //       ...data.getTripsByUsername,
-    //     ],
-    //   },
-    // });
     update(proxy: any, result) {
       history.push(`/trips/${result.data.createTrip.id}`);
       history.go(0);
@@ -118,6 +95,12 @@ function CreateTrip() {
             expenses={expenses}
             setExpenses={setExpenses}
             errors={errors}
+          />
+        </div>
+        <div className="form-group d-flex justify-content-center">
+          <AddFriendsToTrips
+            setSelectedFriends={setFriends}
+            selectedFriends={friends}
           />
         </div>
         {Object.keys(errors).length > 0 && (

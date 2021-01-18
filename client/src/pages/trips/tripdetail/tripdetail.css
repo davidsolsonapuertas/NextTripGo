@@ -1,0 +1,25 @@
+.grid-container-detail {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  gap: 0px 0px;
+  grid-template-areas:
+    'Card Card Map Map'
+    'Card Card Map Map'
+    'Expenses Expenses Friends Friends';
+}
+.Map {
+  grid-area: Map;
+  display: flex;
+  justify-content: center;
+}
+.Card {
+  grid-area: Card;
+  display: flex;
+  justify-content: center;
+}
+.Expenses {
+  grid-area: Expenses;
+}
+.Friends {
+  grid-area: Friends;
+}

@@ -37,9 +37,6 @@ function App() {
             <PrivateRoute exact path="/me">
               <Profile />
             </PrivateRoute>
-            <PrivateRoute exact path="/user/:id">
-              <UserProfile />
-            </PrivateRoute>
             <PrivateRoute exact path="/search">
               <Search />
             </PrivateRoute>
@@ -51,6 +48,9 @@ function App() {
             </PrivateRoute>
             <PrivateRoute exact path="/createTrip">
               <CreateTrip />
+            </PrivateRoute>
+            <PrivateRoute exact path="/user/:id">
+              <UserProfile />
             </PrivateRoute>
             <PrivateRoute exact path="/">
               <Home />

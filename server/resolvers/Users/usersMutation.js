@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken');
 const { UserInputError } = require('apollo-server');
 const bcrypt = require('bcryptjs');
 const path = require('path');
-const { createWriteStream } = require('fs');
+const fs = require('fs');
 
 const { SECRET_KEY } = require('../../../config');
 const {
@@ -201,21 +201,16 @@ module.exports = {
 
       return 'Successful';
     },
-
     uploadFile: async (_, { file }) => {
-      const { createReadStream, filename } = await file;
-      const pictureName = filename.split('.').slice(-1);
+      const { createReadStream, filename, mimetype, encoding } = await file;
 
-      await new Promise((res) =>
-        createReadStream()
-          .pipe(
-            createWriteStream(
-              path.join(__dirname, '../../public/images', pictureName)
-            )
-          )
-          .on('close', res)
-      );
-      return pictureName;
+      const stream = createReadStream();
+      const pathName = path.join(__dirname, `../../public/images${filename}`);
+      console.log(filename);
+      await stream.pipe(fs.createWriteStream(pathName));
+      return {
+        url: `http://localhost:4000/images/${filename}`,
+      };
     },
   },
 };

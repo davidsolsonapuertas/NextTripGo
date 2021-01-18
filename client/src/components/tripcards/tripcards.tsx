@@ -16,8 +16,10 @@ function TripCards({ trips, time, mode }: IProps) {
       .filter((trip) => {
         if (time === 'past') {
           return trip.fromDate < new Date().toISOString();
-        } else {
+        } else if (time === 'upcoming') {
           return trip.fromDate > new Date().toISOString();
+        } else {
+          return trip;
         }
       })
       .sort((a, b) => (a.fromDate > b.fromDate ? 1 : -1));

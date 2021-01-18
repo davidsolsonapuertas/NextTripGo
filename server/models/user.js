@@ -14,13 +14,13 @@ const userSchema = new Schema({
   friends: [
     {
       type: Schema.Types.ObjectId,
-      ref: 'users',
+      ref: 'User',
     },
   ],
   trips: [
     {
       type: Schema.Types.ObjectId,
-      ref: 'trips',
+      ref: 'Trip',
     },
   ],
   sentFriendRequests: [String],

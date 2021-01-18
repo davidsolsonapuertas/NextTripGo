@@ -6,7 +6,7 @@ import FlightTakeoffRoundedIcon from '@material-ui/icons/FlightTakeoffRounded';
 
 import TripCards from '../../../Components/TripCards/TripCards';
 import { AuthContext } from '../../../Context/Auth';
-import { FETCH_TRIPS_BY_USERNAME } from '../../../services/queryService';
+import { FETCH_TRIPS_BY_USERNAME } from '../../../services/Trips/TripsQuery';
 
 interface IUser {
   user: any;
@@ -61,6 +61,14 @@ function DisplayTrips() {
         <TripCards trips={trips} time={'past'} mode="My" />
       ) : (
         <TripCards trips={trips} time={'upcoming'} mode="My" />
+      )}
+      {!trips?.length && (
+        <div className="d-flex text-center flex-column">
+          <h3>You don't have any trip yet!</h3>
+          <Link to="/createTrip">
+            <p>Create a trip now!</p>
+          </Link>
+        </div>
       )}
     </div>
   );

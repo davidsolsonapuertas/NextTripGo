@@ -1,9 +1,5 @@
 import React, { useState } from 'react';
-import { useQuery } from '@apollo/client';
 import Autosuggest from 'react-autosuggest';
-import { useHistory } from 'react-router-dom';
-
-import { FETCH_USERS } from '../../services/queryService';
 
 import './Search.css';
 
@@ -27,15 +23,11 @@ interface Friends {
   createdAt: String;
 }
 
-function Search() {
+function Search({ dataToSearch, setSuggestionValue }: any) {
   const [selected, setSelected] = useState('');
   const [suggestions, setSuggestions] = useState<string[]>([]);
-  const history = useHistory();
 
-  let { data } = useQuery(FETCH_USERS);
-  const allUsers = data?.getUsers;
-
-  const lowerCasedUsernames = allUsers?.map((user: User) =>
+  const lowerCasedUsernames = dataToSearch?.map((user: User) =>
     user.username.toLowerCase()
   );
 
@@ -54,9 +46,10 @@ function Search() {
           setSelected(value);
           setSuggestions(getSuggestions(value));
         }}
-        onSuggestionSelected={(_, { suggestionValue }) =>
-          history.push('/user/' + suggestionValue)
-        }
+        onSuggestionSelected={(_, { suggestionValue }) => {
+          setSuggestionValue(suggestionValue);
+          setSelected('');
+        }}
         getSuggestionValue={(suggestion) => suggestion}
         renderSuggestion={(suggestion) => <span>{suggestion}</span>}
         inputProps={{

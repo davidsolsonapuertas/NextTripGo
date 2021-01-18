@@ -1,5 +1,5 @@
 const { ApolloServer, PubSub } = require('apollo-server-express');
-const { graphqlUploadExpress } = require('graphql-upload');
+// const { graphqlUploadExpress } = require('graphql-upload');
 const cors = require('cors');
 const express = require('express');
 const typeDefs = require('./typeDefs');
@@ -17,8 +17,8 @@ const app = express();
 
 app.use(
   cors(),
-  express.static('public'),
-  graphqlUploadExpress({ maxFileSize: 10000000, maxFiles: 11 })
+  express.static('public')
+  // graphqlUploadExpress({ maxFileSize: 10000000, maxFiles: 11 })
 );
 
 app.use('/static', express.static('public'));

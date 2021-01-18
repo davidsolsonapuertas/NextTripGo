@@ -7,8 +7,20 @@ import './privateroute.css';
 import Sidebar from '../../Components/Sidebar/Sidebar';
 import Topbar from '../../Components/Topbar/Topbar';
 
+interface IUser {
+  user: any;
+  login: (userData: User) => void;
+  logout: () => void;
+}
+
+interface User {
+  username: string;
+  password: string;
+  token: string;
+}
+
 function PrivateRoute({ children, ...rest }: any) {
-  const { user } = useContext(AuthContext);
+  const { user } = useContext<IUser>(AuthContext);
   const [sidebar, setSidebar] = useState(true);
 
   return (

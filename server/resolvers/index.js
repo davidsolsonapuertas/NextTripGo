@@ -1,3 +1,4 @@
+// const { GraphQLUpload } = require('graphql-upload');
 const tripsQuery = require('./Trips/tripsQuery');
 const tripsMutation = require('./Trips/tripsMutation');
 const usersQuery = require('./Users/usersQuery');

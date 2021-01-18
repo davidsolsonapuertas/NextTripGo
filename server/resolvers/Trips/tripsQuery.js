@@ -28,8 +28,10 @@ module.exports = {
         const user = await User.findById(userId);
         if (user) {
           const res = [];
-          for (key in user.trips) {
-            trip = await Trip.findById(user.trips[key]);
+          for (let key in user.trips) {
+            trip = await Trip.findById(user.trips[key])
+              .populate('friends')
+              .populate('userid');
             res.push(trip);
           }
           return res;
@@ -45,6 +47,14 @@ module.exports = {
     async userid(obj) {
       const user = await User.findById(obj.userid);
       return user;
+    },
+    async friends(obj) {
+      const res = [];
+      for (let key in obj.friends) {
+        user = await User.findById(obj.friends[key]);
+        res.push(user);
+      }
+      return res;
     },
   },
 };

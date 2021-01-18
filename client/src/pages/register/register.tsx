@@ -3,7 +3,7 @@ import { useMutation } from '@apollo/client';
 import { useHistory, Link } from 'react-router-dom';
 
 import './register.css';
-import { REGISTER_USER } from '../../services/mutationService';
+import { REGISTER_USER } from '../../services/Users/UsersAccessMutation';
 import SearchLocationInput from '../../APIs/GoogleMaps/SearchLocationInput/SearchLocationInput.js';
 import { useForm } from '../../util/Hooks';
 import { AuthContext } from '../../Context/Auth';
@@ -36,7 +36,11 @@ function Register(props: any) {
       firstname: values.firstname,
       lastname: values.lastname,
       username: values.username,
-      currentCity: formattedAddress[0],
+      currentCity: {
+        formattedAddress: formattedAddress[0],
+        latitude: formattedAddress[1],
+        longitude: formattedAddress[2],
+      },
       email: values.email,
       password: values.password,
       confirmPassword: values.confirmPassword,

@@ -1,8 +1,17 @@
-import React, { useState, useContext, Dispatch, SetStateAction } from 'react';
+import React, {
+  useState,
+  useMemo,
+  useContext,
+  Dispatch,
+  SetStateAction,
+} from 'react';
 import { Link } from 'react-router-dom';
+import { useQuery } from '@apollo/client';
 import DehazeIcon from '@material-ui/icons/Dehaze';
+import { useHistory } from 'react-router-dom';
 
 import './topbar.css';
+import { FETCH_USERS } from '../../services/Users/UsersQuery';
 import { AuthContext } from '../../Context/Auth';
 import Search from '../../Pages/Search/Search';
 
@@ -12,7 +21,18 @@ interface IProps {
 
 function Topbar({ setSidebar }: IProps) {
   const [open, setOpen] = useState(true);
+  const [suggestionValue, setSuggestionValue] = useState('');
   const { logout } = useContext(AuthContext);
+  const history = useHistory();
+
+  let { data } = useQuery(FETCH_USERS);
+  const allUsers = data?.getUsers;
+
+  useMemo(() => {
+    if (suggestionValue.length > 1) {
+      history.push('/user/' + suggestionValue);
+    }
+  }, [suggestionValue, history]);
 
   const showSidebar = () =>
     setSidebar((sidebar: boolean) => {
@@ -28,7 +48,12 @@ function Topbar({ setSidebar }: IProps) {
         </Link>
       </div>
       <div className="">
-        <Search />
+        {allUsers?.length > 0 && (
+          <Search
+            dataToSearch={allUsers}
+            setSuggestionValue={setSuggestionValue}
+          />
+        )}
       </div>
       <button
         className="button float-right btn"

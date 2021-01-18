@@ -6,7 +6,7 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 import { useMutation } from '@apollo/client';
 
 import { Trip } from '../../../Interfaces/Trip';
-import { DELETE_TRIP } from '../../../services/mutationService';
+import { DELETE_TRIP } from '../../../services/Trips/TripsMutation';
 import Logo from '../../../assets/logo.png';
 import Modal from '../../../Containers/Modal/Modal';
 import '../tripcards.css';

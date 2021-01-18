@@ -56,7 +56,7 @@ const SeeExpenses: FunctionComponent<IProps> = ({ expenses }) => {
   }, []);
 
   return (
-    <div className="col-xl-4 col-lg-5">
+    <div className="m-5">
       <div className="card shadow-hover shadow mb-4">
         <div className="card-header py-3 d-flex flex-row align-items-center justify-content-between">
           <h6 className="m-0 font-weight-bold text-primary">Expenses</h6>

@@ -1,9 +1,10 @@
+/* eslint-disable no-param-reassign */
+var mongoose = require('mongoose');
 const { AuthenticationError } = require('apollo-server');
 const Trip = require('../../models/trip');
 const User = require('../../models/user');
 const checkAuth = require('../../util/check-auth');
 const { UserInputError } = require('apollo-server');
-
 const { validateTripInput } = require('../../util/validators');
 
 module.exports = {
@@ -25,12 +26,20 @@ module.exports = {
     ) {
       const user = checkAuth(context);
 
+      await Promise.all(
+        friends.map(async (friendUsername, index, arr) => {
+          const friend = await User.findOne({ username: friendUsername });
+          arr[index] = friend._id;
+        })
+      );
+
       const { valid, errors } = validateTripInput(
         destination,
         fromDate,
         toDate,
         expenses
       );
+
       if (!valid) {
         throw new UserInputError('Errors', { errors });
       }
@@ -56,7 +65,7 @@ module.exports = {
         newTrip: trip,
       });
 
-      return trip.populate('user').execPopulate();
+      return trip;
     },
     async deleteTrip(_, { tripId }, context) {
       const user = checkAuth(context);

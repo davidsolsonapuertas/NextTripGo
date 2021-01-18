@@ -1,4 +1,5 @@
 const mongoose = require('./index');
+
 const { Schema } = mongoose;
 
 const tripSchema = new Schema({
@@ -13,7 +14,7 @@ const tripSchema = new Schema({
   createdAt: String,
   userid: {
     type: Schema.Types.ObjectId,
-    ref: 'users',
+    ref: 'User',
   },
   expenses: [
     {
@@ -41,10 +42,12 @@ const tripSchema = new Schema({
       },
     ],
   ],
-  friends: {
-    type: Schema.Types.ObjectId,
-    ref: 'users',
-  },
+  friends: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'User',
+    },
+  ],
 });
 
 const Trip = mongoose.model('Trip', tripSchema);

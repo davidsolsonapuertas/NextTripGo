@@ -43,7 +43,7 @@
 .Stat1 {
   grid-area: Stat1;
   margin: -10px 15px 30px 0px;
-  margin-right: 10%;
+  /* margin-right: 10%; */
 }
 .Button {
   grid-area: Button;

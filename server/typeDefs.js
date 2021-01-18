@@ -70,7 +70,7 @@ const typeDefs = gql`
     toDate: String
     expenses: [ExpenseInput]
     toDo: String
-    friends: String
+    friends: [String]
   }
   input ExpenseInput {
     type: String
@@ -86,7 +86,6 @@ const typeDefs = gql`
     getUsers: [User]
     getUser(username: String!): User
     getLoggedUser(userId: ID!): User
-    uploads: [File]
     getTrips: [Trip]
     getTrip(tripId: ID!): Trip
     getTripsByUsername(userId: ID!): [Trip]
@@ -94,7 +93,7 @@ const typeDefs = gql`
   type Mutation {
     register(registerInput: RegisterInput): User
     login(username: String!, password: String!): User
-    uploadFile(file: Upload!): File
+    uploadFile(file: Upload!): File!
     createTrip(createTripInput: CreateTripInput!): Trip
     deleteTrip(tripId: ID!): String
     sendFriendRequest(to: String!): String

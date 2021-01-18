@@ -32,20 +32,27 @@ module.exports = {
         if (userId !== user.id) {
           throw new Error('Action not allowed');
         }
-        const userInfo = await User.findById(userId);
+        const userInfo = await User.findById(userId)
+          .populate({
+            path: 'trips',
+            model: 'Trip',
+            populate: {
+              path: 'userid',
+              model: 'User',
+            },
+          })
+          .populate('friends');
         return userInfo;
       } catch (error) {
         throw new Error(error);
       }
     },
-
-    uploads: (parent, args) => {},
   },
 
   User: {
     async trips(obj) {
       const res = [];
-      for (key in obj.trips) {
+      for (let key in obj.trips) {
         trip = await Trip.findById(obj.trips[key]);
         res.push(trip);
       }
@@ -54,7 +61,7 @@ module.exports = {
 
     async friends(obj) {
       const res = [];
-      for (key in obj.friends) {
+      for (let key in obj.friends) {
         user = await User.findById(obj.friends[key]);
         res.push(user);
       }

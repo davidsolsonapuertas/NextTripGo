@@ -5,10 +5,11 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 import moment from 'moment';
 import { useQuery, useMutation } from '@apollo/client';
 
-import { DELETE_TRIP } from '../../../services/mutationService';
+import './tripdetail.css';
+import { DELETE_TRIP } from '../../../services/Trips/TripsMutation';
 import Logo from '../../../assets/logo.png';
 import Modal from '../../../Containers/Modal/Modal';
-import { GET_TRIP_BY_ID } from '../../../services/queryService';
+import { GET_TRIP_BY_ID } from '../../../services/Trips/TripsQuery';
 import SeeExpenses from '../../../Components/Expenses/SeeExpenses';
 import MapCoordinates from '../../../APIs/GoogleMaps/MapCoordinates';
 
@@ -41,51 +42,46 @@ function TripDetail() {
   return (
     <div>
       {trip ? (
-        <div className="">
-          <div className="">
-            <div key={trip.id} className="mx-3 card shadow shadow-hover mb-4">
-              <Link to={'/trips/' + trip.id}>
-                <Card.Img
-                  className="img-thumbnail mb-1"
-                  src={trip.picture ? trip.picture : Logo}
-                />
-              </Link>
-              <div className="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                <h6 className="m-0 font-weight-bold text-primary">
-                  <Link to={'/trips/' + trip.id}>
-                    {trip.destination.formattedAddress}
-                  </Link>
-                </h6>
-                <div className="dropdown no-arrow">
-                  <Dropdown>
-                    <Dropdown.Toggle variant="link" id="dropdown-basic">
-                      <MoreVertIcon />
-                    </Dropdown.Toggle>
-                    <Dropdown.Menu align="right">
-                      <Dropdown.Item variant="danger" onClick={toggleModal}>
-                        Delete
-                      </Dropdown.Item>
-                      <Dropdown.Item href={'#edit' + trip.id}>
-                        Edit
-                      </Dropdown.Item>
-                    </Dropdown.Menu>
-                  </Dropdown>
-                </div>
-              </div>
-              <div className="card-body card-margin">
-                {moment(trip.fromDate).format('MMM Do YY')} {' – '}
-                {moment(trip.toDate).format('MMM Do YY')}
+        <div className="grid-container-detail">
+          <div
+            key={trip.id}
+            className="Card d-flex justify-content-center card shadow shadow-hover m-5"
+          >
+            <Card.Img
+              className="img-thumbnail w-100 mb-1"
+              src={trip.picture ? trip.picture : Logo}
+            />
+            <div className="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+              <h1 className="m-0 font-weight-bold text-primary">
+                {trip.destination.formattedAddress}
+              </h1>
+              <div className="dropdown no-arrow">
+                <Dropdown>
+                  <Dropdown.Toggle variant="link" id="dropdown-basic">
+                    <MoreVertIcon />
+                  </Dropdown.Toggle>
+                  <Dropdown.Menu align="right">
+                    <Dropdown.Item variant="danger" onClick={toggleModal}>
+                      Delete
+                    </Dropdown.Item>
+                    <Dropdown.Item href={'#edit' + trip.id}>Edit</Dropdown.Item>
+                  </Dropdown.Menu>
+                </Dropdown>
               </div>
             </div>
-            <div className="">
-              <MapCoordinates
-                latitude={trip.destination.latitude}
-                longitude={trip.destination.longitude}
-                style={{ width: '500px', height: '500px' }}
-              />
+            <div className="card-body card-margin">
+              {moment(trip.fromDate).format('MMM Do YY')} {' – '}
+              {moment(trip.toDate).format('MMM Do YY')}
             </div>
           </div>
-          <div className="">
+          <div className="Map m-5">
+            <MapCoordinates
+              latitude={trip.destination.latitude}
+              longitude={trip.destination.longitude}
+              style={{ width: '500px', height: '500px' }}
+            />
+          </div>
+          <div className="Expenses w-100">
             {trip.expenses.length > 0 && (
               <SeeExpenses expenses={trip.expenses} />
             )}
