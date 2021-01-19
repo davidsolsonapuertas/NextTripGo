@@ -3,7 +3,7 @@ const { UserInputError } = require('apollo-server');
 const bcrypt = require('bcryptjs');
 const path = require('path');
 const fs = require('fs');
-// const { createWriteStream, unlink } = require('fs');
+const { createWriteStream, unlink } = require('fs');
 
 const { SECRET_KEY } = require('../../../config');
 const {
@@ -202,20 +202,18 @@ module.exports = {
 
       return 'Successful';
     },
-    uploadFile: async (_, { file }) => {
-      const { createReadStream, filename, mimetype } = await file;
+    setProfilePicture: async (_, { file }, context) => {
+      const user = checkAuth(context);
+      const { createReadStream, filename } = await file;
       const stream = createReadStream();
-      // const id = shortid.generate();
-      const path2 = path.join(__dirname, '../../public/images', filename);
-      // const file = { id, filename, mimetype, path };
+      const pictureName = user.id + '.' + filename.split('.').slice(-1);
+      const path2 = path.join(__dirname, '../../public/images', pictureName);
 
       try {
-        new Promise((resolve, reject) => {
+        await new Promise((resolve, reject) => {
           const writeStream = fs.createWriteStream(path2);
 
-          // writeStream.on('finish', resolve);
           writeStream.on('finish', () => {
-            console.log('finish');
             resolve();
           });
 
@@ -234,26 +232,52 @@ module.exports = {
       } catch (error) {
         console.log(error);
       }
-      // const { createReadStream, filename, mimetype, encoding } = await file;
 
-      // console.log(filename, mimetype, encoding);
-      // new Promise((res, reject) =>
-      //   createReadStream()
-      //     .pipe(
-      //       createWriteStream(
-      //         path.join(__dirname, '../../public/images', filename)
-      //       )
-      //     )
-      //     .on('error', (err) => reject(err))
-      //     .on('finish', res)
-      // );
+      const res = await User.findByIdAndUpdate(
+        user.id,
+        {
+          $set: { profilePic: `http://localhost:4000/images/${pictureName}` },
+        },
+        { new: true }
+      ).exec();
 
-      // const stream = createReadStream();
-      // const pathName = path.join(__dirname, `../../public/images${filename}`);
-      // console.log(filename);
-      // await stream.pipe(fs.createWriteStream(pathName));
       return {
-        url: `http://localhost:4000/images/${filename}`,
+        url: `http://localhost:4000/images/${pictureName}`,
+      };
+    },
+    uploadFile: async (_, { file }, context) => {
+      const user = checkAuth(context);
+      const { createReadStream, filename } = await file;
+      const stream = createReadStream();
+      const pictureName = Date.now() + '.' + filename.split('.').slice(-1);
+      const path2 = path.join(__dirname, '../../public/draft', pictureName);
+
+      try {
+        await new Promise((resolve, reject) => {
+          const writeStream = fs.createWriteStream(path2);
+
+          writeStream.on('finish', () => {
+            resolve();
+          });
+
+          writeStream.on('error', (error) => {
+            unlink(path2, () => {
+              reject(error);
+            });
+          });
+
+          writeStream.on('close', (e) => console.log('closed', e));
+
+          stream.on('error', (error) => writeStream.destroy(error));
+
+          stream.pipe(writeStream);
+        });
+      } catch (error) {
+        console.log(error);
+      }
+
+      return {
+        url: `http://localhost:4000/draft/${pictureName}`,
       };
     },
   },

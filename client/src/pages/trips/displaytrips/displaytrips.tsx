@@ -23,6 +23,7 @@ interface User {
 function DisplayTrips() {
   const { user } = useContext<IUser>(AuthContext);
   let { pathname, hash }: any = useLocation();
+  console.log(hash);
 
   let { data } = useQuery(FETCH_TRIPS_BY_USERNAME, {
     variables: { userId: user.id },
@@ -42,31 +43,26 @@ function DisplayTrips() {
             <Nav.Item>
               <Nav.Link href="#past">Past</Nav.Link>
             </Nav.Item>
-
-            <div className="float-right">
-              <Link to="/createTrip">
-                <button className="btn btn-primary btn-icon-split">
-                  <span className="icon text-white-50">
-                    <FlightTakeoffRoundedIcon />
-                  </span>
-                  <span className="text">Create trip</span>
-                </button>
-              </Link>
-            </div>
           </Nav>
         </Card.Header>
       </Card>
 
-      {trips?.length && hash === '#past' ? (
-        <TripCards trips={trips} time={'past'} mode="My" />
+      {trips?.length > 0 ? (
+        hash === '#past' ? (
+          <TripCards trips={trips} time={'past'} mode="My" />
+        ) : (
+          <TripCards trips={trips} time={'upcoming'} mode="My" />
+        )
       ) : (
-        <TripCards trips={trips} time={'upcoming'} mode="My" />
-      )}
-      {!trips?.length && (
-        <div className="d-flex text-center flex-column">
-          <h3>You don't have any trip yet!</h3>
+        <div>
+          <p>You don't have any trips.</p>
           <Link to="/createTrip">
-            <p>Create a trip now!</p>
+            <button className="btn btn-primary btn-icon-split">
+              <span className="icon text-white-50">
+                <FlightTakeoffRoundedIcon />
+              </span>
+              <span className="text">Create trip</span>
+            </button>
           </Link>
         </div>
       )}

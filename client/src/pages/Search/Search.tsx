@@ -28,11 +28,11 @@ function Search({ dataToSearch, setSuggestionValue }: any) {
   const [suggestions, setSuggestions] = useState<string[]>([]);
 
   const lowerCasedUsernames = dataToSearch?.map((user: User) =>
-    user.username.toLowerCase()
+    user?.username?.toLowerCase()
   );
 
   const getSuggestions = (value: string): string[] => {
-    return lowerCasedUsernames.filter((usernames: String) =>
+    return lowerCasedUsernames?.filter((usernames: String) =>
       usernames.startsWith(value.trim().toLowerCase())
     );
   };

@@ -96,6 +96,7 @@ const typeDefs = gql`
     register(registerInput: RegisterInput): User
     login(username: String!, password: String!): User
     uploadFile(file: FileUpload!): File!
+    setProfilePicture(file: FileUpload!): File!
     createTrip(createTripInput: CreateTripInput!): Trip
     deleteTrip(tripId: ID!): String
     sendFriendRequest(to: String!): String

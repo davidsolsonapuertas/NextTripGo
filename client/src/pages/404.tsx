@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 function PageNotFound() {
   return (
-    <div>
+    <div className="mt-5">
       <div className="container-fluid">
         <div className="text-center">
           <div className="error mx-auto" data-text="404">

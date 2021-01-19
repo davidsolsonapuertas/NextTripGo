@@ -15,9 +15,9 @@ function TripCards({ trips, time, mode }: IProps) {
     trips = trips
       .filter((trip) => {
         if (time === 'past') {
-          return trip.fromDate < new Date().toISOString();
+          return trip?.fromDate < new Date().toISOString();
         } else if (time === 'upcoming') {
-          return trip.fromDate > new Date().toISOString();
+          return trip?.fromDate > new Date().toISOString();
         } else {
           return trip;
         }
@@ -27,7 +27,7 @@ function TripCards({ trips, time, mode }: IProps) {
   return (
     <div className="d-flex mt-4 justify-content-center flex-wrap">
       {trips &&
-        trips.map((trip: Trip, index: number) => {
+        trips?.map((trip: Trip, index: number) => {
           if (mode === 'My') {
             return <TripCardMy key={index} trip={trip} />;
           } else if (mode === 'Users') {

@@ -61,6 +61,14 @@ module.exports = {
         $addToSet: { trips: newTrip._id },
       });
 
+      await Promise.all(
+        friends.map(async (friendId, index, arr) => {
+          await User.findByIdAndUpdate(friendId, {
+            $addToSet: { trips: newTrip._id },
+          });
+        })
+      );
+
       context.pubsub.publish('NEW_TRIP', {
         newTrip: trip,
       });

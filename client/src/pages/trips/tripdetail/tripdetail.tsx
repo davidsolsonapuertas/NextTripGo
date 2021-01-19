@@ -74,7 +74,10 @@ function TripDetail() {
               {moment(trip.fromDate).format('MMM Do YY')} {' – '}
               {moment(trip.toDate).format('MMM Do YY')}
               {trip?.friends?.length > 0 && (
-                <ShowFriends friends={trip?.friends} />
+                <ShowFriends
+                  friends={trip?.friends}
+                  username={trip.userid.username}
+                />
               )}
             </div>
           </div>
