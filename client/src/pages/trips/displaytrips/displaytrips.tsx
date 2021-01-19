@@ -54,8 +54,8 @@ function DisplayTrips() {
           <TripCards trips={trips} time={'upcoming'} mode="My" />
         )
       ) : (
-        <div>
-          <p>You don't have any trips.</p>
+        <div className="d-flex w-100 mt-5 flex-column align-items-center justify-content-center">
+          <p className="mb-5">You don't have any trips.</p>
           <Link to="/createTrip">
             <button className="btn btn-primary btn-icon-split">
               <span className="icon text-white-50">

@@ -23,8 +23,6 @@ function AddFriendsToTrips({ selectedFriends, setSelectedFriends }: any) {
   const { user } = useContext<IUser>(AuthContext);
   const [suggestionValue, setSuggestionValue] = useState<string | null>(null);
 
-  console.log('selectedfriends', selectedFriends);
-
   useMemo(() => {
     if (suggestionValue !== null) {
       setSelectedFriends((oldFriendsArr: string[]) => {
@@ -42,12 +40,15 @@ function AddFriendsToTrips({ selectedFriends, setSelectedFriends }: any) {
   const loggedUserFriends = dataLoggedUser?.getLoggedUser?.friends;
 
   return (
-    <div>
+    <div className="mb-5">
       {loggedUserFriends?.length > 0 && (
-        <Search
-          dataToSearch={loggedUserFriends}
-          setSuggestionValue={setSuggestionValue}
-        />
+        <div>
+          <p className="text-center mt-3">Add friends to the trip</p>
+          <Search
+            dataToSearch={loggedUserFriends}
+            setSuggestionValue={setSuggestionValue}
+          />
+        </div>
       )}
       {selectedFriends?.length > 0 &&
         selectedFriends?.map((selectedFriend: string) => {

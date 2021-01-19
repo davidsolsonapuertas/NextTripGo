@@ -28,8 +28,6 @@ function CreateTrip() {
     endDate: new Date(),
   });
 
-  console.log(formattedAddress);
-
   const onSubmit = (e: React.SyntheticEvent) => {
     e.preventDefault();
     createTrip();

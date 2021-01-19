@@ -1,28 +1,23 @@
 import React, { useState, useEffect } from 'react';
-// TODO import axios from 'axios';
+import axios from 'axios';
 
 import '../pexels.css';
 import { PexelKey } from '../../../config';
-
-//  delete mock data
-const data = require('./mockdata');
 
 function RandomVideo() {
   const [videos, setVideos]: any[] = useState([]);
 
   const getVideos = async () => {
     try {
-      //  use
-      // const data = await axios.get(
-      //   'https://api.pexels.com/videos/search?query=travel&size=small&per_page=30',
-      //   {
-      //     headers: {
-      //       Authorization: `${PexelKey}`,
-      //     },
-      //   }
-      // );
-      // setVideos(data.data.videos);
-      setVideos(data.videos);
+      const data = await axios.get(
+        'https://api.pexels.com/videos/search?query=travel&size=small&per_page=30',
+        {
+          headers: {
+            Authorization: `${PexelKey}`,
+          },
+        }
+      );
+      setVideos(data?.data?.videos);
     } catch (e) {
       console.log(e);
     }
@@ -38,7 +33,7 @@ function RandomVideo() {
 
   return (
     <div>
-      {videos.length && (
+      {videos?.length > 0 && (
         <video
           src={videos[getRandomInt()].video_files[0].link}
           autoPlay

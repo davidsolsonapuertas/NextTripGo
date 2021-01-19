@@ -167,5 +167,9 @@ export const styles = makeStyles((theme: Theme) =>
       height: '280px',
       borderRadius: '50%',
     },
+    sidebar: {
+      color: theme.palette.getContrastText(deepPurple[500]),
+      backgroundColor: deepPurple[500],
+    },
   })
 );

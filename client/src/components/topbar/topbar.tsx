@@ -11,22 +11,43 @@ import DehazeIcon from '@material-ui/icons/Dehaze';
 import { useHistory } from 'react-router-dom';
 
 import './topbar.css';
-import { FETCH_USERS } from '../../services/Users/UsersQuery';
+import { FETCH_USERS, GET_LOGGED_USER } from '../../services/Users/UsersQuery';
 import { AuthContext } from '../../Context/Auth';
 import Search from '../../Pages/Search/Search';
+import FriendRequestDropdown from './FriendRequestDropdown';
+import UserProfile from './UserProfile';
 
 interface IProps {
   setSidebar: Dispatch<SetStateAction<boolean>>;
 }
 
+interface IUser {
+  user: any;
+  login: (userData: LoggedUser) => void;
+  logout: () => void;
+}
+
+interface LoggedUser {
+  username: string;
+  password: string;
+  token: string;
+}
+
 function Topbar({ setSidebar }: IProps) {
   const [open, setOpen] = useState(true);
   const [suggestionValue, setSuggestionValue] = useState('');
-  const { logout } = useContext(AuthContext);
+  const { logout, user } = useContext<IUser>(AuthContext);
   const history = useHistory();
 
   let { data } = useQuery(FETCH_USERS);
   const allUsers = data?.getUsers;
+
+  const { data: dataLoggedUser } = useQuery(GET_LOGGED_USER, {
+    variables: { userId: user?.id },
+    pollInterval: 10000,
+  });
+
+  const loggedUser = dataLoggedUser?.getLoggedUser;
 
   useMemo(() => {
     if (suggestionValue.length > 1) {
@@ -41,13 +62,13 @@ function Topbar({ setSidebar }: IProps) {
     });
 
   return (
-    <div className="trip-topbar d-flex justify-content-between bg-white shadow">
+    <div className="grid-container-topbar bg-white shadow">
       <div className="margin-topbar d-flex align-items-center">
         <Link className="trip-sidebar-icon" to="#">
           <DehazeIcon onClick={showSidebar} />
         </Link>
       </div>
-      <div className="">
+      <div className="Search">
         {allUsers?.length > 0 && (
           <Search
             dataToSearch={allUsers}
@@ -55,13 +76,13 @@ function Topbar({ setSidebar }: IProps) {
           />
         )}
       </div>
-      <button
-        className="button float-right btn"
-        style={{ float: 'right' }}
-        onClick={logout}
-      >
-        Logout
-      </button>
+      <div className="Side d-flex align-items-center text-center justify-content-end">
+        <FriendRequestDropdown loggedUser={loggedUser} />
+        <UserProfile loggedUser={loggedUser} />
+        <button className="button btn" onClick={logout}>
+          Logout
+        </button>
+      </div>
     </div>
   );
 }

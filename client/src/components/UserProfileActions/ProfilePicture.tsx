@@ -32,33 +32,34 @@ function ProfilePicture({ user }: IProps) {
       {user?.username === userLoggedIn?.username ? (
         <div>
           {user?.profilePic?.length > 1 ? (
-            <div
-              id="userOwnPic"
-              className="profilepic userOwnPic img shadow-hover"
-            >
-              <DropZone>
+            <DropZone>
+              <div className="profilepic userOwnPic img shadow-hover">
                 <img
                   width="300px"
                   alt={user?.username}
                   src={user?.profilePic}
                 />
-              </DropZone>
-            </div>
+              </div>
+            </DropZone>
           ) : (
-            <div>
-              <DropZone>
-                <Avatar className={classes.profilePic + ' shadow-hover img'}>
+            <DropZone>
+              <div>
+                <Avatar
+                  className={
+                    classes.profilePic + ' shadow-hover img userOwnPic'
+                  }
+                >
                   {user?.username?.charAt(0).toUpperCase()}
                 </Avatar>
-              </DropZone>
-            </div>
+              </div>
+            </DropZone>
           )}
         </div>
       ) : (
         <div>
           {user?.profilePic?.length > 1 ? (
             <div>
-              <div className="profilepic shadow-hover img">
+              <div className="profilepic ml-10 shadow-hover img">
                 <img
                   width="300px"
                   alt={user?.username}
@@ -68,7 +69,9 @@ function ProfilePicture({ user }: IProps) {
             </div>
           ) : (
             <div>
-              <Avatar className={classes.profilePic + ' shadow-hover img'}>
+              <Avatar
+                className={classes.profilePic + ' ml-10 shadow-hover img'}
+              >
                 {user?.username?.charAt(0).toUpperCase()}
               </Avatar>
             </div>
