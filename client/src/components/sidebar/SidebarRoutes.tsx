@@ -11,11 +11,6 @@ export const routes = [
     icon: <HomeRoundedIcon />,
   },
   {
-    title: 'Search',
-    path: '/search',
-    icon: <SearchIcon />,
-  },
-  {
     title: 'Trips',
     path: '/trips',
     icon: <FlightTakeoffRoundedIcon />,

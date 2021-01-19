@@ -34,7 +34,7 @@ export const styles = (theme) => ({
   },
   slider: {
     padding: '22px 0px',
-    marginLeft: 16,
+    marginLeft: 22,
     [theme.breakpoints.up('sm')]: {
       flexDirection: 'row',
       alignItems: 'center',

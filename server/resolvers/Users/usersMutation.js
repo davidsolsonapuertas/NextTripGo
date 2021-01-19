@@ -202,6 +202,7 @@ module.exports = {
 
       return 'Successful';
     },
+
     setProfilePicture: async (_, { file }, context) => {
       const user = checkAuth(context);
       const { createReadStream, filename } = await file;
@@ -222,8 +223,6 @@ module.exports = {
               reject(error);
             });
           });
-
-          writeStream.on('close', (e) => console.log('closed', e));
 
           stream.on('error', (error) => writeStream.destroy(error));
 
@@ -265,8 +264,6 @@ module.exports = {
               reject(error);
             });
           });
-
-          writeStream.on('close', (e) => console.log('closed', e));
 
           stream.on('error', (error) => writeStream.destroy(error));
 

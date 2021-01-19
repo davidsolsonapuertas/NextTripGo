@@ -3,6 +3,7 @@ import React from 'react';
 import { Trip } from '../../Interfaces/Trip';
 import TripCardMy from './MyTripCards/TripCardMy';
 import TripCardUser from './Users/TripCardUser';
+import TripCardMe from './MeTripCards/TripCardMe';
 
 type IProps = {
   trips: Trip[];
@@ -32,6 +33,8 @@ function TripCards({ trips, time, mode }: IProps) {
             return <TripCardMy key={index} trip={trip} />;
           } else if (mode === 'Users') {
             return <TripCardUser key={index} trip={trip} />;
+          } else if (mode === 'Me') {
+            return <TripCardMe key={index} trip={trip} />;
           }
         })}
     </div>

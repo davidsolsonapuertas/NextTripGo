@@ -51,9 +51,14 @@
   justify-content: center;
 }
 .profilepic {
+  margin-left: 10%;
   width: 300px;
   height: 300px;
+  overflow: hidden;
   border-radius: 50%;
+}
+.userOwnPic:hover {
+  cursor: pointer;
 }
 .profile-trips-text {
   margin-left: 30px;

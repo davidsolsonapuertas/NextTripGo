@@ -12,7 +12,6 @@ import Register from './Pages/Register/Register';
 import Login from './Pages/Login/Login';
 import Home from './Pages/Home/Home';
 import Profile from './Pages/Profile/Profile';
-import Search from './Pages/Search/Search';
 import RandomVideo from './APIs/Pexels/RandomVideo/RandomVideo';
 import DisplayTrips from './Pages/Trips/DisplayTrips/DisplayTrips';
 import CreateTrip from './Pages/Trips/CreateTrip/CreateTrip';
@@ -36,9 +35,6 @@ function App() {
             </AuthRoute>
             <PrivateRoute exact path="/me">
               <Profile />
-            </PrivateRoute>
-            <PrivateRoute exact path="/search">
-              <Search />
             </PrivateRoute>
             <PrivateRoute exact path="/trips/:id">
               <TripDetail />

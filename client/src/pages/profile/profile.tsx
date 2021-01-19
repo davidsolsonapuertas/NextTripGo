@@ -29,7 +29,7 @@ function Profile() {
 
   const { data: dataLoggedUser } = useQuery(GET_LOGGED_USER, {
     variables: { userId: user.id },
-    // pollInterval: 1000,
+    pollInterval: 2000,
   });
   let loggedUser = dataLoggedUser?.getLoggedUser;
   return (
@@ -38,7 +38,7 @@ function Profile() {
         <div className="trips">
           <h3 className="profile-trips-text">Your trips</h3>
           {loggedUser?.trips.length > 0 ? (
-            <UserTripcards trips={loggedUser?.trips} time="" mode="Users" />
+            <UserTripcards trips={loggedUser?.trips} time="" mode="Me" />
           ) : (
             <div>
               <p>You don't have any trips.</p>

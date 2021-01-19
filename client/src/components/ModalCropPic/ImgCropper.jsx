@@ -1,11 +1,15 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useContext } from 'react';
 import Cropper from 'react-easy-crop';
 import Slider from '@material-ui/core/Slider';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
+import { useMutation } from '@apollo/client';
 
-import ImgDialog from './ImgDialog';
+import './cropimage.css';
+import { GET_LOGGED_USER } from '../../services/Users/UsersQuery';
+import { SET_PROFILE_PICTURE } from '../../services/Users/UsersAccessMutation';
+import { AuthContext } from '../../Context/Auth';
 import getCroppedImg from './CropImage.jsx';
 import { styles } from './Styles.js';
 
@@ -16,9 +20,13 @@ function ImgCropper({ classes, imageLink }) {
   const [croppedAreaPixels, setCroppedAreaPixels] = useState(null);
   const [croppedImage, setCroppedImage] = useState(null);
 
+  const { user } = useContext(AuthContext);
+
   const onCropComplete = useCallback((croppedArea, croppedAreaPixels) => {
     setCroppedAreaPixels(croppedAreaPixels);
   }, []);
+
+  const [setPicture] = useMutation(SET_PROFILE_PICTURE);
 
   const showCroppedImage = useCallback(async () => {
     try {
@@ -27,7 +35,10 @@ function ImgCropper({ classes, imageLink }) {
         croppedAreaPixels,
         rotation
       );
-      setCroppedImage(croppedImage);
+      await setCroppedImage(croppedImage);
+      await setPicture({
+        variables: { file: croppedImage },
+      });
     } catch (e) {
       console.error(e);
     }
@@ -95,10 +106,9 @@ function ImgCropper({ classes, imageLink }) {
             color="primary"
             classes={{ root: classes.cropButton }}
           >
-            Show Result
+            Upload picture
           </Button>
         </div>
-        <ImgDialog img={croppedImage} onClose={onClose} />
       </div>
     </div>
   );

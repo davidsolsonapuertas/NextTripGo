@@ -29,7 +29,6 @@ function DropZone({ children }: IProps) {
         await uploadFile({
           variables: { file: picture },
           update(_, { data }) {
-            console.log(data);
             setDraft(data?.uploadFile.url);
           },
         });

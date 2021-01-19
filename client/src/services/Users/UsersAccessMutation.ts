@@ -58,7 +58,7 @@ export const UPLOAD_FILE = gql`
 
 export const SET_PROFILE_PICTURE = gql`
   mutation setProfilePicture($file: FileUpload!) {
-    uploadFile(file: $file) {
+    setProfilePicture(file: $file) {
       url
     }
   }

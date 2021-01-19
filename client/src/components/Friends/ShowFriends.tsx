@@ -29,9 +29,9 @@ function ShowFriends({ friends, username }: IProps) {
           {friends?.map((friend: User, index: number) => {
             return (
               <div className="mx-2">
-                <Link to={'/user/' + friend.username}>
+                <Link to={'/user/' + friend?.username}>
                   <Avatar className={classes[index + 1]}>
-                    {friend.username?.charAt(0).toUpperCase()}
+                    {friend?.username?.charAt(0).toUpperCase()}
                   </Avatar>
                 </Link>
               </div>

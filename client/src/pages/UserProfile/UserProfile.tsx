@@ -12,6 +12,7 @@ import {
   GET_USER_BY_USERNAME,
 } from '../../services/Users/UsersQuery';
 import profilepic from '../../assets/profilepic.jpg';
+import ProfilePicture from '../../Components/UserProfileActions/ProfilePicture';
 import { AuthContext } from '../../Context/Auth';
 import Profile from '../../Pages/Profile/Profile';
 import UserTripcards from '../../Components/TripCards/TripCards';
@@ -66,11 +67,9 @@ function UserProfile() {
             )}
           </div>
           <div className="profile-pic ">
-            <img
-              className="profilepic shadow-hover img"
-              alt={userVisited?.username}
-              src={profilepic}
-            />
+            <div className="mx-25">
+              <ProfilePicture user={userVisited} />
+            </div>
             <h1 className="profile-username-text">{userVisited?.username}</h1>
           </div>
           <div className="Information shadow-hover">
