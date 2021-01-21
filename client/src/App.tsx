@@ -18,6 +18,7 @@ import CreateTrip from './Pages/Trips/CreateTrip/CreateTrip';
 import TripDetail from './Pages/Trips/TripDetail/TripDetail';
 import PageNotFound from './Pages/404';
 import UserProfile from './Pages/UserProfile/UserProfile';
+import Friends from './Pages/Friends/Friends';
 
 function App() {
   return (
@@ -44,6 +45,9 @@ function App() {
             </PrivateRoute>
             <PrivateRoute exact path="/createTrip">
               <CreateTrip />
+            </PrivateRoute>
+            <PrivateRoute exact path="/friends">
+              <Friends />
             </PrivateRoute>
             <PrivateRoute exact path="/user/:id">
               <UserProfile />

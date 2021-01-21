@@ -26,6 +26,19 @@ module.exports = {
         throw new Error(error);
       }
     },
+    async getUserById(_, { userId }) {
+      try {
+        const user = await User.findById(userId);
+
+        if (user) {
+          return user;
+        } else {
+          throw new Error('User not found');
+        }
+      } catch (error) {
+        throw new Error(error);
+      }
+    },
     async getLoggedUser(_, { userId }, context) {
       try {
         const user = checkAuth(context);

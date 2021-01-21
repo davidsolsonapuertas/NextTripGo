@@ -44,7 +44,7 @@ function Topbar({ setSidebar }: IProps) {
 
   const { data: dataLoggedUser } = useQuery(GET_LOGGED_USER, {
     variables: { userId: user?.id },
-    pollInterval: 10000,
+    pollInterval: 500,
   });
 
   const loggedUser = dataLoggedUser?.getLoggedUser;

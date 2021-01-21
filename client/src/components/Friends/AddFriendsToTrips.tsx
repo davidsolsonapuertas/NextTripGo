@@ -50,10 +50,16 @@ function AddFriendsToTrips({ selectedFriends, setSelectedFriends }: any) {
           />
         </div>
       )}
-      {selectedFriends?.length > 0 &&
-        selectedFriends?.map((selectedFriend: string) => {
-          return <Avatar>{selectedFriend?.charAt(0).toUpperCase()}</Avatar>;
-        })}
+      <div className="w-100 d-flex mt-3">
+        {selectedFriends?.length > 0 &&
+          selectedFriends?.map((selectedFriend: string) => {
+            return (
+              <div className="mx-2">
+                <Avatar>{selectedFriend?.charAt(0).toUpperCase()}</Avatar>
+              </div>
+            );
+          })}
+      </div>
     </div>
   );
 }

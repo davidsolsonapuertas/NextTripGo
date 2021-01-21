@@ -91,14 +91,14 @@ module.exports = {
           },
         });
       }
-      const mail = await User.findOne({ email });
-      if (mail) {
-        throw new UserInputError('Email already linked to an account', {
-          errors: {
-            username: 'This email has already linked to an account',
-          },
-        });
-      }
+      // const mail = await User.findOne({ email });
+      // if (mail) {
+      //   throw new UserInputError('Email already linked to an account', {
+      //     errors: {
+      //       username: 'This email has already linked to an account',
+      //     },
+      //   });
+      // }
       const newUser = new User({
         firstname,
         lastname,

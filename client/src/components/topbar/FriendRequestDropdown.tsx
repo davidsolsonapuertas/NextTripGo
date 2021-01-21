@@ -17,13 +17,13 @@ function FriendRequestDropdown({ loggedUser }: IProps) {
           <Dropdown.Toggle variant="link" id="dropdown-basic">
             <div className="d-flex">
               <SupervisedUserCircleIcon style={{ fontSize: 45 }} />
-              <div className="friend-requests">
-                {loggedUser?.receivedFriendRequests?.length > 0 && (
+              {loggedUser?.receivedFriendRequests?.length > 0 && (
+                <div className="friend-requests">
                   <p className="">
                     {loggedUser?.receivedFriendRequests?.length}
                   </p>
-                )}
-              </div>
+                </div>
+              )}
             </div>
           </Dropdown.Toggle>
         </Link>

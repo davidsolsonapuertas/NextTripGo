@@ -127,3 +127,39 @@ export const GET_USER_BY_USERNAME = gql`
     }
   }
 `;
+
+export const GET_USER_BY_ID = gql`
+  query getUserById($userId: String!) {
+    getUserById(userId: $userId) {
+      id
+      firstname
+      lastname
+      username
+      currentCity {
+        formattedAddress
+        latitude
+        longitude
+      }
+      profilePic
+      friends {
+        username
+      }
+      trips {
+        id
+        destination {
+          formattedAddress
+          latitude
+          longitude
+        }
+        picture
+        fromDate
+        toDate
+        createdAt
+        friends {
+          username
+        }
+      }
+      createdAt
+    }
+  }
+`;

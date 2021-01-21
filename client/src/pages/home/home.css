@@ -1,0 +1,37 @@
+.grid-container-home {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 0.4fr 2.8fr;
+  gap: 0px 0px;
+  grid-template-areas:
+    'getstarted getstarted'
+    'createtrip dropzone';
+}
+.getstarted {
+  grid-area: getstarted;
+}
+.dropzone {
+  grid-area: dropzone;
+}
+.createtrip {
+  grid-area: createtrip;
+  overflow: hidden;
+  position: relative;
+}
+.home-video {
+  min-width: 100%;
+  min-height: 100%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%);
+}
+.video-content {
+  z-index: 20;
+}
+.text-home {
+  color: white;
+  background-color: black;
+  padding: 2%;
+  border-radius: 0px 20px 20px 0px;
+}
