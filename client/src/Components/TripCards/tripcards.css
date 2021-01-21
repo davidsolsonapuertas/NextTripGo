@@ -1,0 +1,29 @@
+.triplist {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.triplist > * {
+  margin: 10px 10px 10px 10px;
+}
+.img-thumbnail {
+  height: 230px;
+  width: 400px;
+  overflow: hidden;
+  object-fit: cover;
+  padding: 0;
+  margin-top: 0;
+}
+.card {
+  border-radius: 25px;
+  overflow: hidden;
+}
+.shadow-hover:hover {
+  box-shadow: rgba(0, 0, 0, 0.15) 0px 6px 20px !important;
+}
+.card-margin {
+  padding: 1.25rem;
+}
+.trip-user {
+  width: 40%;
+}

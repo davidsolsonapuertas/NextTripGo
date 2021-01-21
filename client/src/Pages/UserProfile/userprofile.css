@@ -1,0 +1,71 @@
+.grid-container {
+  margin-top: 30px;
+  display: grid;
+  grid-template-columns: 1fr 1.8fr 0.6fr 0.6fr;
+  grid-template-rows: 1fr 1fr 0.25fr 0.4fr 1.2fr;
+  gap: 16px 0px;
+  grid-template-areas:
+    'trips trips profilepic profilepic'
+    'trips trips profilepic profilepic'
+    'trips trips Information Information'
+    'trips trips Button Button'
+    'trips trips Stat1 Stat1';
+}
+.trips {
+  grid-area: trips;
+  text-align: center;
+}
+.profile-pic {
+  grid-area: profilepic;
+  text-align: center;
+}
+.Information {
+  grid-area: Information;
+  overflow: auto;
+  white-space: nowrap;
+  margin-bottom: 10px;
+  margin-left: 12.5%;
+  padding: 0.375rem 0.75rem;
+  scrollbar-width: none;
+  border-radius: 20px 0px 0px 20px;
+  display: flex;
+  flex-direction: row;
+  background-color: black;
+  color: white;
+}
+.Information::-webkit-scrollbar {
+  display: none;
+}
+.Information p {
+  display: inline-block;
+  text-align: center;
+}
+.Stat1 {
+  grid-area: Stat1;
+  margin: -10px 15px 30px 0px;
+}
+.Button {
+  grid-area: Button;
+  display: flex;
+  height: auto;
+  justify-content: center;
+}
+.profilepic {
+  width: 300px;
+  height: 300px;
+  overflow: hidden;
+  border-radius: 50%;
+}
+.ml-10 {
+  margin-left: 10%;
+}
+.userOwnPic:hover {
+  cursor: pointer;
+}
+.profile-trips-text {
+  margin-left: 30px;
+  margin-bottom: 30px;
+}
+.profile-button {
+  border-radius: 20px;
+}
