@@ -1,6 +1,7 @@
 module.exports = {
   page: 1,
   per_page: 15,
+  other: '',
   photos: [
     {
       id: 1388030,
