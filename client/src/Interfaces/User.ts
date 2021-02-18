@@ -3,6 +3,7 @@ import { Document, Types } from 'mongoose';
 import { Trip } from './Trip';
 
 export interface User extends Document {
+  id: string;
   firstname: string;
   lastname: string;
   username: string;

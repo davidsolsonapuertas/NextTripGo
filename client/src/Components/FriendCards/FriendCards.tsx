@@ -1,26 +1,12 @@
-import React, { useContext, useState, useMemo } from 'react';
+import React from 'react';
 
 import { User } from '../../Interfaces/User';
-import { useQuery } from '@apollo/client';
-import { GET_USER_BY_ID } from '../../services/Users/UsersQuery';
 
 interface IProps {
   friends: User[];
-  receivedFriendRequests: String[];
 }
 
-function FriendCards({ friends, receivedFriendRequests }: IProps) {
-  const [friendRequests, setFriendRequests] = useState([]);
-
-  // const [searchUser] = useQuery(GET_USER_BY_ID, {
-  //   variables: { userId: user?.id },
-  // });
-
-  //TODO change and delete
-  // receivedFriendRequests?.map((friendRequest) => {
-  //   searchUser(friendRequest);
-  // });
-
+function FriendCards({ friends }: IProps) {
   return (
     <div className="d-flex flex-">
       {friends?.length > 1 ? (

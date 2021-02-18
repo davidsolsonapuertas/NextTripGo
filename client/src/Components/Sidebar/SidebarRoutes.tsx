@@ -1,7 +1,6 @@
 import HomeRoundedIcon from '@material-ui/icons/HomeRounded';
 import FlightTakeoffRoundedIcon from '@material-ui/icons/FlightTakeoffRounded';
 import PeopleAltRoundedIcon from '@material-ui/icons/PeopleAltRounded';
-import SearchIcon from '@material-ui/icons/Search';
 import PersonRoundedIcon from '@material-ui/icons/PersonRounded';
 
 export const routes = [

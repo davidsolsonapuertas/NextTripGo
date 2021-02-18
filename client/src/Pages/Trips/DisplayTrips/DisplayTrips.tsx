@@ -23,7 +23,6 @@ interface User {
 function DisplayTrips() {
   const { user } = useContext<IUser>(AuthContext);
   let { pathname, hash }: any = useLocation();
-  console.log(hash);
 
   let { data } = useQuery(FETCH_TRIPS_BY_USERNAME, {
     variables: { userId: user.id },

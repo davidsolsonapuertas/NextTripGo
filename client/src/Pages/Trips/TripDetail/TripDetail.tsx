@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useParams, Link, useHistory } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import { Card, Dropdown } from 'react-bootstrap';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import moment from 'moment';

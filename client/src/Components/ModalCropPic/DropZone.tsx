@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { useMutation } from '@apollo/client';
 
@@ -12,10 +12,6 @@ interface IProps {
 function DropZone({ children }: IProps) {
   const [showModal, setShowModal] = useState(false);
   const [draft, setDraft]: any = useState();
-
-  const toggleModal = () => {
-    setShowModal((state) => !state);
-  };
 
   const [uploadFile] = useMutation(UPLOAD_FILE);
 

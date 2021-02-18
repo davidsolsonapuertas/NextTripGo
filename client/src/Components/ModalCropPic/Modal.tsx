@@ -1,5 +1,5 @@
-import React, { FunctionComponent } from 'react';
-import { Button, Modal as ProfileModal } from 'react-bootstrap';
+import React from 'react';
+import { Modal as ProfileModal } from 'react-bootstrap';
 
 import StyledDemo from './ImgCropper';
 
@@ -20,7 +20,7 @@ const Modal = ({ show, onCancel, file }: IProps) => {
       >
         <ProfileModal.Header closeButton>
           <ProfileModal.Title id="example-modal-sizes-title-lg">
-            Large Modal
+            Crop picture
           </ProfileModal.Title>
         </ProfileModal.Header>
         <ProfileModal.Body>

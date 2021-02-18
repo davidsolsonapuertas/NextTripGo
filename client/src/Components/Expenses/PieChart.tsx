@@ -21,8 +21,8 @@ function PieChart({ expenses }: IProps) {
     });
 
   useEffect(() => {
-    var ctx = 'myChart';
-    var myPieChart = new Chart(ctx, {
+    let ctx = 'myChart';
+    new Chart(ctx, {
       type: 'doughnut',
       data: {
         labels: types,

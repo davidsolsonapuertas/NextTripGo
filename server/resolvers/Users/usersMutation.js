@@ -5,7 +5,7 @@ const path = require('path');
 const fs = require('fs');
 const { createWriteStream, unlink } = require('fs');
 
-const { SECRET_KEY } = require('../../../config');
+const { SECRET_KEY } = require('../../config');
 const {
   validateRegisterInput,
   validateLoginInput,

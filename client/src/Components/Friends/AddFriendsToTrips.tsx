@@ -1,7 +1,6 @@
 import React, { useContext, useState, useMemo } from 'react';
 import { useQuery } from '@apollo/client';
 import Avatar from '@material-ui/core/Avatar';
-import { User } from '../../Interfaces/User';
 
 import { AuthContext } from '../../Context/Auth';
 import { GET_LOGGED_USER } from '../../services/Users/UsersQuery';

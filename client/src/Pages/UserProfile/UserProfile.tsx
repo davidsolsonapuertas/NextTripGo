@@ -4,14 +4,12 @@ import { useParams } from 'react-router-dom';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
 import PeopleIcon from '@material-ui/icons/People';
 import moment from 'moment';
-import { useHistory } from 'react-router-dom';
 
 import './userprofile.css';
 import {
   GET_LOGGED_USER,
   GET_USER_BY_USERNAME,
 } from '../../services/Users/UsersQuery';
-import profilepic from '../../assets/profilepic.jpg';
 import ProfilePicture from '../../Components/UserProfileActions/ProfilePicture';
 import { AuthContext } from '../../Context/Auth';
 import Profile from '../../Pages/Profile/Profile';
@@ -38,7 +36,6 @@ interface User {
 function UserProfile() {
   let { id } = useParams<IProps>();
   const { user } = useContext<IUser>(AuthContext);
-  const history = useHistory();
 
   const { data: dataUserVisited } = useQuery(GET_USER_BY_USERNAME, {
     variables: { username: id },

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import Dropdown from 'react-bootstrap/Dropdown';
 import Button from 'react-bootstrap/Button';
@@ -30,7 +30,7 @@ function UserProfileFriendButton({ userVisited, userVisiting }: IProps) {
         query: GET_USER_BY_USERNAME,
         variables: { username: userVisited.username },
       },
-      { query: GET_LOGGED_USER, variables: { userId: userVisiting.id } },
+      { query: GET_LOGGED_USER, variables: { userId: userVisiting?.id } },
     ],
   });
 
