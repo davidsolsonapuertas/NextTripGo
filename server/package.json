@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint /**/*.js /**/*.ts",
-    "install-all": "npm i; cd client; npm i; yarn install; cd ../;"
+    "start": "nodemon index.js"
   },
   "repository": {
     "type": "git",

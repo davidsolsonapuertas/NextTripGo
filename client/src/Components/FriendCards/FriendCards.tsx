@@ -4,6 +4,7 @@ import { User } from '../../Interfaces/User';
 
 interface IProps {
   friends: User[];
+  receivedFriendRequests: any;
 }
 
 function FriendCards({ friends }: IProps) {

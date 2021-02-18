@@ -21,6 +21,8 @@ import UserProfile from './Pages/UserProfile/UserProfile';
 import Friends from './Pages/Friends/Friends';
 
 function App() {
+  console.log('hyop');
+
   return (
     <AuthProvider>
       <div className="App">

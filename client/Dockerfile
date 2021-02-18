@@ -1,8 +1,8 @@
 FROM node:14-slim
 
-WORKDIR /client/src/app
+WORKDIR /client/app
 
-COPY package.json ./
+COPY package*.json ./
 
 RUN npm i
 
