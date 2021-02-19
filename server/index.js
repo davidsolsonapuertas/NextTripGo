@@ -21,7 +21,6 @@ app.use(
   express.static('public'),
   graphqlUploadExpress({ maxFileSize: 10000000, maxFiles: 10 })
 );
-console.log('hassl');
 app.use('/static', express.static('public'));
 
 server.applyMiddleware({ app });

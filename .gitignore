@@ -4,3 +4,4 @@ client/src/.eslintrc.js
 .DS_Store
 node_modules/
 .eslintrc.js
+.swp
