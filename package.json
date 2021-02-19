@@ -1,0 +1,22 @@
+{
+  "name": "nexttripgo",
+  "version": "1.0.0",
+  "description": "### What is NextTripGo?",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build-client-image": "docker build -t client ./client/",
+    "build-server-image": "docker build -t server ./server/",
+    "build-images": "npm run build-client-image && npm run build-server-image"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/davidsolsonapuertas/NextTripGo.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/davidsolsonapuertas/NextTripGo/issues"
+  },
+  "homepage": "https://github.com/davidsolsonapuertas/NextTripGo#readme"
+}

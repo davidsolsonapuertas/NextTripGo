@@ -2,7 +2,7 @@
 
 ### What is NextTripGo?
 
- 🏝NextTripGo - keep your next trip organised and simple🏝
+🏝NextTripGo - keep your next trip organised and simple🏝
 
 🚀Create a page for your next trip - add a destination, picture and dates and you’re ready to go!🚀
 
@@ -16,7 +16,7 @@ NextTripGo is built in React, TypeScript, GraphQL, Node.js, Express and MongoDB.
 
 ### Previews
 
-<img src="/Users/davidsolsona/Documents/GitHub/Solo/readme/Screenshot 3.png" alt="Untitled design (1)" style="zoom:25%;" /><img src="/Users/davidsolsona/Documents/GitHub/Solo/readme/Screenshot 4.png" alt="Untitled design" style="zoom:25%;" />
+<img src="./readme/Screenshot 3.png" alt="Untitled design (1)" style="zoom:25%;" /><img src="./readme/Screenshot 4.png" alt="Untitled design" style="zoom:25%;" />
 
 ### Prerequisites
 
@@ -43,4 +43,3 @@ These instruction will help you setup a local development instance of the app.
 - Founder, Full-Stack Engineer: David Solsona - [GitHub profile](https://github.com/davidsolsonapuertas)
 - Contributor, Full-Stack Developer: Caroline Victor-Pujebet - [GitHub profile](https://github.com/Carolinevp)
 - Contributor, Full-Stack Developer: James Hough - [GitHub profile](https://github.com/Hough-Lab)
-
