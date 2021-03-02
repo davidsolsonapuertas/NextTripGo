@@ -1,6 +1,6 @@
-import { useState } from 'react';
+import { useState } from "react";
 
-export const useForm = (callback: any, initialState = {}) => {
+export const useForm = (callback: () => void, initialState = {}) => {
   const [values, setValues] = useState(initialState);
 
   const onChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {

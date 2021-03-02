@@ -1,34 +1,23 @@
-import React, { useContext } from 'react';
-import { Link } from 'react-router-dom';
-import { useQuery } from '@apollo/client';
-import FlightTakeoffRoundedIcon from '@material-ui/icons/FlightTakeoffRounded';
-import LocationOnIcon from '@material-ui/icons/LocationOn';
-import PeopleIcon from '@material-ui/icons/People';
-import moment from 'moment';
+import React, { useContext } from "react";
+import { Link } from "react-router-dom";
+import { useQuery } from "@apollo/client";
+import FlightTakeoffRoundedIcon from "@material-ui/icons/FlightTakeoffRounded";
+import LocationOnIcon from "@material-ui/icons/LocationOn";
+import PeopleIcon from "@material-ui/icons/People";
+import moment from "moment";
 
-import { GET_LOGGED_USER } from '../../services/Users/UsersQuery';
-import MapCoordinates from '../../APIs/GoogleMaps/MapCoordinates';
-import { AuthContext } from '../../Context/Auth';
-import UserTripcards from '../../Components/TripCards/TripCards';
-import ProfilePicture from '../../Components/UserProfileActions/ProfilePicture';
-
-interface IUser {
-  user: any;
-  login: (userData: User) => void;
-  logout: () => void;
-}
-
-interface User {
-  username: string;
-  password: string;
-  token: string;
-}
+import { GET_LOGGED_USER } from "../../services/Users/UsersQuery";
+import MapCoordinates from "../../APIs/GoogleMaps/MapCoordinates";
+import { AuthContext } from "../../Context/Auth";
+import UserTripcards from "../../Components/TripCards/TripCards";
+import ProfilePicture from "../../Components/UserProfileActions/ProfilePicture";
+import { IUser } from "../../Interfaces/User";
 
 function Profile() {
   const { user } = useContext<IUser>(AuthContext);
 
   const { data: dataLoggedUser } = useQuery(GET_LOGGED_USER, {
-    variables: { userId: user.id },
+    variables: { userId: user?.id },
     pollInterval: 2000,
   });
   let loggedUser = dataLoggedUser?.getLoggedUser;
@@ -71,20 +60,20 @@ function Profile() {
           <p>
             &nbsp;&nbsp;
             {loggedUser?.friends?.length > 0
-              ? loggedUser?.friends.length + ' friends'
-              : 'No friends yet'}
+              ? loggedUser?.friends.length + " friends"
+              : "No friends yet"}
             &nbsp;&nbsp; | &nbsp;&nbsp;
           </p>
-          {' 🌏 '}&nbsp;
+          {" 🌏 "}&nbsp;
           <p>
             {loggedUser?.trips?.length > 0
-              ? loggedUser?.trips.length + ' trips'
-              : 'No trips yet'}
+              ? loggedUser?.trips.length + " trips"
+              : "No trips yet"}
             &nbsp; &nbsp; | &nbsp;&nbsp;
           </p>
-          {' 🗓 '}&nbsp;
+          {" 🗓 "}&nbsp;
           <p>
-            {'Joined ' + moment(loggedUser?.createdAt, 'YYYYMMDD').fromNow()}
+            {"Joined " + moment(loggedUser?.createdAt, "YYYYMMDD").fromNow()}
             &nbsp;
           </p>
         </div>
@@ -93,11 +82,11 @@ function Profile() {
             <MapCoordinates
               latitude={loggedUser?.currentCity.latitude}
               longitude={loggedUser?.currentCity.longitude}
-              style={{ minWidth: '340px', height: '200px' }}
+              style={{ minWidth: "340px", height: "200px" }}
             />
           </div>
         ) : (
-          ''
+          ""
         )}
       </div>
     </div>

@@ -1,27 +1,38 @@
-import React, { useContext, useState } from 'react';
-import { useMutation } from '@apollo/client';
-import { useHistory, Link } from 'react-router-dom';
+import React, { useContext, useState, FormEventHandler } from "react";
+import { useMutation } from "@apollo/client";
+import { useHistory, Link } from "react-router-dom";
 
-import './login.css';
-import { LOGIN_USER } from '../../services/Users/UsersAccessMutation';
-import { AuthContext } from '../../Context/Auth';
-import { useForm } from '../../util/Hooks';
+import "./login.css";
+import { LOGIN_USER } from "../../services/Users/UsersAccessMutation";
+import { AuthContext } from "../../Context/Auth";
+import { useForm } from "../../util/Hooks";
+
+interface IError {
+  username?: string;
+  password?: string;
+}
+
+interface IValues {
+  onChange: FormEventHandler<Element>;
+  onSubmit: FormEventHandler<Element>;
+  values: { username?: string; password?: string };
+}
 
 function Login() {
   let history = useHistory();
   const context = useContext(AuthContext);
 
-  const [errors, setErrors]: any = useState({});
+  const [errors, setErrors] = useState<IError>({});
 
-  const { onChange, onSubmit, values }: any = useForm(loginUserCallback, {
-    username: '',
-    password: '',
+  const { onChange, onSubmit, values }: IValues = useForm(loginUserCallback, {
+    username: "",
+    password: "",
   });
 
   const [loginUser] = useMutation(LOGIN_USER, {
     update(proxy, { data: { login: userData } }) {
       context.login(userData);
-      history.push('/');
+      history.push("/");
     },
     onError(err) {
       setErrors(err?.graphQLErrors[0]?.extensions?.exception.errors);
@@ -54,8 +65,8 @@ function Login() {
                         type="text"
                         className={
                           errors.username
-                            ? 'form-control form-control-user errorRed'
-                            : 'form-control form-control-user'
+                            ? "form-control form-control-user errorRed"
+                            : "form-control form-control-user"
                         }
                         placeholder="Username"
                         name="username"
@@ -68,8 +79,8 @@ function Login() {
                         type="password"
                         className={
                           errors.password
-                            ? 'form-control form-control-user errorRed'
-                            : 'form-control form-control-user'
+                            ? "form-control form-control-user errorRed"
+                            : "form-control form-control-user"
                         }
                         placeholder="Password"
                         name="password"

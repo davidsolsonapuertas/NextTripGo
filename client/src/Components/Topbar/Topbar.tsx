@@ -4,25 +4,29 @@ import React, {
   useContext,
   Dispatch,
   SetStateAction,
-} from 'react';
-import { Link } from 'react-router-dom';
-import { useQuery } from '@apollo/client';
-import DehazeIcon from '@material-ui/icons/Dehaze';
-import { useHistory } from 'react-router-dom';
+} from "react";
+import { Link } from "react-router-dom";
+import { useQuery } from "@apollo/client";
+import DehazeIcon from "@material-ui/icons/Dehaze";
+import { useHistory } from "react-router-dom";
 
-import './topbar.css';
-import { FETCH_USERS, GET_LOGGED_USER } from '../../services/Users/UsersQuery';
-import { AuthContext } from '../../Context/Auth';
-import Search from '../../Pages/Search/Search';
-import FriendRequestDropdown from './FriendRequestDropdown';
-import UserProfile from './UserProfile';
+import "./topbar.css";
+import { FETCH_USERS, GET_LOGGED_USER } from "../../services/Users/UsersQuery";
+import { AuthContext } from "../../Context/Auth";
+import Search from "../../Pages/Search/Search";
+import FriendRequestDropdown from "./FriendRequestDropdown";
+import UserProfile from "./UserProfile";
 
 interface IProps {
   setSidebar: Dispatch<SetStateAction<boolean>>;
 }
 
 interface IUser {
-  user: any;
+  user: {
+    id: string;
+    username: string;
+    profilePic: string;
+  } | null;
   login: (userData: LoggedUser) => void;
   logout: () => void;
 }
@@ -35,7 +39,7 @@ interface LoggedUser {
 
 function Topbar({ setSidebar }: IProps) {
   const [open, setOpen] = useState(true);
-  const [suggestionValue, setSuggestionValue] = useState('');
+  const [suggestionValue, setSuggestionValue] = useState<string | null>("");
   const { logout, user } = useContext<IUser>(AuthContext);
   const history = useHistory();
 
@@ -50,8 +54,8 @@ function Topbar({ setSidebar }: IProps) {
   const loggedUser = dataLoggedUser?.getLoggedUser;
 
   useMemo(() => {
-    if (suggestionValue.length > 1) {
-      history.push('/user/' + suggestionValue);
+    if (suggestionValue) {
+      history.push("/user/" + suggestionValue);
     }
   }, [suggestionValue, history]);
 

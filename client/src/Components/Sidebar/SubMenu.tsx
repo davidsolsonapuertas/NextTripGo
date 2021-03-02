@@ -1,11 +1,20 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
 
-import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
-import ArrowDropUpIcon from '@material-ui/icons/ArrowDropUp';
+import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
+import ArrowDropUpIcon from "@material-ui/icons/ArrowDropUp";
 
 interface IProps {
-  item: any;
+  item: {
+    title: string;
+    path: string;
+    icon: JSX.Element;
+    subNav?: {
+      title: string;
+      path: string;
+      icon: JSX.Element | string;
+    }[];
+  };
 }
 
 function SubMenu({ item }: IProps) {
@@ -50,7 +59,7 @@ function SubMenu({ item }: IProps) {
       )}
       {subnav && item.subNav && (
         <div className="bg-white mx-4 collapse-inner rounded">
-          {item.subNav.map((item: any, index: number) => {
+          {item.subNav.map((item, index) => {
             return (
               <Link
                 key={index}

@@ -1,21 +1,10 @@
-import React, { useContext } from 'react';
+import React, { useContext } from "react";
 
-import { useQuery } from '@apollo/client';
-import FriendCards from '../../Components/FriendCards/FriendCards';
-import { AuthContext } from '../../Context/Auth';
-import { GET_LOGGED_USER } from '../../services/Users/UsersQuery';
-
-interface IUser {
-  user: any;
-  login: (userData: LoggedUser) => void;
-  logout: () => void;
-}
-
-interface LoggedUser {
-  username: string;
-  password: string;
-  token: string;
-}
+import { useQuery } from "@apollo/client";
+import FriendCards from "../../Components/FriendCards/FriendCards";
+import { AuthContext } from "../../Context/Auth";
+import { GET_LOGGED_USER } from "../../services/Users/UsersQuery";
+import { IUser } from "../../Interfaces/User";
 
 function Friends() {
   const { user } = useContext<IUser>(AuthContext);

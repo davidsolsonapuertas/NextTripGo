@@ -1,9 +1,15 @@
-import React, { useContext } from 'react';
-import { Route, Redirect } from 'react-router-dom';
+import React, { useContext } from "react";
+import { Route, Redirect } from "react-router-dom";
 
-import { AuthContext } from '../../Context/Auth';
+import { AuthContext } from "../../Context/Auth";
 
-function AuthRoute({ children, ...rest }: any) {
+interface IProps {
+  children: JSX.Element[];
+  exact?: boolean;
+  path: string;
+}
+
+function AuthRoute({ children, ...rest }: IProps) {
   const { user } = useContext(AuthContext);
 
   return (

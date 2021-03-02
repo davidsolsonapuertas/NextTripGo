@@ -1,38 +1,27 @@
-import React, { useContext } from 'react';
-import { Redirect, useLocation, Link } from 'react-router-dom';
-import { useQuery } from '@apollo/client';
-import { Card, Nav } from 'react-bootstrap';
-import FlightTakeoffRoundedIcon from '@material-ui/icons/FlightTakeoffRounded';
+import React, { useContext } from "react";
+import { Redirect, useLocation, Link } from "react-router-dom";
+import { useQuery } from "@apollo/client";
+import { Card, Nav } from "react-bootstrap";
+import FlightTakeoffRoundedIcon from "@material-ui/icons/FlightTakeoffRounded";
 
-import TripCards from '../../../Components/TripCards/TripCards';
-import { AuthContext } from '../../../Context/Auth';
-import { FETCH_TRIPS_BY_USERNAME } from '../../../services/Trips/TripsQuery';
-
-interface IUser {
-  user: any;
-  login: (userData: User) => void;
-  logout: () => void;
-}
-
-interface User {
-  username: string;
-  password: string;
-  token: string;
-}
+import TripCards from "../../../Components/TripCards/TripCards";
+import { AuthContext } from "../../../Context/Auth";
+import { FETCH_TRIPS_BY_USERNAME } from "../../../services/Trips/TripsQuery";
+import { IUser } from "../../../Interfaces/User";
 
 function DisplayTrips() {
   const { user } = useContext<IUser>(AuthContext);
-  let { pathname, hash }: any = useLocation();
+  let { pathname, hash } = useLocation<string>();
 
   let { data } = useQuery(FETCH_TRIPS_BY_USERNAME, {
-    variables: { userId: user.id },
+    variables: { userId: user?.id },
   });
 
   let trips = data?.getTripsByUsername;
 
   return (
     <div>
-      {pathname === '/trips' && <Redirect to="/trips#upcoming" />}
+      {pathname === "/trips" && <Redirect to="/trips#upcoming" />}
       <Card className="rounded-0">
         <Card.Header className="d-flex">
           <Nav variant="tabs" defaultActiveKey="#upcoming">
@@ -47,10 +36,10 @@ function DisplayTrips() {
       </Card>
 
       {trips?.length > 0 ? (
-        hash === '#past' ? (
-          <TripCards trips={trips} time={'past'} mode="My" />
+        hash === "#past" ? (
+          <TripCards trips={trips} time={"past"} mode="My" />
         ) : (
-          <TripCards trips={trips} time={'upcoming'} mode="My" />
+          <TripCards trips={trips} time={"upcoming"} mode="My" />
         )
       ) : (
         <div className="d-flex w-100 mt-5 flex-column align-items-center justify-content-center">

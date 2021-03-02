@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import Autosuggest from 'react-autosuggest';
+import React, { useState, Dispatch, SetStateAction } from "react";
+import Autosuggest from "react-autosuggest";
 
-import './Search.css';
+import "./Search.css";
 
 interface User {
   id: String;
@@ -23,8 +23,15 @@ interface Friends {
   createdAt: String;
 }
 
-function Search({ dataToSearch, setSuggestionValue }: any) {
-  const [selected, setSelected] = useState('');
+interface IProps {
+  dataToSearch: [];
+  setSuggestionValue: Dispatch<SetStateAction<string | null>>;
+}
+
+//* Dispatch<SetStateAction<string>>;
+
+function Search({ dataToSearch, setSuggestionValue }: IProps) {
+  const [selected, setSelected] = useState("");
   const [suggestions, setSuggestions] = useState<string[]>([]);
 
   const lowerCasedUsernames = dataToSearch?.map((user: User) =>
@@ -32,7 +39,7 @@ function Search({ dataToSearch, setSuggestionValue }: any) {
   );
 
   const getSuggestions = (value: string): string[] => {
-    return lowerCasedUsernames?.filter((usernames: String) =>
+    return lowerCasedUsernames?.filter((usernames: string) =>
       usernames.startsWith(value.trim().toLowerCase())
     );
   };
@@ -48,12 +55,12 @@ function Search({ dataToSearch, setSuggestionValue }: any) {
         }}
         onSuggestionSelected={(_, { suggestionValue }) => {
           setSuggestionValue(suggestionValue);
-          setSelected('');
+          setSelected("");
         }}
         getSuggestionValue={(suggestion) => suggestion}
         renderSuggestion={(suggestion) => <span>{suggestion}</span>}
         inputProps={{
-          placeholder: '🔍   Search friends by username',
+          placeholder: "🔍   Search friends by username",
           value: selected,
           onChange: (_, { newValue, method }) => {
             setSelected(newValue);

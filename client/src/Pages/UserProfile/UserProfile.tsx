@@ -1,36 +1,25 @@
-import React, { useContext } from 'react';
-import { useQuery } from '@apollo/client';
-import { useParams } from 'react-router-dom';
-import LocationOnIcon from '@material-ui/icons/LocationOn';
-import PeopleIcon from '@material-ui/icons/People';
-import moment from 'moment';
+import React, { useContext } from "react";
+import { useQuery } from "@apollo/client";
+import { useParams } from "react-router-dom";
+import LocationOnIcon from "@material-ui/icons/LocationOn";
+import PeopleIcon from "@material-ui/icons/People";
+import moment from "moment";
 
-import './userprofile.css';
+import "./userprofile.css";
 import {
   GET_LOGGED_USER,
   GET_USER_BY_USERNAME,
-} from '../../services/Users/UsersQuery';
-import ProfilePicture from '../../Components/UserProfileActions/ProfilePicture';
-import { AuthContext } from '../../Context/Auth';
-import Profile from '../../Pages/Profile/Profile';
-import UserTripcards from '../../Components/TripCards/TripCards';
-import MapCoordinates from '../../APIs/GoogleMaps/MapCoordinates';
-import UserProfileFriendButton from '../../Components/UserProfileActions/UserProfileFriendButton';
+} from "../../services/Users/UsersQuery";
+import ProfilePicture from "../../Components/UserProfileActions/ProfilePicture";
+import { AuthContext } from "../../Context/Auth";
+import Profile from "../../Pages/Profile/Profile";
+import UserTripcards from "../../Components/TripCards/TripCards";
+import MapCoordinates from "../../APIs/GoogleMaps/MapCoordinates";
+import UserProfileFriendButton from "../../Components/UserProfileActions/UserProfileFriendButton";
+import { IUser } from "../../Interfaces/User";
 
 interface IProps {
   id: string;
-}
-
-interface IUser {
-  user: any;
-  login: (userData: User) => void;
-  logout: () => void;
-}
-
-interface User {
-  username: string;
-  password: string;
-  token: string;
 }
 
 function UserProfile() {
@@ -43,7 +32,7 @@ function UserProfile() {
   });
 
   const { data: dataLoggedUser } = useQuery(GET_LOGGED_USER, {
-    variables: { userId: user.id },
+    variables: { userId: user?.id },
   });
 
   let userVisited = dataUserVisited?.getUser;
@@ -81,20 +70,20 @@ function UserProfile() {
             <p>
               &nbsp;&nbsp;
               {userVisited?.friends?.length > 0
-                ? userVisited?.friends.length + ' friends'
-                : 'No friends yet'}
+                ? userVisited?.friends.length + " friends"
+                : "No friends yet"}
               &nbsp;&nbsp; | &nbsp;&nbsp;
             </p>
-            {' 🌏 '}&nbsp;
+            {" 🌏 "}&nbsp;
             <p>
               {userVisited?.trips?.length > 0
-                ? userVisited?.trips.length + ' trips'
-                : 'No trips yet'}
+                ? userVisited?.trips.length + " trips"
+                : "No trips yet"}
               &nbsp; &nbsp; | &nbsp;&nbsp;
             </p>
-            {' 🗓 '}&nbsp;
+            {" 🗓 "}&nbsp;
             <p>
-              {'Joined ' + moment(userVisited?.createdAt, 'YYYYMMDD').fromNow()}
+              {"Joined " + moment(userVisited?.createdAt, "YYYYMMDD").fromNow()}
               &nbsp;
             </p>
           </div>
@@ -103,11 +92,11 @@ function UserProfile() {
               <MapCoordinates
                 latitude={userVisited?.currentCity.latitude}
                 longitude={userVisited?.currentCity.longitude}
-                style={{ minWidth: '340px', height: '200px' }}
+                style={{ minWidth: "340px", height: "200px" }}
               />
             </div>
           ) : (
-            ''
+            ""
           )}
           <UserProfileFriendButton
             userVisited={userVisited}

@@ -1,8 +1,8 @@
-import React from 'react';
-import DropdownButton from 'react-bootstrap/DropdownButton';
-import Dropdown from 'react-bootstrap/Dropdown';
-import Button from 'react-bootstrap/Button';
-import { useMutation } from '@apollo/client';
+import React from "react";
+import DropdownButton from "react-bootstrap/DropdownButton";
+import Dropdown from "react-bootstrap/Dropdown";
+import Button from "react-bootstrap/Button";
+import { useMutation } from "@apollo/client";
 
 import {
   SEND_FRIEND_REQUEST,
@@ -10,12 +10,12 @@ import {
   ACCEPT_FRIEND_REQUEST,
   REJECT_FRIEND_REQUEST,
   DELETE_FRIEND,
-} from '../../services/Users/FriendsMutations';
+} from "../../services/Users/FriendsMutations";
 import {
   GET_USER_BY_USERNAME,
   GET_LOGGED_USER,
-} from '../../services/Users/UsersQuery';
-import { User } from '../../Interfaces/User';
+} from "../../services/Users/UsersQuery";
+import { User } from "../../Interfaces/User";
 
 interface IProps {
   userVisited: User;
@@ -101,8 +101,8 @@ function UserProfileFriendButton({ userVisited, userVisiting }: IProps) {
   return (
     <div className="Button w-100 h-50 d-flex justify-content-center">
       {typeof userVisiting?.friends?.find(
-        (friend: any) => friend?.id === userVisited?.id
-      ) === 'undefined' &&
+        (friend: User) => friend?.id === userVisited?.id
+      ) === "undefined" &&
         userVisiting?.sentFriendRequests?.indexOf(userVisited?.id) === -1 &&
         userVisiting?.receivedFriendRequests?.indexOf(userVisited?.id) ===
           -1 && (
@@ -136,8 +136,8 @@ function UserProfileFriendButton({ userVisited, userVisiting }: IProps) {
         </DropdownButton>
       )}
       {typeof userVisiting?.friends?.find(
-        (friend: any) => friend?.id === userVisited?.id
-      ) !== 'undefined' && (
+        (friend: User) => friend?.id === userVisited?.id
+      ) !== "undefined" && (
         <DropdownButton id="dropdown-basic-button" title="Friends">
           <Dropdown.Item onClick={deleteFriendCallback}>Unfriend</Dropdown.Item>
         </DropdownButton>

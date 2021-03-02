@@ -1,25 +1,20 @@
-import React, { useContext, useState } from 'react';
-import { Route, Redirect } from 'react-router-dom';
+import React, { useContext, useState } from "react";
+import { Route, Redirect } from "react-router-dom";
 
-import { AuthContext } from '../../Context/Auth';
-import './privateroute.css';
+import { AuthContext } from "../../Context/Auth";
+import "./privateroute.css";
 
-import Sidebar from '../../Components/Sidebar/Sidebar';
-import Topbar from '../../Components/Topbar/Topbar';
+import Sidebar from "../../Components/Sidebar/Sidebar";
+import Topbar from "../../Components/Topbar/Topbar";
+import { IUser } from "../../Interfaces/User";
 
-interface IUser {
-  user: any;
-  login: (userData: User) => void;
-  logout: () => void;
+interface IProps {
+  children: JSX.Element;
+  exact?: boolean;
+  path: string;
 }
 
-interface User {
-  username: string;
-  password: string;
-  token: string;
-}
-
-function PrivateRoute({ children, ...rest }: any) {
+function PrivateRoute({ children, ...rest }: IProps) {
   const { user } = useContext<IUser>(AuthContext);
   const [sidebar, setSidebar] = useState(true);
 
@@ -33,7 +28,7 @@ function PrivateRoute({ children, ...rest }: any) {
             <Topbar setSidebar={setSidebar} />
             <div
               className={
-                sidebar ? 'other-elements' : 'other-elements-nosidebar'
+                sidebar ? "other-elements" : "other-elements-nosidebar"
               }
             >
               {children}
@@ -42,7 +37,7 @@ function PrivateRoute({ children, ...rest }: any) {
         ) : (
           <Redirect
             to={{
-              pathname: '/login',
+              pathname: "/login",
               state: { from: location },
             }}
           />

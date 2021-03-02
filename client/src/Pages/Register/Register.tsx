@@ -1,33 +1,48 @@
-import React, { useContext, useState } from 'react';
-import { useMutation } from '@apollo/client';
-import { useHistory, Link } from 'react-router-dom';
+import React, { useContext, useState, FormEventHandler } from "react";
+import { useMutation } from "@apollo/client";
+import { useHistory, Link } from "react-router-dom";
 
-import './register.css';
-import { REGISTER_USER } from '../../services/Users/UsersAccessMutation';
-import SearchLocationInput from '../../APIs/GoogleMaps/SearchLocationInput/SearchLocationInput.js';
-import { useForm } from '../../util/Hooks';
-import { AuthContext } from '../../Context/Auth';
+import "./register.css";
+import { REGISTER_USER } from "../../services/Users/UsersAccessMutation";
+import SearchLocationInput from "../../APIs/GoogleMaps/SearchLocationInput/SearchLocationInput.js";
+import { useForm } from "../../util/Hooks";
+import { AuthContext } from "../../Context/Auth";
 
-function Register(props: any) {
+interface IErrors {
+  firstname?: string;
+  lastname?: string;
+  username?: string;
+  email?: string;
+  password?: string;
+  confirmPassword?: string;
+}
+
+interface IValues {
+  onChange: FormEventHandler<Element>;
+  onSubmit: FormEventHandler<Element>;
+  values: IErrors;
+}
+
+function Register() {
   let history = useHistory();
-  const [errors, setErrors]: any = useState({});
-  const [formattedAddress, setFormatedAddress]: any = useState('');
+  const [errors, setErrors] = useState<IErrors>({});
+  const [formattedAddress, setFormatedAddress] = useState<string>("");
 
   const context = useContext(AuthContext);
 
-  const { onChange, onSubmit, values }: any = useForm(registerUser, {
-    firstname: '',
-    lastname: '',
-    username: '',
-    email: '',
-    password: '',
-    confirmPassword: '',
+  const { onChange, onSubmit, values }: IValues = useForm(registerUser, {
+    firstname: "",
+    lastname: "",
+    username: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
   });
 
   const [addUser] = useMutation(REGISTER_USER, {
     update(proxy, { data: { register: userData } }) {
       context.login(userData);
-      history.push('/');
+      history.push("/");
     },
     onError(err) {
       setErrors(err?.graphQLErrors[0]?.extensions?.exception.errors);
@@ -72,8 +87,8 @@ function Register(props: any) {
                           type="text"
                           className={
                             errors.firstname
-                              ? 'form-control form-control-user errorRed'
-                              : 'form-control form-control-user'
+                              ? "form-control form-control-user errorRed"
+                              : "form-control form-control-user"
                           }
                           placeholder="First Name"
                           name="firstname"
@@ -87,8 +102,8 @@ function Register(props: any) {
                           type="text"
                           className={
                             errors.lastname
-                              ? 'form-control form-control-user errorRed'
-                              : 'form-control form-control-user'
+                              ? "form-control form-control-user errorRed"
+                              : "form-control form-control-user"
                           }
                           placeholder="Last Name"
                           name="lastname"
@@ -103,8 +118,8 @@ function Register(props: any) {
                           type="text"
                           className={
                             errors.username
-                              ? 'form-control form-control-user errorRed'
-                              : 'form-control form-control-user'
+                              ? "form-control form-control-user errorRed"
+                              : "form-control form-control-user"
                           }
                           placeholder="Username"
                           name="username"
@@ -115,11 +130,11 @@ function Register(props: any) {
                       <div className="col-sm-6">
                         <SearchLocationInput
                           setFormatedAddress={setFormatedAddress}
-                          placeholder={'Current city'}
+                          placeholder={"Current city"}
                           styles={
                             errors.username
-                              ? 'form-control form-control-user errorRed'
-                              : 'form-control form-control-user'
+                              ? "form-control form-control-user errorRed"
+                              : "form-control form-control-user"
                           }
                         />
                       </div>
@@ -129,8 +144,8 @@ function Register(props: any) {
                         type="email"
                         className={
                           errors.email
-                            ? 'form-control form-control-user errorRed'
-                            : 'form-control form-control-user'
+                            ? "form-control form-control-user errorRed"
+                            : "form-control form-control-user"
                         }
                         placeholder="Email"
                         name="email"
@@ -144,8 +159,8 @@ function Register(props: any) {
                           type="password"
                           className={
                             errors.password
-                              ? 'form-control form-control-user errorRed'
-                              : 'form-control form-control-user'
+                              ? "form-control form-control-user errorRed"
+                              : "form-control form-control-user"
                           }
                           placeholder="Password"
                           name="password"
@@ -158,8 +173,8 @@ function Register(props: any) {
                           type="password"
                           className={
                             errors.confirmPassword
-                              ? 'form-control form-control-user errorRed'
-                              : 'form-control form-control-user'
+                              ? "form-control form-control-user errorRed"
+                              : "form-control form-control-user"
                           }
                           placeholder="Confirm Password"
                           name="confirmPassword"

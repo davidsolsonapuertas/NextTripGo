@@ -1,13 +1,17 @@
-import React, { useContext } from 'react';
-import Avatar from '@material-ui/core/Avatar';
+import React, { useContext } from "react";
+import Avatar from "@material-ui/core/Avatar";
 
-import { styles } from '../../assets/MaterialUIStyles';
-import { AuthContext } from '../../Context/Auth';
-import { User } from '../../Interfaces/User';
-import DropZone from '../ModalCropPic/DropZone';
+import { styles } from "../../assets/MaterialUIStyles";
+import { AuthContext } from "../../Context/Auth";
+import { User } from "../../Interfaces/User";
+import DropZone from "../ModalCropPic/DropZone";
 
 interface IUser {
-  user: any;
+  user: {
+    id: string;
+    username: string;
+    profilePic: string;
+  } | null;
   login: (userData: LoggedUser) => void;
   logout: () => void;
 }
@@ -46,7 +50,7 @@ function ProfilePicture({ user }: IProps) {
               <div>
                 <Avatar
                   className={
-                    classes.profilePic + ' shadow-hover img userOwnPic'
+                    classes.profilePic + " shadow-hover img userOwnPic"
                   }
                 >
                   {user?.username?.charAt(0).toUpperCase()}
@@ -70,7 +74,7 @@ function ProfilePicture({ user }: IProps) {
           ) : (
             <div>
               <Avatar
-                className={classes.profilePic + ' ml-10 shadow-hover img'}
+                className={classes.profilePic + " ml-10 shadow-hover img"}
               >
                 {user?.username?.charAt(0).toUpperCase()}
               </Avatar>
