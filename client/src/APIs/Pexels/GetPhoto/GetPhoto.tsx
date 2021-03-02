@@ -1,20 +1,26 @@
-import React, { useState, Dispatch, SetStateAction, useMemo } from 'react';
-import axios from 'axios';
+import React, { useState, Dispatch, SetStateAction, useMemo } from "react";
+import axios from "axios";
 
-import '../pexels.css';
-import { PexelKey } from '../../../config';
-import './getphoto.css';
+import "../pexels.css";
+import { PexelKey } from "../../../config";
+import "./getphoto.css";
 
 type AppProps = {
   destination: string;
   setPhoto: Dispatch<SetStateAction<string>>;
 };
 
+interface IPhoto {
+  src: {
+    medium: string;
+  };
+}
+
 function DestinationPhotos({ destination, setPhoto }: AppProps) {
-  const [photos, setPhotos]: any = useState({});
+  const [photos, setPhotos] = useState<IPhoto[]>();
 
   const getPhotos = async (destination: string) => {
-    if (typeof destination !== 'undefined') {
+    if (typeof destination !== "undefined") {
       try {
         if (destination.length > 1) {
           const data = await axios.get(
@@ -26,7 +32,7 @@ function DestinationPhotos({ destination, setPhoto }: AppProps) {
             }
           );
 
-          data.data.hasOwnProperty('photos') && setPhotos(data.data.photos);
+          data.data.hasOwnProperty("photos") && setPhotos(data.data.photos);
         }
       } catch (e) {
         console.log(e);
@@ -35,7 +41,7 @@ function DestinationPhotos({ destination, setPhoto }: AppProps) {
   };
 
   useMemo(() => {
-    if (typeof destination !== 'undefined') {
+    if (typeof destination !== "undefined") {
       getPhotos(destination);
     }
   }, [destination]);
@@ -45,8 +51,8 @@ function DestinationPhotos({ destination, setPhoto }: AppProps) {
       <fieldset>
         {destination &&
           destination.length > 1 &&
-          (photos.length > 1 ? (
-            photos.map((photo: any) => (
+          (photos && photos?.length > 1 ? (
+            photos?.map((photo: IPhoto) => (
               <div key={photo.src.medium} className="cc-selector">
                 <input
                   id={photo.src.medium}
@@ -58,7 +64,7 @@ function DestinationPhotos({ destination, setPhoto }: AppProps) {
                 <label
                   className="drinkcard-cc"
                   htmlFor={photo.src.medium}
-                  style={{ backgroundImage: 'url(' + photo.src.medium + ')' }}
+                  style={{ backgroundImage: "url(" + photo.src.medium + ")" }}
                 ></label>
               </div>
             ))

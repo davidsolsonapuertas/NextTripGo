@@ -1,9 +1,9 @@
-import React from 'react';
-import { DateRangePicker } from 'react-date-range';
-import { Dispatch, SetStateAction } from 'react';
+import React from "react";
+import { DateRangePicker, OnChangeProps, Range } from "react-date-range";
+import { Dispatch, SetStateAction } from "react";
 
-import 'react-date-range/dist/styles.css';
-import 'react-date-range/dist/theme/default.css';
+import "react-date-range/dist/styles.css";
+import "react-date-range/dist/theme/default.css";
 
 interface IProps {
   setDates: Dispatch<SetStateAction<object>>;
@@ -12,13 +12,13 @@ interface IProps {
 }
 
 function Daterangepicker({ setDates, dates, setRanges }: IProps) {
-  const handleSelect = (ranges: any) => {
+  const handleSelect = (ranges: OnChangeProps) => {
     setDates({
       ...dates,
-      startDate: ranges.selection.startDate,
-      endDate: ranges.selection.endDate,
+      startDate: (ranges as { selection: Range }).selection.startDate,
+      endDate: (ranges as { selection: Range }).selection.endDate,
     });
-    setRanges(ranges.selection);
+    setRanges((ranges as { selection: Range }).selection);
   };
 
   return (

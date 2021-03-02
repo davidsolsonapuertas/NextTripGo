@@ -1,16 +1,22 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 
-import '../pexels.css';
-import { PexelKey } from '../../../config';
+import "../pexels.css";
+import { PexelKey } from "../../../config";
+
+interface IVideos {
+  video_files: {
+    link: string;
+  }[];
+}
 
 function RandomVideo() {
-  const [videos, setVideos]: any[] = useState([]);
+  const [videos, setVideos] = useState<IVideos[]>([]);
 
   const getVideos = async () => {
     try {
       const data = await axios.get(
-        'https://api.pexels.com/videos/search?query=travel&size=small&per_page=30',
+        "https://api.pexels.com/videos/search?query=travel&size=small&per_page=30",
         {
           headers: {
             Authorization: `${PexelKey}`,

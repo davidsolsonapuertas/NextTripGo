@@ -1,27 +1,34 @@
-import React, { useState, Dispatch, SetStateAction } from 'react';
-import Button from 'react-bootstrap/Button';
-import AddCircleIcon from '@material-ui/icons/AddCircle';
-import RemoveCircleIcon from '@material-ui/icons/RemoveCircle';
+import React, { useState, Dispatch, SetStateAction } from "react";
+import Button from "react-bootstrap/Button";
+import AddCircleIcon from "@material-ui/icons/AddCircle";
+import RemoveCircleIcon from "@material-ui/icons/RemoveCircle";
 
-import { currencies } from '../../assets/Currencies';
-import ValidateAmount from './validateAmount';
-import { Expense } from '../../Interfaces/Trip';
+import { currencies } from "../../assets/Currencies";
+import ValidateAmount from "./validateAmount";
+import { Expense } from "../../Interfaces/Trip";
 
 interface Expenses extends Array<Expense> {}
 
 interface IProps {
   expenses: Expenses;
   setExpenses: Dispatch<SetStateAction<Expenses>>;
-  errors: any;
+  errors: {
+    expensestype?: string;
+    destination?: {
+      formattedAddress: string[];
+      latitude: string[];
+      longitude: string[];
+    };
+  };
 }
 
 function ExpensesComponent({ expenses, setExpenses, errors }: IProps) {
-  const [amount, setAmount]: any = useState(['0']);
+  const [amount, setAmount] = useState<string[]>(["0"]);
 
   const handleAddFields = () => {
     const values = [...expenses];
-    values.push({ type: '', amount: 0, currency: '' });
-    amount.push('0');
+    values.push({ type: "", amount: 0, currency: "" });
+    amount.push("0");
     setExpenses(values);
   };
 
@@ -32,11 +39,14 @@ function ExpensesComponent({ expenses, setExpenses, errors }: IProps) {
     setExpenses(values);
   };
 
-  const handleInputChange = (index: number, e?: any) => {
+  const handleInputChange = (
+    index: number,
+    e?: { target: { name: string; value: string } }
+  ) => {
     const values = [...expenses];
-    if (e?.target.name === 'type') {
+    if (e?.target.name === "type") {
       values[index].type = e.target.value;
-    } else if (e?.target.name === 'currency') {
+    } else if (e?.target.name === "currency") {
       values[index].currency = e.target.value;
     }
     setExpenses(values);
@@ -79,8 +89,8 @@ function ExpensesComponent({ expenses, setExpenses, errors }: IProps) {
               name="type"
               className={
                 errors?.expensestype
-                  ? 'form-control form-control-user errorRed'
-                  : 'form-control form-control-user'
+                  ? "form-control form-control-user errorRed"
+                  : "form-control form-control-user"
               }
               onChange={(event) => handleInputChange(index, event)}
             />
@@ -96,8 +106,8 @@ function ExpensesComponent({ expenses, setExpenses, errors }: IProps) {
             <select
               className={
                 errors?.expensestype
-                  ? 'custom-select rounded errorRed'
-                  : 'custom-select rounded ml-2'
+                  ? "custom-select rounded errorRed"
+                  : "custom-select rounded ml-2"
               }
               onChange={(event) => {
                 handleInputChange(index, event);

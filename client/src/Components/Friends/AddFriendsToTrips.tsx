@@ -1,16 +1,17 @@
-import React, { useContext, useState, useMemo } from 'react';
-import { useQuery } from '@apollo/client';
-import Avatar from '@material-ui/core/Avatar';
+import React, {
+  useContext,
+  useState,
+  useMemo,
+  Dispatch,
+  SetStateAction,
+} from "react";
+import { useQuery } from "@apollo/client";
+import Avatar from "@material-ui/core/Avatar";
 
-import { AuthContext } from '../../Context/Auth';
-import { GET_LOGGED_USER } from '../../services/Users/UsersQuery';
-import Search from '../../Pages/Search/Search';
-
-interface IUser {
-  user: any;
-  login: (userData: LoggedUser) => void;
-  logout: () => void;
-}
+import { AuthContext } from "../../Context/Auth";
+import { GET_LOGGED_USER } from "../../services/Users/UsersQuery";
+import Search from "../../Pages/Search/Search";
+import { IUser } from "../../Interfaces/User";
 
 interface LoggedUser {
   username: string;
@@ -18,7 +19,12 @@ interface LoggedUser {
   token: string;
 }
 
-function AddFriendsToTrips({ selectedFriends, setSelectedFriends }: any) {
+interface IProps {
+  selectedFriends: string[];
+  setSelectedFriends: Dispatch<SetStateAction<string[]>>;
+}
+
+function AddFriendsToTrips({ selectedFriends, setSelectedFriends }: IProps) {
   const { user } = useContext<IUser>(AuthContext);
   const [suggestionValue, setSuggestionValue] = useState<string | null>(null);
 
@@ -33,7 +39,7 @@ function AddFriendsToTrips({ selectedFriends, setSelectedFriends }: any) {
   }, [suggestionValue, setSelectedFriends]);
 
   const { data: dataLoggedUser } = useQuery(GET_LOGGED_USER, {
-    variables: { userId: user.id },
+    variables: { userId: user?.id },
   });
 
   const loggedUserFriends = dataLoggedUser?.getLoggedUser?.friends;

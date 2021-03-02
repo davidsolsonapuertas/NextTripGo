@@ -1,29 +1,48 @@
-import React, { useState } from 'react';
-import { useMutation } from '@apollo/client';
-import { useHistory } from 'react-router-dom';
+import React, { useState } from "react";
+import { useMutation } from "@apollo/client";
+import { useHistory } from "react-router-dom";
 
-import { CREATE_TRIP } from '../../../services/Trips/TripsMutation';
-import SearchLocationInput from '../../../APIs/GoogleMaps/SearchLocationInput/SearchLocationInput.js';
-import DestinationPhotos from '../../../APIs/Pexels/GetPhoto/GetPhoto';
-import Daterangepicker from '../../../Components/DateRangePicker/DateRangePicker';
-import ExpensesComponent from '../../../Components/Expenses/CreateExpenses';
-import AddFriendsToTrips from '../../../Components/Friends/AddFriendsToTrips';
+import { CREATE_TRIP } from "../../../services/Trips/TripsMutation";
+import SearchLocationInput from "../../../APIs/GoogleMaps/SearchLocationInput/SearchLocationInput.js";
+import DestinationPhotos from "../../../APIs/Pexels/GetPhoto/GetPhoto";
+import Daterangepicker from "../../../Components/DateRangePicker/DateRangePicker";
+import ExpensesComponent from "../../../Components/Expenses/CreateExpenses";
+import AddFriendsToTrips from "../../../Components/Friends/AddFriendsToTrips";
+import { Expense } from "../../../Interfaces/Trip";
+
+interface IErrors {
+  expensestype?: string;
+  destination?: {
+    formattedAddress: string[];
+    latitude: string[];
+    longitude: string[];
+  };
+}
+
+interface IRanges {
+  startDate?: Date;
+  endDate?: Date;
+}
 
 function CreateTrip() {
   let history = useHistory();
 
-  const [errors, setErrors]: any = useState({});
+  const [errors, setErrors] = useState<IErrors>({});
 
-  const [formattedAddress, setFormatedAddress]: any = useState(['', '', '']);
-  const [photo, setPhoto]: any = useState('');
-  const [expenses, setExpenses]: any = useState([]);
-  const [friends, setFriends]: any = useState([]);
-  const [dates, setDates]: any = useState({
+  const [formattedAddress, setFormatedAddress] = useState<string[]>([
+    "",
+    "",
+    "",
+  ]);
+  const [photo, setPhoto] = useState<string>("");
+  const [expenses, setExpenses] = useState<Expense[]>([]);
+  const [friends, setFriends] = useState<string[]>([]);
+  const [dates, setDates] = useState<object>({
     startDate: new Date(),
     endDate: new Date(),
-    key: 'selection',
+    key: "selection",
   });
-  const [ranges, setRanges]: any = useState({
+  const [ranges, setRanges] = useState<IRanges>({
     startDate: new Date(),
     endDate: new Date(),
   });
@@ -47,12 +66,12 @@ function CreateTrip() {
       friends: friends,
       // toDo: values.toDo,
     },
-    update(proxy: any, result) {
+    update(proxy, result) {
       history.push(`/trips/${result.data.createTrip.id}`);
       history.go(0);
     },
     onError(err) {
-      setErrors((errors: any) => {
+      setErrors((errors: object) => {
         return err?.graphQLErrors[0]?.extensions?.exception.errors;
       });
     },
@@ -70,8 +89,8 @@ function CreateTrip() {
             placeholder={"What's your next destination? ✈"}
             styles={
               errors.destination
-                ? 'form-control form-control-user errorRed w-50'
-                : 'form-control form-control-user w-50'
+                ? "form-control form-control-user errorRed w-50"
+                : "form-control form-control-user w-50"
             }
           />
         </div>
@@ -84,7 +103,7 @@ function CreateTrip() {
         </div>
         <div className="form-group">
           <DestinationPhotos
-            destination={formattedAddress[0]?.split(',')[0]}
+            destination={formattedAddress[0]?.split(",")[0]}
             setPhoto={setPhoto}
           />
         </div>

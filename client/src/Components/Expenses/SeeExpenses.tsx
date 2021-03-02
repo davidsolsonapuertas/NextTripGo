@@ -1,11 +1,11 @@
-import React, { FunctionComponent, useState, useMemo } from 'react';
-import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
+import React, { FunctionComponent, useState, useMemo } from "react";
+import FiberManualRecordIcon from "@material-ui/icons/FiberManualRecord";
 
-import './Currency.css';
-import { getRate } from '../../APIs/ConvertCurrency/ConvertCurrency';
-import { variant, colors } from '../../assets/ColorPalette';
-import { Expense } from '../../Interfaces/Trip';
-import PieChart from './PieChart';
+import "./Currency.css";
+import { getRate } from "../../APIs/ConvertCurrency/ConvertCurrency";
+import { variant, colors } from "../../assets/ColorPalette";
+import { Expense } from "../../Interfaces/Trip";
+import PieChart from "./PieChart";
 
 interface IProps {
   expenses: Expenses;
@@ -15,8 +15,10 @@ interface Expenses extends Array<Expense> {}
 
 const SeeExpenses: FunctionComponent<IProps> = ({ expenses }) => {
   const expensesCopy = expenses.map((el) => ({ ...el }));
-  const [changedExpenses, setChangedExpenses]: any = useState(expensesCopy);
-  const [totalExpenses, setTotalExpenses]: any = useState(0);
+  const [changedExpenses, setChangedExpenses] = useState<Expense[]>(
+    expensesCopy
+  );
+  const [totalExpenses, setTotalExpenses] = useState<number>(0);
 
   const currencies: string[] = [];
 
@@ -35,7 +37,7 @@ const SeeExpenses: FunctionComponent<IProps> = ({ expenses }) => {
         if (oldExpenses[key].currency !== currency) {
           let exchRate = Object.values(res)[0];
 
-          if (typeof exchRate === 'number')
+          if (typeof exchRate === "number")
             oldExpenses[key].amount =
               Math.round(expensesCopy[key].amount * exchRate * 100) / 100;
           oldExpenses[key].currency = currency;
@@ -70,7 +72,7 @@ const SeeExpenses: FunctionComponent<IProps> = ({ expenses }) => {
                   changeCurrency(currency);
                 }}
                 type="button"
-                className={'btn rounded-0 ' + 'btn-' + variant[index]}
+                className={"btn rounded-0 " + "btn-" + variant[index]}
               >
                 {currency}
               </button>
@@ -83,7 +85,7 @@ const SeeExpenses: FunctionComponent<IProps> = ({ expenses }) => {
               setChangedExpenses(expensesCopy);
               setTotalExpenses(0);
             }}
-            className={'btn rounded-0 btn-link'}
+            className={"btn rounded-0 btn-link"}
           >
             Mixed
           </button>
@@ -109,9 +111,9 @@ const SeeExpenses: FunctionComponent<IProps> = ({ expenses }) => {
                       className="mr-3"
                       style={{ color: `${colors[index]}` }}
                     />
-                    {expense.type + ' '}
+                    {expense.type + " "}
                     <div>
-                      {expense.amount + ' '}
+                      {expense.amount + " "}
                       {expense.currency}
                     </div>
                   </span>
@@ -127,7 +129,7 @@ const SeeExpenses: FunctionComponent<IProps> = ({ expenses }) => {
                 />
                 Total expenses
                 <div>
-                  {Math.round(totalExpenses * 100) / 100 + ' '}
+                  {Math.round(totalExpenses * 100) / 100 + " "}
                   {changedExpenses[0].currency}
                 </div>
               </span>

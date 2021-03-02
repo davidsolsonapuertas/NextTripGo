@@ -1,10 +1,10 @@
-import React from 'react';
+import React from "react";
 
-import { User } from '../../Interfaces/User';
+import { User } from "../../Interfaces/User";
 
 interface IProps {
   friends: User[];
-  receivedFriendRequests: any;
+  receivedFriendRequests: string[];
 }
 
 function FriendCards({ friends }: IProps) {

@@ -1,6 +1,6 @@
-import { Document, Types } from 'mongoose';
+import { Document, Types } from "mongoose";
 
-import { Trip } from './Trip';
+import { Trip } from "./Trip";
 
 export interface User extends Document {
   id: string;
@@ -22,4 +22,20 @@ export interface Destination {
   formattedAddress: string;
   latitude: number;
   longitude: number;
+}
+
+export interface LoggedUser {
+  username: string;
+  password: string;
+  token: string;
+}
+
+export interface IUser {
+  user: {
+    id: string;
+    username: string;
+    profilePic: string;
+  } | null;
+  login: (userData: LoggedUser) => void;
+  logout: () => void;
 }

@@ -1,8 +1,8 @@
-import React, { useEffect } from 'react';
-import Chart from 'chart.js';
+import React, { useEffect } from "react";
+import Chart from "chart.js";
 
-import { colors } from '../../assets/ColorPalette';
-import { Expense } from '../../Interfaces/Trip';
+import { colors } from "../../assets/ColorPalette";
+import { Expense } from "../../Interfaces/Trip";
 
 interface Expenses extends Array<Expense> {}
 
@@ -15,15 +15,15 @@ function PieChart({ expenses }: IProps) {
   const types: string[] = [];
 
   expenses &&
-    expenses.map((expense: any) => {
+    expenses.map((expense: { type: string; amount: number }) => {
       types.push(expense.type);
       values.push(expense.amount);
     });
 
   useEffect(() => {
-    let ctx = 'myChart';
+    let ctx = "myChart";
     new Chart(ctx, {
-      type: 'doughnut',
+      type: "doughnut",
       data: {
         labels: types,
         datasets: [
@@ -36,9 +36,9 @@ function PieChart({ expenses }: IProps) {
       options: {
         maintainAspectRatio: false,
         tooltips: {
-          backgroundColor: 'rgb(255,255,255)',
-          bodyFontColor: '#858796',
-          borderColor: '#dddfeb',
+          backgroundColor: "rgb(255,255,255)",
+          bodyFontColor: "#858796",
+          borderColor: "#dddfeb",
           borderWidth: 1,
           xPadding: 15,
           yPadding: 15,

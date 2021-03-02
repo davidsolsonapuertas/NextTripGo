@@ -1,4 +1,4 @@
-const { gql } = require('apollo-server');
+const { gql } = require("apollo-server");
 
 const typeDefs = gql`
   scalar FileUpload
@@ -13,21 +13,8 @@ const typeDefs = gql`
     userid: User!
     expenses: [Expense]
     toDo: String
-    # activities: [DayActivities]
     friends: [User]
   }
-  # type DayActivities {
-  #   dayactivities: [Activity]
-  # }
-  # type Activity {
-  #   day: String
-  #   fromHour: String
-  #   toHour: String
-  #   activity: String
-  #   description: String
-  #   price: Float
-  #   location: Location
-  # }
   type File {
     url: String!
   }

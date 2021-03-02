@@ -1,27 +1,27 @@
-import React from 'react';
-import { BrowserRouter as Router, Switch } from 'react-router-dom';
+import React from "react";
+import { BrowserRouter as Router, Switch } from "react-router-dom";
 
-import './bootstrap.css';
-import './App.css';
+import "./bootstrap.css";
+import "./App.css";
 
-import { AuthProvider } from './Context/Auth';
+import { AuthProvider } from "./Context/Auth";
 
-import PrivateRoute from './util/PrivateRoute/PrivateRoute';
-import AuthRoute from './util/AuthRoute/AuthRoute';
-import Register from './Pages/Register/Register';
-import Login from './Pages/Login/Login';
-import Home from './Pages/Home/Home';
-import Profile from './Pages/Profile/Profile';
-import RandomVideo from './APIs/Pexels/RandomVideo/RandomVideo';
-import DisplayTrips from './Pages/Trips/DisplayTrips/DisplayTrips';
-import CreateTrip from './Pages/Trips/CreateTrip/CreateTrip';
-import TripDetail from './Pages/Trips/TripDetail/TripDetail';
-import PageNotFound from './Pages/404';
-import UserProfile from './Pages/UserProfile/UserProfile';
-import Friends from './Pages/Friends/Friends';
+import PrivateRoute from "./util/PrivateRoute/PrivateRoute";
+import AuthRoute from "./util/AuthRoute/AuthRoute";
+import Register from "./Pages/Register/Register";
+import Login from "./Pages/Login/Login";
+import Home from "./Pages/Home/Home";
+import Profile from "./Pages/Profile/Profile";
+import RandomVideo from "./APIs/Pexels/RandomVideo/RandomVideo";
+import DisplayTrips from "./Pages/Trips/DisplayTrips/DisplayTrips";
+import CreateTrip from "./Pages/Trips/CreateTrip/CreateTrip";
+import TripDetail from "./Pages/Trips/TripDetail/TripDetail";
+import PageNotFound from "./Pages/404";
+import UserProfile from "./Pages/UserProfile/UserProfile";
+import Friends from "./Pages/Friends/Friends";
 
 function App() {
-  console.log('hyop');
+  console.log("hyop");
 
   return (
     <AuthProvider>
